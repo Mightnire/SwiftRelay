@@ -783,7 +783,6 @@ namespace Netch.Forms
             this.OtherTabPage.Controls.Add(this.CheckUpdateWhenOpenedCheckBox);
             this.OtherTabPage.Controls.Add(this.NoSupportDialogCheckBox);
             this.OtherTabPage.Controls.Add(this.CheckBetaUpdateCheckBox);
-            this.OtherTabPage.Controls.Add(this.UpdateServersWhenOpenedCheckBox);
             this.OtherTabPage.Location = new System.Drawing.Point(4, 29);
             this.OtherTabPage.Name = "OtherTabPage";
             this.OtherTabPage.Padding = new System.Windows.Forms.Padding(3);

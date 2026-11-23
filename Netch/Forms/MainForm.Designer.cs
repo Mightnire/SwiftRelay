@@ -36,9 +36,6 @@
             this.CreateProcessModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.CreateRouteTableRuleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ReloadModesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.SubscriptionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ManageSubscriptionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.UpdateServersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.OptionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.OpenDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ShowHideConsoleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -112,7 +109,6 @@
             this.MenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ServerToolStripMenuItem,
             this.ModeToolStripMenuItem,
-            this.SubscriptionToolStripMenuItem,
             this.OptionsToolStripMenuItem,
             this.HelpToolStripMenuItem,
             this.ForceExitToolStripMenuItem,
@@ -172,30 +168,6 @@
             this.ReloadModesToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
             this.ReloadModesToolStripMenuItem.Text = "Reload Modes";
             this.ReloadModesToolStripMenuItem.Click += new System.EventHandler(this.ReloadModesToolStripMenuItem_Click);
-            // 
-            // SubscriptionToolStripMenuItem
-            // 
-            this.SubscriptionToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ManageSubscriptionsToolStripMenuItem,
-            this.UpdateServersToolStripMenuItem});
-            this.SubscriptionToolStripMenuItem.Margin = new System.Windows.Forms.Padding(0, 0, 0, 1);
-            this.SubscriptionToolStripMenuItem.Name = "SubscriptionToolStripMenuItem";
-            this.SubscriptionToolStripMenuItem.Size = new System.Drawing.Size(92, 21);
-            this.SubscriptionToolStripMenuItem.Text = "Subscription";
-            // 
-            // ManageSubscriptionsToolStripMenuItem
-            // 
-            this.ManageSubscriptionsToolStripMenuItem.Name = "ManageSubscriptionsToolStripMenuItem";
-            this.ManageSubscriptionsToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
-            this.ManageSubscriptionsToolStripMenuItem.Text = "Manage Subscriptions";
-            this.ManageSubscriptionsToolStripMenuItem.Click += new System.EventHandler(this.ManageSubscriptionLinksToolStripMenuItem_Click);
-            // 
-            // UpdateServersToolStripMenuItem
-            // 
-            this.UpdateServersToolStripMenuItem.Name = "UpdateServersToolStripMenuItem";
-            this.UpdateServersToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
-            this.UpdateServersToolStripMenuItem.Text = "Update Servers";
-            this.UpdateServersToolStripMenuItem.Click += new System.EventHandler(this.UpdateServersFromSubscriptionLinksToolStripMenuItem_Click);
             // 
             // OptionsToolStripMenuItem
             // 
@@ -617,7 +589,7 @@
             // NotifyIcon
             // 
             this.NotifyIcon.ContextMenuStrip = this.NotifyMenu;
-            this.NotifyIcon.Text = "Netch";
+            this.NotifyIcon.Text = "SwiftRelay";
             this.NotifyIcon.Visible = true;
             this.NotifyIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.NotifyIcon_MouseDoubleClick);
             // 
@@ -722,7 +694,7 @@
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Netch";
+            this.Text = "SwiftRelay";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.MenuStrip.ResumeLayout(false);
@@ -770,7 +742,6 @@
         private System.Windows.Forms.ToolStripMenuItem ExitToolStripButton;
         private System.Windows.Forms.ToolStripMenuItem ForceExitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ImportServersFromClipboardToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem ManageSubscriptionsToolStripMenuItem;
         private System.Windows.Forms.MenuStrip MenuStrip;
         public System.Windows.Forms.ComboBox ModeComboBox;
         private System.Windows.Forms.Label ModeLabel;
@@ -794,11 +765,9 @@
         private System.Windows.Forms.PictureBox SpeedPictureBox;
         private System.Windows.Forms.ToolStripStatusLabel StatusLabel;
         private System.Windows.Forms.StatusStrip StatusStrip;
-        private System.Windows.Forms.ToolStripMenuItem SubscriptionToolStripMenuItem;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.ToolStripMenuItem UninstallServiceToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem UpdateServersToolStripMenuItem;
         private System.Windows.Forms.ToolStripStatusLabel UploadSpeedLabel;
         private System.Windows.Forms.ToolStripStatusLabel UsedBandwidthLabel;
         private System.Windows.Forms.ToolStripLabel NewVersionLabel;

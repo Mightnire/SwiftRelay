@@ -30,7 +30,8 @@ public partial class MainForm : Form
     public MainForm()
     {
         InitializeComponent();
-        NotifyIcon.Icon = Icon = Resources.icon;
+        Icon = Resources.icon;
+        NotifyIcon.Icon = Resources.tray_icon;
 
         AddAddServerToolStripMenuItems();
 
@@ -89,10 +90,6 @@ public partial class MainForm : Form
         // 检查更新
         if (Global.Settings.CheckUpdateWhenOpened)
             CheckUpdateAsync().Forget();
-
-        // 检查订阅更新
-        if (Global.Settings.UpdateServersWhenOpened)
-            UpdateServersFromSubscriptionAsync().Forget();
 
         // 打开软件时启动加速，产生开始按钮点击事件
         if (Global.Settings.StartWhenOpened)
@@ -261,58 +258,6 @@ public partial class MainForm : Form
         finally
         {
             Enabled = true;
-        }
-    }
-
-    #endregion
-
-    #region Subscription
-
-    private void ManageSubscriptionLinksToolStripMenuItem_Click(object sender, EventArgs e)
-    {
-        Hide();
-        new SubscriptionForm().ShowDialog();
-        LoadServers();
-        Show();
-    }
-
-    private async void UpdateServersFromSubscriptionLinksToolStripMenuItem_Click(object sender, EventArgs e)
-    {
-        await UpdateServersFromSubscriptionAsync();
-    }
-
-    private async Task UpdateServersFromSubscriptionAsync()
-    {
-        void DisableItems(bool v)
-        {
-            MenuStrip.Enabled = ConfigurationGroupBox.Enabled = ProfileGroupBox.Enabled = ControlButton.Enabled = v;
-        }
-
-        if (Global.Settings.Subscription.Count <= 0)
-        {
-            MessageBoxX.Show(i18N.Translate("No subscription link"));
-            return;
-        }
-
-        StatusText(i18N.Translate("Updating servers"));
-        DisableItems(false);
-
-        try
-        {
-            await SubscriptionUtil.UpdateServersAsync();
-
-            LoadServers();
-            await Configuration.SaveAsync();
-            StatusText(i18N.Translate("Servers updated"));
-        }
-        catch (Exception e)
-        {
-            NotifyTip(i18N.Translate("Unhandled update servers error") + "\n" + e.Message, info: false);
-            Log.Error(e, "Unhandled Update servers error");
-        }
-        finally
-        {
-            DisableItems(true);
         }
     }
 
@@ -981,7 +926,7 @@ public partial class MainForm : Form
 
                 // 启动需要禁用的控件
                 ServerToolStripMenuItem.Enabled = ModeToolStripMenuItem.Enabled =
-                    SubscriptionToolStripMenuItem.Enabled = UninstallServiceToolStripMenuItem.Enabled = enabled;
+                    UninstallServiceToolStripMenuItem.Enabled = enabled;
             }
 
             _state = value;

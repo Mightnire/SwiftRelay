@@ -19,7 +19,7 @@ namespace Netch;
 
 public static class Program
 {
-    public static readonly ISingleInstanceService SingleInstance = new SingleInstanceService($"Global\\{nameof(Netch)}");
+    public static readonly ISingleInstanceService SingleInstance = new SingleInstanceService("Global\\SwiftRelay");
 
     internal static HWND ConsoleHwnd { get; private set; }
 
@@ -111,7 +111,7 @@ public static class Program
 
     private static async Task LogEnvironmentAsync()
     {
-        Log.Information("Netch Version: {Version}", $"{UpdateChecker.Owner}/{UpdateChecker.Repo}@{UpdateChecker.Version}");
+        Log.Information("SwiftRelay Version: {Version}", $"{UpdateChecker.Owner}/{UpdateChecker.Repo}@{UpdateChecker.Version}");
         Log.Information("OS: {OSVersion}", Environment.OSVersion);
         Log.Information("SHA256: {Hash}", $"{await Utils.Utils.Sha256CheckSumAsync(Global.NetchExecutable)}");
         Log.Information("System Language: {Language}", CultureInfo.CurrentCulture.Name);

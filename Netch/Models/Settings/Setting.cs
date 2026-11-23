@@ -127,37 +127,11 @@ public class Setting
     public int STUN_Server_Port { get; set; } = 3478;
 
     /// <summary>
-    ///     订阅链接列表
-    /// </summary>
-    public List<Subscription> Subscription { get; set; } = new();
-
-    /// <summary>
     ///     TUNTAP 适配器配置
     /// </summary>
     public TUNConfig TUNTAP { get; set; } = new();
 
-    /// <summary>
-    ///     是否打开软件时更新订阅
-    /// </summary>
-    public bool UpdateServersWhenOpened { get; set; } = false;
-
-    public V2rayConfig V2RayConfig { get; set; } = new();
-
     public bool NoSupportDialog { get; set; } = false;
-
-    #region Migration
-
-    [Obsolete]
-    public JsonElement SubscribeLink
-    {
-        set
-        {
-            if (Subscription == null! || !Subscription.Any())
-                Subscription = value.Deserialize<List<Subscription>>()!;
-        }
-    }
-
-    #endregion
 
     public Setting ShallowCopy()
     {

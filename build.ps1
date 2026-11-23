@@ -52,25 +52,28 @@ cp -Force '.\Other\release\*.bin' "$OutputPath\bin"
 cp -Force '.\Other\release\*.dll' "$OutputPath\bin"
 cp -Force '.\Other\release\*.exe' "$OutputPath\bin"
 
-if ( -Not ( Test-Path ".\Netch\bin\$Configuration" ) ) {
-	Write-Host
-	Write-Host 'Building Netch'
+Write-Host
+Write-Host 'Building SwiftRelay'
 
-	dotnet publish `
-		-c $Configuration `
-		-r 'win-x64' `
-		-p:Platform='x64' `
-		-p:SelfContained=$SelfContained `
-		-p:PublishTrimmed=$PublishReadyToRun `
-		-p:PublishSingleFile=$PublishSingleFile `
-		-p:PublishReadyToRun=$PublishReadyToRun `
-		-p:PublishReadyToRunShowWarnings=$PublishReadyToRun `
-		-p:IncludeNativeLibrariesForSelfExtract=$SelfContained `
-		-o ".\Netch\bin\$Configuration" `
-		'.\Netch\Netch.csproj'
-	if ( -Not $? ) { exit $lastExitCode }
+dotnet publish `
+	-c $Configuration `
+	-r 'win-x64' `
+	-p:Platform='x64' `
+	-p:SelfContained=$SelfContained `
+	-p:PublishTrimmed=$PublishReadyToRun `
+	-p:PublishSingleFile=$PublishSingleFile `
+	-p:PublishReadyToRun=$PublishReadyToRun `
+	-p:PublishReadyToRunShowWarnings=$PublishReadyToRun `
+	-p:IncludeNativeLibrariesForSelfExtract=$SelfContained `
+	-o ".\Netch\bin\$Configuration" `
+	'.\Netch\Netch.csproj'
+if ( -Not $? ) { exit $lastExitCode }
+
+if (Test-Path ".\Netch\bin\$Configuration\SwiftRelay.exe") {
+	cp -Force ".\Netch\bin\$Configuration\SwiftRelay.exe" $OutputPath
+} else {
+	cp -Force ".\Netch\bin\$Configuration\Netch.exe" $OutputPath
 }
-cp -Force ".\Netch\bin\$Configuration\Netch.exe" $OutputPath
 
 if ( -Not ( Test-Path ".\Redirector\Redirector.bin" ) -and -Not ( Test-Path ".\Redirector\bin\$Configuration\Redirector.bin" ) ) {
 	Write-Host
@@ -91,7 +94,11 @@ if ( -Not ( Test-Path ".\Redirector\Redirector.bin" ) -and -Not ( Test-Path ".\R
 }
 
 if (Test-Path ".\Redirector\bin\$Configuration\Redirector.bin") {
-	cp -Force ".\Redirector\bin\$Configuration\nfapi.dll"      "$OutputPath\bin"
+	if (Test-Path ".\Redirector\bin\$Configuration\nfapi.dll") {
+		cp -Force ".\Redirector\bin\$Configuration\nfapi.dll"      "$OutputPath\bin"
+	} else {
+		cp -Force ".\Redirector\static\nfapi.dll" "$OutputPath\bin"
+	}
 	cp -Force ".\Redirector\bin\$Configuration\Redirector.bin" "$OutputPath\bin"
 } else {
 	cp -Force ".\Redirector\static\nfapi.dll" "$OutputPath\bin"

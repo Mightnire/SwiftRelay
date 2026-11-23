@@ -119,38 +119,6 @@ public partial class SettingForm : BindingForm
 
         #endregion
 
-        #region V2Ray
-        BindCheckBox(XrayConeCheckBox, b => Global.Settings.V2RayConfig.XrayCone = b, Global.Settings.V2RayConfig.XrayCone);
-
-        BindCheckBox(TLSAllowInsecureCheckBox, b => Global.Settings.V2RayConfig.AllowInsecure = b, Global.Settings.V2RayConfig.AllowInsecure);
-        BindCheckBox(UseMuxCheckBox, b => Global.Settings.V2RayConfig.UseMux = b, Global.Settings.V2RayConfig.UseMux);
-        BindCheckBox(TCPFastOpenBox, b => Global.Settings.V2RayConfig.TCPFastOpen = b, Global.Settings.V2RayConfig.TCPFastOpen);
-
-        BindTextBox<int>(mtuTextBox, i => true, i => Global.Settings.V2RayConfig.KcpConfig.mtu = i, Global.Settings.V2RayConfig.KcpConfig.mtu);
-        BindTextBox<int>(ttiTextBox, i => true, i => Global.Settings.V2RayConfig.KcpConfig.tti = i, Global.Settings.V2RayConfig.KcpConfig.tti);
-        BindTextBox<int>(uplinkCapacityTextBox,
-            i => true,
-            i => Global.Settings.V2RayConfig.KcpConfig.uplinkCapacity = i,
-            Global.Settings.V2RayConfig.KcpConfig.uplinkCapacity);
-
-        BindTextBox<int>(downlinkCapacityTextBox,
-            i => true,
-            i => Global.Settings.V2RayConfig.KcpConfig.downlinkCapacity = i,
-            Global.Settings.V2RayConfig.KcpConfig.downlinkCapacity);
-
-        BindTextBox<int>(readBufferSizeTextBox,
-            i => true,
-            i => Global.Settings.V2RayConfig.KcpConfig.readBufferSize = i,
-            Global.Settings.V2RayConfig.KcpConfig.readBufferSize);
-
-        BindTextBox<int>(writeBufferSizeTextBox,
-            i => true,
-            i => Global.Settings.V2RayConfig.KcpConfig.writeBufferSize = i,
-            Global.Settings.V2RayConfig.KcpConfig.writeBufferSize);
-
-        BindCheckBox(congestionCheckBox, b => Global.Settings.V2RayConfig.KcpConfig.congestion = b, Global.Settings.V2RayConfig.KcpConfig.congestion);
-
-        #endregion
 
         #region Others
 
@@ -167,8 +135,6 @@ public partial class SettingForm : BindingForm
         BindCheckBox(CheckUpdateWhenOpenedCheckBox, b => Global.Settings.CheckUpdateWhenOpened = b, Global.Settings.CheckUpdateWhenOpened);
 
         BindCheckBox(CheckBetaUpdateCheckBox, b => Global.Settings.CheckBetaUpdate = b, Global.Settings.CheckBetaUpdate);
-
-        BindCheckBox(UpdateServersWhenOpenedCheckBox, b => Global.Settings.UpdateServersWhenOpened = b, Global.Settings.UpdateServersWhenOpened);
 
         BindCheckBox(NoSupportDialogCheckBox, b => Global.Settings.NoSupportDialog = b, Global.Settings.NoSupportDialog);
 

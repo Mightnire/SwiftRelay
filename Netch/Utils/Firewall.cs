@@ -5,7 +5,7 @@ namespace Netch.Utils;
 
 public static class Firewall
 {
-    private const string Netch = "Netch";
+    private const string Netch = "SwiftRelay";
 
     /// <summary>
     ///     Netch 自带程序添加防火墙

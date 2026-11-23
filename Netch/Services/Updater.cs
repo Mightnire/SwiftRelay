@@ -36,13 +36,17 @@ public class Updater
         if ((exitCode = Extract(extractPath)) != 0)
             throw new MessageException(i18N.Translate($"7za unexpectedly exited. ({exitCode})"));
 
-        // update archive file must have a top-level directory "Netch"
-        var updateDirectory = Path.Combine(extractPath, "Netch");
+        // update archive file must have a top-level directory "SwiftRelay" or "Netch"
+        var updateDirectory = Directory.Exists(Path.Combine(extractPath, "SwiftRelay"))
+            ? Path.Combine(extractPath, "SwiftRelay")
+            : Path.Combine(extractPath, "Netch");
         if (!Directory.Exists(updateDirectory))
             throw new MessageException(i18N.Translate("Update file top-level directory not exist"));
 
-        // {_tempDirectory}/extract/Netch/Netch.exe
-        var updateMainProgramFilePath = Path.Combine(updateDirectory, "Netch.exe");
+        // {_tempDirectory}/extract/SwiftRelay/SwiftRelay.exe
+        var updateMainProgramFilePath = File.Exists(Path.Combine(updateDirectory, "SwiftRelay.exe"))
+            ? Path.Combine(updateDirectory, "SwiftRelay.exe")
+            : Path.Combine(updateDirectory, "Netch.exe");
         if (!File.Exists(updateMainProgramFilePath))
             throw new MessageException(i18N.Translate($"Update file main program not exist"));
 

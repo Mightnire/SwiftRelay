@@ -19,7 +19,7 @@ public partial class AboutForm : Form
 
     private void NetchPictureBox_Click(object sender, EventArgs e)
     {
-        Utils.Utils.Open("https://github.com/NetchX/Netch");
+        Utils.Utils.Open("https://github.com/Mightnire/SwiftRelay");
     }
 
     private void ChannelLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

@@ -183,7 +183,7 @@ public static class Utils
 
     public static void RegisterNetchStartupItem()
     {
-        const string TaskName = "Netch Startup";
+        const string TaskName = "SwiftRelay Startup";
         var folder = TaskService.Instance.GetFolder("\\");
         var taskIsExists = folder.Tasks.Any(task => task.Name == TaskName);
 
@@ -194,8 +194,8 @@ public static class Utils
 
             var td = TaskService.Instance.NewTask();
 
-            td.RegistrationInfo.Author = "Netch";
-            td.RegistrationInfo.Description = "Netch run at startup.";
+            td.RegistrationInfo.Author = "SwiftRelay";
+            td.RegistrationInfo.Description = "SwiftRelay run at startup.";
             td.Principal.RunLevel = TaskRunLevel.Highest;
 
             td.Triggers.Add(new LogonTrigger());
@@ -209,7 +209,7 @@ public static class Utils
             td.Settings.RunOnlyIfIdle = false;
             td.Settings.Compatibility = TaskCompatibility.V2_1;
 
-            TaskService.Instance.RootFolder.RegisterTaskDefinition("Netch Startup", td);
+            TaskService.Instance.RootFolder.RegisterTaskDefinition("SwiftRelay Startup", td);
         }
         else
         {

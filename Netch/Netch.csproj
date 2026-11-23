@@ -3,6 +3,7 @@
   <Import Project="..\common.props" />
 
   <PropertyGroup>
+    <AssemblyName>SwiftRelay</AssemblyName>
     <OutputType>WinExe</OutputType>
     <Configurations>Debug;Release</Configurations>
     <UseWindowsForms>true</UseWindowsForms>
