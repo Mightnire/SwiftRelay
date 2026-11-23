@@ -10,7 +10,18 @@ A lightweight, pure Socks5 proxy and game routing client for Windows.
 [![](https://img.shields.io/github/v/release/Mightnire/SwiftRelay?style=flat-square)](https://github.com/Mightnire/SwiftRelay/releases)
 [![](https://img.shields.io/github/license/Mightnire/SwiftRelay?style=flat-square)](LICENSE)
 
+[English](README.md) | [简体中文](README_CN.md)
+
 </div>
+
+---
+
+> [!IMPORTANT]
+> ### ⚠️ Disclaimer / 免责声明
+>
+> - **Educational & Research Use Only**: This software is an open-source project intended strictly for technical research, network protocol learning, and legitimate local network routing/optimization (such as reducing multiplayer game latency via private Socks5 relays).
+> - **Strictly No Circumvention**: All protocols, tools, and configurations designed for bypassing national firewall boundaries or cyber censorship (GFW) have been **completely and permanently removed**.
+> - **Compliance with Laws**: Users must strictly abide by the laws and regulations of their country and region. Any illegal use is strictly prohibited. The developers and contributors assume no responsibility or liability for any misuse, damage, or legal consequences resulting from this project.
 
 ---
 
