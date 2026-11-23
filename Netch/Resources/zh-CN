@@ -2,6 +2,9 @@
     ": ": "：",
     "Information": "信息",
     "Error": "错误",
+    "Process": "进程",
+    "Share": "共享",
+    "ModeType_Tooltip": "[1] 进程模式 (ProcessMode): 拦截并代理指定进程网络流量\n[2] 网络共享 (ShareMode): 通过网卡将代理共享给局域网主机\n[3] 网卡代理 (TunMode): 创建虚拟网卡接管特定或全部网络流量",
 
     "Missing File or runtime components": "缺少文件或运行库",
     "Please extract all files then run the program!": "请先解压所有文件再执行程序！",

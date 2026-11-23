@@ -15,7 +15,16 @@ public abstract class Mode
     // TODO maybe make it becomes mode dictionary key
     public string FullName { get; set; } = string.Empty;
 
-    public override string ToString() => $"[{(int)Type + 1}] {i18NRemark}";
+    [JsonIgnore]
+    public string TypeText => Type switch
+    {
+        ModeType.ProcessMode => i18N.Translate("Process"),
+        ModeType.ShareMode => i18N.Translate("Share"),
+        ModeType.TunMode => "TUN",
+        _ => Type.ToString()
+    };
+
+    public override string ToString() => $"[{(int)Type + 1}·{TypeText}] {i18NRemark}";
 
     [JsonIgnore]
     public string i18NRemark

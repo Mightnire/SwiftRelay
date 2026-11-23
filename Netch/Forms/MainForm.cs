@@ -81,6 +81,13 @@ public partial class MainForm : Form
         // 加载翻译
         TranslateControls();
 
+        var modeTip = i18N.Translate("ModeType_Tooltip");
+        if (modeTip == "ModeType_Tooltip")
+            modeTip = "[1] Process Mode: Intercept & proxy process traffic\n[2] Share Mode: Share proxy to LAN devices\n[3] TUN Mode: Virtual TUN adapter to route IP traffic";
+        var modeToolTip = new ToolTip();
+        modeToolTip.SetToolTip(ModeLabel, modeTip);
+        modeToolTip.SetToolTip(ModeComboBox, modeTip);
+
         // 隐藏 ConnectivityStatusLabel
         ConnectivityStatusVisible(false);
 
