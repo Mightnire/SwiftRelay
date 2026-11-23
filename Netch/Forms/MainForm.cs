@@ -38,7 +38,7 @@ public partial class MainForm : Form
         #region i18N Translations
 
         if (Flags.NoSupport)
-            _mainFormText.Add(Name, new[] { "{0} ({1})", "Netch", "No Support" });
+            _mainFormText.Add(Name, new[] { "{0} ({1})", "SwiftRelay", "No Support" });
 
         _mainFormText.Add(UninstallServiceToolStripMenuItem.Name, new[] { "Uninstall {0}", "NF Service" });
 
@@ -1218,7 +1218,7 @@ public partial class MainForm : Form
         if (_isFirstCloseWindow)
         {
             // 显示提示语
-            NotifyTip(i18N.Translate("Netch is now minimized to the notification bar, double click this icon to restore."));
+            NotifyTip(i18N.Translate("SwiftRelay is now minimized to the notification bar, double click this icon to restore."));
             _isFirstCloseWindow = false;
         }
 

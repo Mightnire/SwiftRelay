@@ -214,7 +214,7 @@
             // 
             this.RemoveNetchFirewallRulesToolStripMenuItem.Name = "RemoveNetchFirewallRulesToolStripMenuItem";
             this.RemoveNetchFirewallRulesToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
-            this.RemoveNetchFirewallRulesToolStripMenuItem.Text = "Remove Netch Firewall Rules";
+            this.RemoveNetchFirewallRulesToolStripMenuItem.Text = "Remove SwiftRelay Firewall Rules";
             this.RemoveNetchFirewallRulesToolStripMenuItem.Click += new System.EventHandler(this.RemoveNetchFirewallRulesToolStripMenuItem_Click);
             // 
             // HelpToolStripMenuItem
