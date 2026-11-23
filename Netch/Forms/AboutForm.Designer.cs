@@ -28,27 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.ChannelLabel = new System.Windows.Forms.LinkLabel();
             this.NetchPictureBox = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.NetchPictureBox)).BeginInit();
             this.SuspendLayout();
-            // 
-            // ChannelLabel
-            // 
-            this.ChannelLabel.AutoSize = true;
-            this.ChannelLabel.Location = new System.Drawing.Point(116, 215);
-            this.ChannelLabel.Name = "ChannelLabel";
-            this.ChannelLabel.Size = new System.Drawing.Size(113, 17);
-            this.ChannelLabel.TabIndex = 5;
-            this.ChannelLabel.TabStop = true;
-            this.ChannelLabel.Text = "Telegram Channel";
-            this.ChannelLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.ChannelLabel_LinkClicked);
             // 
             // NetchPictureBox
             // 
             this.NetchPictureBox.Cursor = System.Windows.Forms.Cursors.Hand;
             this.NetchPictureBox.Image = global::Netch.Properties.Resources.Netch;
-            this.NetchPictureBox.Location = new System.Drawing.Point(72, 12);
+            this.NetchPictureBox.Location = new System.Drawing.Point(69, 18);
             this.NetchPictureBox.Name = "NetchPictureBox";
             this.NetchPictureBox.Size = new System.Drawing.Size(200, 200);
             this.NetchPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -60,8 +48,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(338, 244);
-            this.Controls.Add(this.ChannelLabel);
+            this.ClientSize = new System.Drawing.Size(338, 236);
             this.Controls.Add(this.NetchPictureBox);
             this.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -73,13 +60,11 @@
             this.Load += new System.EventHandler(this.AboutForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.NetchPictureBox)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
         private System.Windows.Forms.PictureBox NetchPictureBox;
-        private System.Windows.Forms.LinkLabel ChannelLabel;
     }
 }

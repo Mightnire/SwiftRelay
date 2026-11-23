@@ -21,14 +21,4 @@ public partial class AboutForm : Form
     {
         Utils.Utils.Open("https://github.com/Mightnire/SwiftRelay");
     }
-
-    private void ChannelLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-    {
-        Utils.Utils.Open("https://t.me/Netch");
-    }
-
-    private void SponsorPictureBox_Click(object sender, EventArgs e)
-    {
-        Utils.Utils.Open("https://www.mansora.co");
-    }
 }

@@ -1,41 +1,54 @@
-# `In preparation for 2.0, this repository will be cleared of all 1.0 related releases and code`
-<p align="center"><img src="https://github.com/NetchX/Netch/blob/main/Netch/Resources/Netch.png?raw=true" width="128" /></p>
+<p align="center">
+  <img src="Netch/Resources/Netch.png" width="128" alt="SwiftRelay Logo" />
+</p>
 
 <div align="center">
 
-# Netch
-A simple proxy client
+# SwiftRelay
+A lightweight, pure Socks5 proxy and game routing client for Windows.
 
-[![](https://img.shields.io/badge/telegram-group-green?style=flat-square)](https://t.me/netch_group)
-[![](https://img.shields.io/badge/telegram-channel-blue?style=flat-square)](https://t.me/netch_channel)
-[![](https://img.shields.io/github/downloads/netchx/netch/total.svg?style=flat-square)](https://github.com/netchx/netch/releases)
-[![](https://img.shields.io/github/v/release/netchx/netch?style=flat-square)](https://github.com/netchx/netch/releases)
+[![](https://img.shields.io/github/v/release/Mightnire/SwiftRelay?style=flat-square)](https://github.com/Mightnire/SwiftRelay/releases)
+[![](https://img.shields.io/github/license/Mightnire/SwiftRelay?style=flat-square)](LICENSE)
+
 </div>
 
-## Features
-Some features may not be implemented in version 1
+---
 
-### Modes
-- `ProcessMode` - Use Netfilter driver to intercept process traffic
-- `ShareMode` - Share your network based on WinPcap / Npcap
-- `TunMode` - Use WinTUN driver to create virtual adapter
-- `WebMode` - Web proxy mode
+## 🌟 Overview
 
-### Protocols
-- [`Socks5`](https://www.wikiwand.com/en/SOCKS)
-- [`Shadowsocks`](https://shadowsocks.org)
-- [`ShadowsocksR`](https://github.com/shadowsocksrr/shadowsocksr-libev)
-- [`WireGuard`](https://www.wireguard.com)
-- [`Trojan`](https://trojan-gfw.github.io/trojan)
-- [`VMess`](https://www.v2fly.org)
-- [`VLESS`](https://xtls.github.io)
+**SwiftRelay** is a dedicated game and process network routing utility focused exclusively on standard **Socks5** proxies. Refactored and streamlined from Netch:
 
-### Others
-- UDP NAT FullCone (Limited by your server)
-- .NET 6.0 x64
+- **Pure & Lightweight**: Completely stripped of all circumvention/GFW protocols (Shadowsocks, SSR, VMess, VLESS, Trojan, WireGuard, etc.) and unnecessary subscription logic.
+- **Process & Game Traffic Interception**: Seamlessly proxy individual game processes and applications without modifying system-wide proxy settings.
+- **High Performance**: Native network redirection drivers ensuring ultra-low overhead, FullCone NAT support, and stable game latency.
 
-## Sponsor
-<a href="https://www.jetbrains.com/?from=Netch"><img src="jetbrains.svg" alt="JetBrains" width="200"/></a>
+## 🚀 Modes
 
-## License
-Netch is licensed under the [GPLv3](https://raw.githubusercontent.com/netchx/netch/main/LICENSE) license
+- **ProcessMode** (`NetFilter`): Intercepts traffic at the socket level for selected processes and executables. Ideal for game acceleration.
+- **TunMode** (`WinTUN`): Creates a virtual network adapter to route IP traffic.
+- **ShareMode** (`pcap2socks`): Shares your proxy to other devices in the local network (such as consoles like Switch / PS5).
+
+## 📦 Supported Protocol
+
+- **Socks5** (Supports IP/Domain target, Port, and optional Username / Password authentication)
+
+## 🛠️ Building from Source
+
+### Prerequisites
+
+- Windows 10 (Build 17763+) or Windows 11
+- [.NET SDK 6.0+](https://dotnet.microsoft.com/download)
+- MinGW-w64 (GCC/G++ 11+) or Visual Studio MSBuild with C++ toolchain
+
+### Build Commands
+
+```powershell
+# Run the build script
+.\build.ps1 -Configuration Release -OutputPath release
+```
+
+The output single-file executable `SwiftRelay.exe` and its supporting native drivers/binaries will be placed in the `release/` directory.
+
+## 📄 License
+
+SwiftRelay is licensed under the [GPLv3](LICENSE) license.

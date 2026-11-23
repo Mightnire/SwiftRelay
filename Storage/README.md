@@ -1,38 +1,25 @@
-# Netch
-Prebuilt binaries for Netch version 1
+# SwiftRelay Binaries
 
-## aiodns
-https://github.com/netchx/netch
+Prebuilt binaries and dependencies for SwiftRelay:
 
 ## Redirector
-https://github.com/netchx/netch
+Native process traffic redirector based on NetFilter SDK.
 
 ## RouteHelper
-https://github.com/netchx/netch
-
-## ck-client
-https://github.com/cbeuw/Cloak
+Windows IP routing table and adapter helper.
 
 ## GeoLite2
+MaxMind GeoLite2 Country database.
 https://www.maxmind.com
 
-## xray-core
-https://github.com/xtls/xray-core
-
-## shadowsocks-libev
-https://github.com/shadowsocks/shadowsocks-rust
-
-## shadowsocksr-libev
-https://github.com/shadowsocksrr/shadowsocksr-libev
-
-## simple-obfs
-https://github.com/shadowsocks/simple-obfs
-
 ## tun2socks
+Lightweight tun2socks binary for WinTUN adapter integration.
 https://github.com/xjasonlyu/tun2socks
 
-## v2ray-plugin
-https://github.com/teddysun/v2ray-plugin
-
 ## WinTUN
+High-performance virtual TUN network adapter for Windows.
 https://www.wintun.net
+
+## pcap2socks
+Proxy redirector for redirecting PCAP traffic to Socks5.
+https://github.com/zhxie/pcap2socks
