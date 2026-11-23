@@ -461,7 +461,7 @@ public partial class MainForm : Form
 
     private void fAQToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        Utils.Utils.Open("https://docs.netch.org");
+        Utils.Utils.Open("https://github.com/Mightnire/SwiftRelay#readme");
     }
 
     #endregion

@@ -56,10 +56,10 @@ public static class DnsUtils
             switch (result.AddressFamily)
             {
                 case AddressFamily.InterNetwork:
-                    Cache.Add(hostname, result);
+                    Cache[hostname] = result;
                     break;
                 case AddressFamily.InterNetworkV6:
-                    Cache6.Add(hostname, result);
+                    Cache6[hostname] = result;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
