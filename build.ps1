@@ -40,9 +40,6 @@ try {
 } catch {}
 cp -Recurse -Force '..\Storage\tun2socks.bin' 'bin'  | Out-Null
 cp -Recurse -Force '..\Storage\README.md' 'bin'  | Out-Null
-if (Test-Path '..\DISCLAIMER.md') {
-    cp -Force '..\DISCLAIMER.md' '.'  | Out-Null
-}
 Pop-Location
 
 if ( -Not ( Test-Path '.\Other\release' ) ) {
