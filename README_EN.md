@@ -3,7 +3,7 @@
 >
 > #### SwiftRelay functions solely as a local network traffic router and standard Socks (Socks5 / Socks4a / Socks4) relay utility. It does not include any built-in network nodes or acceleration routes, and all node configurations used within the software are manually entered by the user. SwiftRelay cannot and does not inspect, verify, or guarantee the source, security, stability, or compliance of the nodes entered by the user, nor does it make any warranties regarding their legality; users are solely responsible for ensuring that the network access services and node configurations they use comply with applicable local laws, regulations, and relevant terms of service.
 >
-> #### SwiftRelay is only compatible with a limited number of applications and online games. The terms of service of certain online platforms, software, or games explicitly prohibit the use of unauthorized traffic routing or network acceleration tools; detection by relevant risk-control or monitoring mechanisms may result in account restrictions, suspensions, or permanent bans. Furthermore, compatible programs may still exhibit some defects, including, but not limited to, partial or all traffic of the target program failing to be proxied and resulting in a direct connection, latency fluctuations, packet loss, connection drops, system driver compatibility issues, etc., which may affect how the programs perform. Users must review the terms of service of the target platform, software, or game prior to use, and assume full responsibility for any account penalties or losses incurred.
+> #### SwiftRelay is only compatible with a limited number of applications and online games. The terms of service of certain online platforms, software, or games explicitly prohibit the use of unauthorized traffic routing or network acceleration tools; forced use may result in account restrictions, suspensions, or permanent bans. Furthermore, compatible programs may still exhibit some defects, including, but not limited to, partial or all traffic of the target program failing to be proxied and resulting in a direct connection, latency fluctuations, packet loss, connection drops, system driver compatibility issues, etc., which may affect how the programs perform. Users must review the terms of service of the target platform, software, or game prior to use, and assume full responsibility for any account penalties or losses incurred.
 >
 > #### The SwiftRelay name and icon were generated with the assistance of Gemini and are used in this project by Mightnire (https://github.com/Mightnire).
 >
@@ -66,9 +66,9 @@ A lightweight, pure Socks proxy and game routing client for Windows.
 
 The output single-file executable `SwiftRelay.exe` and its supporting native drivers/binaries will be placed in the `release/` directory.
 
-## 🙏 Acknowledgments & Upstream
+## 🙏 Acknowledgments
 
-SwiftRelay was branched and refactored from [Netch](https://github.com/netchx/netch). The true upstream baseline for this project originates from commit [`9d99eb1`](https://github.com/netchx/netch/tree/9d99eb1c5a2acbf2a34f2600f94242601019a300) (*Bump microsoft/setup-msbuild from 1.1.3 to 1.3.1*). Sincere thanks to the original authors and the open-source community for their contributions.
+This project is modified from [Netch](https://github.com/netchx/netch), originally created by [AmazingDM](https://github.com/AmazingDM). The upstream code baseline is at commit [`9d99eb1`](https://github.com/netchx/netch/tree/9d99eb1c5a2acbf2a34f2600f94242601019a300). Special thanks to AmazingDM and the open-source community for their contributions.
 
 ## 📄 License
 
