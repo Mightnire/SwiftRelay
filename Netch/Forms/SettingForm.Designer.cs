@@ -135,9 +135,7 @@ namespace Netch.Forms
             this.TabControl.Controls.Add(this.GeneralTabPage);
             this.TabControl.Controls.Add(this.NFTabPage);
             this.TabControl.Controls.Add(this.WinTUNTabPage);
-            this.TabControl.Controls.Add(this.v2rayTabPage);
             this.TabControl.Controls.Add(this.OtherTabPage);
-            this.TabControl.Controls.Add(this.AioDNSTabPage);
             this.TabControl.Location = new System.Drawing.Point(3, 3);
             this.TabControl.Name = "TabControl";
             this.TabControl.SelectedIndex = 0;

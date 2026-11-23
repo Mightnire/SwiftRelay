@@ -26,36 +26,16 @@ public static class ShareLink
 
         var list = new List<Server>();
 
-        try
+        foreach (var line in text.GetLines())
         {
-            list.AddRange(JsonSerializer.Deserialize<List<ShadowsocksConfig>>(text)!.Select(server => new ShadowsocksServer
+            try
             {
-                Hostname = server.server,
-                Port = server.server_port,
-                EncryptMethod = server.method,
-                Password = server.password,
-                Remark = server.remarks,
-                Plugin = server.plugin,
-                PluginOption = server.plugin_opts
-            }));
-        }
-        catch (JsonException)
-        {
-            foreach (var line in text.GetLines())
-            {
-                try
-                {
-                    list.AddRange(ParseUri(line));
-                }
-                catch (Exception e)
-                {
-                    Log.Error(e, "Parse servers from share link error");
-                }
+                list.AddRange(ParseUri(line));
             }
-        }
-        catch (Exception e)
-        {
-            Log.Error(e, "Parse servers from share link error");
+            catch (Exception e)
+            {
+                Log.Error(e, "Parse servers from share link error");
+            }
         }
 
         return list;

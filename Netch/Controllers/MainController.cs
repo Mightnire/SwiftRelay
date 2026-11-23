@@ -48,23 +48,14 @@ public static class MainController
             if (modePort != null)
                 TryReleaseTcpPort((ushort)modePort, portName);
 
-            if (Server is Socks5Server socks5 && (!socks5.Auth() || ModeController.Features.HasFlag(ModeFeature.SupportSocks5Auth)))
+            if (Server is Socks5Server socks5)
             {
                 Socks5Server = socks5;
+                StatusPortInfoText.Socks5Port = Socks5Server.Port;
             }
             else
             {
-                // Start Server Controller to get a local socks5 server
-                Log.Debug("Server Information: {Data}", $"{server.Type} {server.MaskedData()}");
-
-                ServerController = new V2rayController();
-                Global.MainForm.StatusText(i18N.TranslateFormat("Starting {0}", ServerController.Name));
-
-                TryReleaseTcpPort(ServerController.Socks5LocalPort(), "Socks5");
-                Socks5Server = await ServerController.StartAsync(server);
-
-                StatusPortInfoText.Socks5Port = Socks5Server.Port;
-                StatusPortInfoText.UpdateShareLan();
+                throw new MessageException(i18N.Translate("Unsupported server type"));
             }
 
             // Start Mode Controller

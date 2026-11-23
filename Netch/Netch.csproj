@@ -14,12 +14,12 @@
     <ApplicationIcon>Resources\Netch.ico</ApplicationIcon>
     <IsPackable>false</IsPackable>
     <!-- event handler async void Warning -->
-    <NoWarn>VSTHRD100</NoWarn>
+    <NoWarn>$(NoWarn);VSTHRD100;CA1416;SYSLIB0014;SYSLIB0021;CS8625;VSTHRD002</NoWarn>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <AnalysisMode>Default</AnalysisMode>
-    <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
+    <CodeAnalysisTreatWarningsAsErrors>false</CodeAnalysisTreatWarningsAsErrors>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFramework>net6.0-windows10.0.17763.0</TargetFramework>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

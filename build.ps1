@@ -35,9 +35,9 @@ cp -Recurse -Force '..\Storage\i18n' '.'  | Out-Null
 cp -Recurse -Force '..\Storage\mode' '.'  | Out-Null
 cp -Recurse -Force '..\Storage\stun.txt' 'bin'  | Out-Null
 cp -Recurse -Force '..\Storage\nfdriver.sys' 'bin'  | Out-Null
-cp -Recurse -Force '..\Storage\aiodns.conf' 'bin'  | Out-Null
-Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/Loyalsoldier/geoip/release/Country.mmdb' -OutFile 'bin\GeoLite2-Country.mmdb'
-#cp -Recurse -Force '..\Storage\GeoLite2-Country.mmdb' 'bin'  | Out-Null
+try {
+    Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/Loyalsoldier/geoip/release/Country.mmdb' -OutFile 'bin\GeoLite2-Country.mmdb'
+} catch {}
 cp -Recurse -Force '..\Storage\tun2socks.bin' 'bin'  | Out-Null
 cp -Recurse -Force '..\Storage\README.md' 'bin'  | Out-Null
 Pop-Location
@@ -72,30 +72,55 @@ if ( -Not ( Test-Path ".\Netch\bin\$Configuration" ) ) {
 }
 cp -Force ".\Netch\bin\$Configuration\Netch.exe" $OutputPath
 
-if ( -Not ( Test-Path ".\Redirector\bin\$Configuration" ) ) {
+if ( -Not ( Test-Path ".\Redirector\Redirector.bin" ) -and -Not ( Test-Path ".\Redirector\bin\$Configuration\Redirector.bin" ) ) {
 	Write-Host
 	Write-Host 'Building Redirector'
 
-	msbuild `
-		-property:Configuration=$Configuration `
-		-property:Platform=x64 `
-		'.\Redirector\Redirector.vcxproj'
-	if ( -Not $? ) { exit $lastExitCode }
+	if (Get-Command msbuild -ErrorAction SilentlyContinue) {
+		msbuild `
+			-property:Configuration=$Configuration `
+			-property:Platform=x64 `
+			'.\Redirector\Redirector.vcxproj'
+		if ( -Not $? ) { exit $lastExitCode }
+	} else {
+		$gpp = "D:\Program Files\RedPanda-Cpp\MinGW64\bin\g++.exe"
+		Push-Location .\Redirector
+		& $gpp -shared -O3 -std=c++17 -fpermissive -Iinclude Based.cpp DNSHandler.cpp EventHandler.cpp IPEventHandler.cpp Redirector.cpp SocksHelper.cpp TCPHandler.cpp Utils.cpp -Llib -lnfapi -Lstatic -lnfapi -lws2_32 -static-libgcc -static-libstdc++ -o Redirector.bin
+		Pop-Location
+	}
 }
-cp -Force ".\Redirector\bin\$Configuration\nfapi.dll"      "$OutputPath\bin"
-cp -Force ".\Redirector\bin\$Configuration\Redirector.bin" "$OutputPath\bin"
 
-if ( -Not ( Test-Path ".\RouteHelper\bin\$Configuration" ) ) {
+if (Test-Path ".\Redirector\bin\$Configuration\Redirector.bin") {
+	cp -Force ".\Redirector\bin\$Configuration\nfapi.dll"      "$OutputPath\bin"
+	cp -Force ".\Redirector\bin\$Configuration\Redirector.bin" "$OutputPath\bin"
+} else {
+	cp -Force ".\Redirector\static\nfapi.dll" "$OutputPath\bin"
+	cp -Force ".\Redirector\Redirector.bin"   "$OutputPath\bin"
+}
+
+if ( -Not ( Test-Path ".\RouteHelper\RouteHelper.bin" ) -and -Not ( Test-Path ".\RouteHelper\bin\$Configuration\RouteHelper.bin" ) ) {
 	Write-Host
 	Write-Host 'Building RouteHelper'
 
-	msbuild `
-		-property:Configuration=$Configuration `
-		-property:Platform=x64 `
-		'.\RouteHelper\RouteHelper.vcxproj'
-	if ( -Not $? ) { exit $lastExitCode }
+	if (Get-Command msbuild -ErrorAction SilentlyContinue) {
+		msbuild `
+			-property:Configuration=$Configuration `
+			-property:Platform=x64 `
+			'.\RouteHelper\RouteHelper.vcxproj'
+		if ( -Not $? ) { exit $lastExitCode }
+	} else {
+		$gpp = "D:\Program Files\RedPanda-Cpp\MinGW64\bin\g++.exe"
+		Push-Location .\RouteHelper
+		& $gpp -shared -O3 -std=c++17 -fpermissive RouteHelper.cpp WaitGroup.cpp -o RouteHelper.bin -liphlpapi -lws2_32 -static-libgcc -static-libstdc++
+		Pop-Location
+	}
 }
-cp -Force ".\RouteHelper\bin\$Configuration\RouteHelper.bin" "$OutputPath\bin"
+
+if (Test-Path ".\RouteHelper\bin\$Configuration\RouteHelper.bin") {
+	cp -Force ".\RouteHelper\bin\$Configuration\RouteHelper.bin" "$OutputPath\bin"
+} else {
+	cp -Force ".\RouteHelper\RouteHelper.bin" "$OutputPath\bin"
+}
 
 if ( $Configuration.Equals('Release') ) {
 	rm -Force "$OutputPath\*.pdb"

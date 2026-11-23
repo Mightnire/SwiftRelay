@@ -1,1 +1,5 @@
 /release
+*.zip
+pcap2socks/
+wintun_extracted/
+wintun/

@@ -231,7 +231,7 @@ public partial class SettingForm : BindingForm
         if (UseCustomDNSCheckBox.Checked)
             TUNTAPDNSTextBox.Text = Global.Settings.TUNTAP.DNS;
         else
-            TUNTAPDNSTextBox.Text = "AioDNS";
+            TUNTAPDNSTextBox.Text = "1.1.1.1";
     }
 
     private void GlobalBypassIPsButton_Click(object sender, EventArgs e)
