@@ -178,13 +178,13 @@ public partial class ProcessForm : BindingForm
         if (dialog.ShowDialog() == DialogResult.OK)
         {
             var path = dialog.SelectedPath;
-            var list = new List<string>();
             const uint maxCount = 50;
+            List<string> list;
             try
             {
-                ScanDirectory(path, list, maxCount);
+                list = ScanDirectory(path, maxCount);
             }
-            catch
+            catch (InvalidOperationException)
             {
                 MessageBoxX.Show(i18N.Translate($"The number of executable files in the \"{path}\" directory is greater than {maxCount}"),
                     LogLevel.WARNING);
@@ -192,20 +192,60 @@ public partial class ProcessForm : BindingForm
                 return;
             }
 
-            AppendText(ruleRichTextBox, string.Join(Constants.EOF, list));
+            // Exclude rules that already exist in the textbox
+            var existingRules = ruleRichTextBox.Lines
+                .Select(s => s.Trim())
+                .Where(s => !string.IsNullOrEmpty(s))
+                .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
+            var newRules = list.Where(r => !existingRules.Contains(r)).ToList();
+            if (newRules.Count > 0)
+            {
+                AppendText(ruleRichTextBox, string.Join(Constants.EOF, newRules));
+            }
         }
     }
 
-    private void ScanDirectory(string directory, List<string> list, uint maxCount = 30)
+    public static List<string> ScanDirectory(string directory, uint maxCount = 50)
     {
-        foreach (var dir in Directory.GetDirectories(directory))
-            ScanDirectory(dir, list, maxCount);
+        var seen = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        var list = new List<string>();
 
-        list.AddRange(
-            Directory.GetFiles(directory).Select(s => Path.GetFileName(s)).Where(s => s.EndsWith(".exe")).Select(s => s.ToRegexString()));
+        ScanDirectoryCore(directory, seen, list, maxCount);
 
-        if (maxCount != 0 && list.Count > maxCount)
-            throw new Exception("The number of results is greater than maxCount");
+        return list;
+    }
+
+    private static void ScanDirectoryCore(string directory, ISet<string> seen, List<string> list, uint maxCount)
+    {
+        try
+        {
+            foreach (var file in Directory.GetFiles(directory))
+            {
+                var fileName = Path.GetFileName(file);
+                if (fileName.EndsWith(".exe", StringComparison.OrdinalIgnoreCase))
+                {
+                    var regexStr = fileName.ToRegexString();
+                    if (seen.Add(regexStr))
+                    {
+                        list.Add(regexStr);
+                        if (maxCount != 0 && list.Count > maxCount)
+                            throw new InvalidOperationException("The number of results is greater than maxCount");
+                    }
+                }
+            }
+
+            foreach (var dir in Directory.GetDirectories(directory))
+                ScanDirectoryCore(dir, seen, list, maxCount);
+        }
+        catch (InvalidOperationException)
+        {
+            throw;
+        }
+        catch (Exception ex)
+        {
+            Log.Debug(ex, "Failed to scan directory: {Directory}", directory);
+        }
     }
 
     private void ValidationButton_Click(object sender, EventArgs e)

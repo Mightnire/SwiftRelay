@@ -145,4 +145,48 @@ public class CompositeModeTests
         thread.Start();
         tcs.Task.Wait(5000);
     }
+
+    [TestMethod]
+    public void TestScanDirectory_Deduplication()
+    {
+        var tempDir = Path.Combine(Path.GetTempPath(), "NetchScanTest_" + Guid.NewGuid().ToString("N"));
+        try
+        {
+            Directory.CreateDirectory(tempDir);
+            var sub1 = Path.Combine(tempDir, "sub1");
+            var sub2 = Path.Combine(tempDir, "sub2", "sub3");
+            Directory.CreateDirectory(sub1);
+            Directory.CreateDirectory(sub2);
+
+            File.WriteAllText(Path.Combine(tempDir, "game.exe"), "dummy");
+            File.WriteAllText(Path.Combine(tempDir, "launcher.exe"), "dummy");
+            File.WriteAllText(Path.Combine(sub1, "game.exe"), "dummy"); // duplicate
+            File.WriteAllText(Path.Combine(sub1, "helper.exe"), "dummy");
+            File.WriteAllText(Path.Combine(sub2, "LAUNCHER.EXE"), "dummy"); // duplicate case-insensitive
+            File.WriteAllText(Path.Combine(sub2, "other.exe"), "dummy");
+            File.WriteAllText(Path.Combine(tempDir, "notes.txt"), "dummy"); // not an exe
+
+            var results = Netch.Forms.ModeForms.ProcessForm.ScanDirectory(tempDir, 50);
+
+            // 6 exe files total on disk, but only 4 unique executable names
+            Assert.AreEqual(4, results.Count, $"Expected 4 unique executables, got {results.Count}");
+            Assert.IsTrue(results.Any(r => r.Equals(@"game\.exe", StringComparison.OrdinalIgnoreCase)));
+            Assert.IsTrue(results.Any(r => r.Equals(@"launcher\.exe", StringComparison.OrdinalIgnoreCase)));
+            Assert.IsTrue(results.Any(r => r.Equals(@"helper\.exe", StringComparison.OrdinalIgnoreCase)));
+            Assert.IsTrue(results.Any(r => r.Equals(@"other\.exe", StringComparison.OrdinalIgnoreCase)));
+
+            // Test maxCount exceeded
+            Assert.ThrowsException<InvalidOperationException>(() =>
+            {
+                Netch.Forms.ModeForms.ProcessForm.ScanDirectory(tempDir, 3);
+            });
+        }
+        finally
+        {
+            if (Directory.Exists(tempDir))
+            {
+                Directory.Delete(tempDir, true);
+            }
+        }
+    }
 }
