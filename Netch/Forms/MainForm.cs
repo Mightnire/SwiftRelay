@@ -70,14 +70,12 @@ public partial class MainForm : Form
 
     private void MainForm_Load(object sender, EventArgs e)
     {
-        // 计算 ComboBox绘制 目标宽度
-        RecordSize();
-
         LoadServers();
         SelectLastServer();
         DelayTestHelper.UpdateTick(true);
 
         ModeService.Instance.Load();
+        LoadModes();
 
         // 加载翻译
         TranslateControls();
@@ -106,19 +104,7 @@ public partial class MainForm : Form
         if (Global.Settings.StartWhenOpened)
             ControlButton.PerformClick();
 
-        Program.SingleInstance.StartListenServer();
-    }
-
-    private void RecordSize()
-    {
-        _numberBoxWidth = ServerComboBox.Width / 10;
-        _numberBoxX = _numberBoxWidth * 9;
-        _numberBoxWrap = _numberBoxWidth / 30;
-
-        _configurationGroupBoxHeight = ConfigurationGroupBox.Height;
-        _profileConfigurationHeight = ConfigurationGroupBox.Controls[0].Height / 3; // 因为 AutoSize, 所以得到的是Controls的总高度
-        _profileGroupBoxPaddingHeight = ProfileGroupBox.Height - ProfileTable.Height;
-        _profileTableHeight = ProfileTable.Height;
+        Program.SingleInstance?.StartListenServer();
     }
 
     private void TranslateControls()
@@ -270,6 +256,7 @@ public partial class MainForm : Form
         try
         {
             ModeService.Instance.Load();
+        LoadModes();
         }
         finally
         {
@@ -879,12 +866,7 @@ public partial class MainForm : Form
 
     #region Profile
 
-    private int _configurationGroupBoxHeight;
-    private int _profileConfigurationHeight;
-    private int _profileGroupBoxPaddingHeight;
-    private int _profileTableHeight;
-
-    private void LoadProfiles()
+    public void LoadProfiles()
     {
         // Clear
         foreach (var button in ProfileTable.Controls)
@@ -898,16 +880,17 @@ public partial class MainForm : Form
         if (profileCount == 0)
         {
             // Hide Profile GroupBox, Change window size
-            configLayoutPanel.RowStyles[2].SizeType = SizeType.Percent;
-            configLayoutPanel.RowStyles[2].Height = 0;
+            ProfileLabel.Visible = false;
+            ProfileNameText.Visible = false;
             ProfileGroupBox.Visible = false;
-
-            ConfigurationGroupBox.Height = _configurationGroupBoxHeight - _profileConfigurationHeight;
         }
         else
         {
-            // Load Profiles
+            ProfileLabel.Visible = true;
+            ProfileNameText.Visible = true;
+            ProfileGroupBox.Visible = true;
 
+            // Load Profiles
             if (Global.Settings.ProfileTableColumnCount == 0)
                 Global.Settings.ProfileTableColumnCount = 5;
 
@@ -936,11 +919,6 @@ public partial class MainForm : Form
 
             for (var i = 1; i <= ProfileTable.ColumnCount; i++)
                 ProfileTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 1));
-
-            configLayoutPanel.RowStyles[2].SizeType = SizeType.AutoSize;
-            ProfileGroupBox.Visible = true;
-            ProfileGroupBox.Height = ProfileTable.RowCount * _profileTableHeight + _profileGroupBoxPaddingHeight;
-            ConfigurationGroupBox.Height = _configurationGroupBoxHeight;
         }
     }
 
@@ -1484,9 +1462,6 @@ public partial class MainForm : Form
     #region ComboBox_DrawItem
 
     private readonly SolidBrush _greenBrush = new(Color.FromArgb(50, 255, 56));
-    private int _numberBoxWidth;
-    private int _numberBoxX;
-    private int _numberBoxWrap;
 
     private void ComboBox_DrawItem(object sender, DrawItemEventArgs e)
     {
@@ -1506,17 +1481,21 @@ public partial class MainForm : Form
         {
             case Server item:
             {
+                var numberBoxWidth = cbx.Width / 10;
+                var numberBoxX = numberBoxWidth * 9;
+                var numberBoxWrap = numberBoxWidth / 30;
+
                 // 计算延迟底色
                 var numBoxBackBrush = item.Delay switch { > 200 => Brushes.Red, > 80 => Brushes.Yellow, >= 0 => _greenBrush, _ => Brushes.Gray };
 
                 // 绘制延迟底色
-                e.Graphics.FillRectangle(numBoxBackBrush, _numberBoxX, e.Bounds.Y, _numberBoxWidth, e.Bounds.Height);
+                e.Graphics.FillRectangle(numBoxBackBrush, numberBoxX, e.Bounds.Y, numberBoxWidth, e.Bounds.Height);
 
                 // 绘制延迟字符串
                 TextRenderer.DrawText(e.Graphics,
                     item.Delay.ToString(),
                     cbx.Font,
-                    new Point(_numberBoxX + _numberBoxWrap, e.Bounds.Y),
+                    new Point(numberBoxX + numberBoxWrap, e.Bounds.Y),
                     Color.Black,
                     TextFormatFlags.Left);
 

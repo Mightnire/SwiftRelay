@@ -10,6 +10,7 @@ namespace Tests;
 [TestClass]
 public class CompositeModeTests
 {
+    public TestContext TestContext { get; set; } = null!;
     [TestMethod]
     public void FromModes_MergesDistinctRulesAndProtocolFlags()
     {
@@ -184,7 +185,84 @@ public class CompositeModeTests
         });
         thread.SetApartmentState(ApartmentState.STA);
         thread.Start();
-        tcs.Task.Wait(8000);
+        if (!tcs.Task.Wait(8000))
+        {
+            Assert.Fail("Timed out waiting for MainForm render");
+        }
+        if (tcs.Task.IsFaulted)
+        {
+            throw tcs.Task.Exception?.InnerException ?? tcs.Task.Exception!;
+        }
+    }
+
+    [TestMethod]
+    public void MainForm_Layout_VerifyRender()
+    {
+        var log = new List<string>();
+        var tcs = new TaskCompletionSource();
+        var thread = new Thread(() =>
+        {
+            try
+            {
+                log.Add("1 Init settings");
+                Netch.Utils.i18N.Load("zh-CN");
+                Netch.Global.Settings.CheckUpdateWhenOpened = false;
+                Netch.Global.Settings.StartWhenOpened = false;
+
+                log.Add("2 new MainForm");
+                using var form = new Netch.Forms.MainForm();
+                form.StartPosition = FormStartPosition.Manual;
+                form.Location = new System.Drawing.Point(-2000, -2000);
+
+                log.Add("3 CreateControl");
+                form.CreateControl();
+
+                log.Add("4 LoadProfiles 0");
+                Netch.Global.Settings.ProfileCount = 0;
+                form.LoadProfiles();
+
+                log.Add("5 bmp1");
+                using (var bmp1 = new System.Drawing.Bitmap(form.Width, form.Height))
+                {
+                    form.DrawToBitmap(bmp1, new System.Drawing.Rectangle(0, 0, form.Width, form.Height));
+                    bmp1.Save(@"C:\Users\mightnire\.gemini\antigravity\brain\e2001d2d-4e92-4c6b-843b-1ee7e90a765d\main_form_no_profile.png");
+                }
+
+                log.Add("6 LoadProfiles 4");
+                Netch.Global.Settings.ProfileCount = 4;
+                Netch.Global.Settings.Profiles.Clear();
+                for (int i = 0; i < 4; i++)
+                {
+                    Netch.Global.Settings.Profiles.Add(new Netch.Models.Profile { Index = i, ProfileName = $"配置 {i + 1}" });
+                }
+                form.LoadProfiles();
+
+                log.Add("7 bmp2");
+                using (var bmp2 = new System.Drawing.Bitmap(form.Width, form.Height))
+                {
+                    form.DrawToBitmap(bmp2, new System.Drawing.Rectangle(0, 0, form.Width, form.Height));
+                    bmp2.Save(@"C:\Users\mightnire\.gemini\antigravity\brain\e2001d2d-4e92-4c6b-843b-1ee7e90a765d\main_form_with_profiles.png");
+                }
+
+                log.Add("8 Done");
+                tcs.SetResult();
+            }
+            catch (Exception ex)
+            {
+                log.Add("EX: " + ex.ToString());
+                tcs.SetException(ex);
+            }
+        });
+        thread.SetApartmentState(ApartmentState.STA);
+        thread.Start();
+        if (!tcs.Task.Wait(8000))
+        {
+            Assert.Fail("Timed out. Progress: " + string.Join(" -> ", log));
+        }
+        if (tcs.Task.IsFaulted)
+        {
+            throw tcs.Task.Exception?.InnerException ?? tcs.Task.Exception!;
+        }
     }
 
     [TestMethod]

@@ -86,7 +86,7 @@
             this.ProfileGroupBox = new System.Windows.Forms.GroupBox();
             this.ProfileTable = new System.Windows.Forms.TableLayoutPanel();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.ButtomControlContainerControl = new System.Windows.Forms.ContainerControl();
+            this.ButtomControlContainerControl = new System.Windows.Forms.TableLayoutPanel();
             this.MenuStrip.SuspendLayout();
             this.ConfigurationGroupBox.SuspendLayout();
             this.configLayoutPanel.SuspendLayout();
@@ -306,7 +306,10 @@
             // 
             // ConfigurationGroupBox
             // 
+            this.ConfigurationGroupBox.AutoSize = true;
+            this.ConfigurationGroupBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ConfigurationGroupBox.Controls.Add(this.configLayoutPanel);
+            this.ConfigurationGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
             this.ConfigurationGroupBox.Location = new System.Drawing.Point(3, 3);
             this.ConfigurationGroupBox.Name = "ConfigurationGroupBox";
             this.ConfigurationGroupBox.Size = new System.Drawing.Size(709, 115);
@@ -609,10 +612,10 @@
             // 
             // ControlButton
             // 
-            this.ControlButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.ControlButton.Location = new System.Drawing.Point(631, 3);
+            this.ControlButton.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.ControlButton.Margin = new System.Windows.Forms.Padding(0);
             this.ControlButton.Name = "ControlButton";
-            this.ControlButton.Size = new System.Drawing.Size(75, 27);
+            this.ControlButton.Size = new System.Drawing.Size(80, 28);
             this.ControlButton.TabIndex = 3;
             this.ControlButton.Text = "Start";
             this.ControlButton.UseVisualStyleBackColor = true;
@@ -651,10 +654,10 @@
             // 
             // SettingsButton
             // 
-            this.SettingsButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.SettingsButton.Location = new System.Drawing.Point(1, 3);
+            this.SettingsButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.SettingsButton.Margin = new System.Windows.Forms.Padding(0);
             this.SettingsButton.Name = "SettingsButton";
-            this.SettingsButton.Size = new System.Drawing.Size(72, 27);
+            this.SettingsButton.Size = new System.Drawing.Size(80, 28);
             this.SettingsButton.TabIndex = 4;
             this.SettingsButton.Text = "Settings";
             this.SettingsButton.UseVisualStyleBackColor = true;
@@ -662,7 +665,10 @@
             // 
             // ProfileGroupBox
             // 
+            this.ProfileGroupBox.AutoSize = true;
+            this.ProfileGroupBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ProfileGroupBox.Controls.Add(this.ProfileTable);
+            this.ProfileGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
             this.ProfileGroupBox.Location = new System.Drawing.Point(3, 124);
             this.ProfileGroupBox.Name = "ProfileGroupBox";
             this.ProfileGroupBox.Size = new System.Drawing.Size(709, 65);
@@ -701,14 +707,19 @@
             // 
             // ButtomControlContainerControl
             // 
-            this.ButtomControlContainerControl.Controls.Add(this.ControlButton);
-            this.ButtomControlContainerControl.Controls.Add(this.SettingsButton);
+            this.ButtomControlContainerControl.ColumnCount = 2;
+            this.ButtomControlContainerControl.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.AutoSize));
+            this.ButtomControlContainerControl.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.ButtomControlContainerControl.Controls.Add(this.SettingsButton, 0, 0);
+            this.ButtomControlContainerControl.Controls.Add(this.ControlButton, 1, 0);
+            this.ButtomControlContainerControl.Dock = System.Windows.Forms.DockStyle.Top;
             this.ButtomControlContainerControl.Location = new System.Drawing.Point(3, 195);
+            this.ButtomControlContainerControl.Margin = new System.Windows.Forms.Padding(3, 6, 3, 3);
             this.ButtomControlContainerControl.Name = "ButtomControlContainerControl";
-            this.ButtomControlContainerControl.Size = new System.Drawing.Size(706, 58);
+            this.ButtomControlContainerControl.RowCount = 1;
+            this.ButtomControlContainerControl.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.ButtomControlContainerControl.Size = new System.Drawing.Size(709, 36);
             this.ButtomControlContainerControl.TabIndex = 14;
-            this.ButtomControlContainerControl.TabStop = false;
-            this.ButtomControlContainerControl.Text = "groupBox1";
             // 
             // MainForm
             // 
@@ -815,7 +826,7 @@
         #endregion
 
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-        private System.Windows.Forms.ContainerControl ButtomControlContainerControl;
+        private System.Windows.Forms.TableLayoutPanel ButtomControlContainerControl;
         private System.Windows.Forms.ToolStripMenuItem ShowHideConsoleToolStripMenuItem;
         private System.Windows.Forms.ToolStripStatusLabel HttpStatusLabel;
         private System.Windows.Forms.ToolStripMenuItem ReloadModesToolStripMenuItem;

@@ -36,7 +36,6 @@ public class ModeService
             composite.ResolveAndMerge();
         }
         Sort();
-        Global.MainForm.LoadModes();
     }
 
     private void LoadCore(string modeDirectory)
@@ -78,15 +77,16 @@ public class ModeService
             throw new InvalidOperationException();
 
         Global.Modes.Add(mode);
-        Sort();
+        Sort(true);
 
         mode.WriteFile();
     }
 
-    public void Sort()
+    public void Sort(bool refreshUI = false)
     {
         SortCollection();
-        Global.MainForm.LoadModes();
+        if (refreshUI)
+            Global.MainForm.LoadModes();
     }
 
     public static void Delete(Mode mode)
