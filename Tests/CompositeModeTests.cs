@@ -147,6 +147,47 @@ public class CompositeModeTests
     }
 
     [TestMethod]
+    public void SettingForm_Layout_VerifyRender()
+    {
+        var tcs = new TaskCompletionSource();
+        var thread = new Thread(() =>
+        {
+            try
+            {
+                Netch.Utils.i18N.Load("zh-CN");
+                using var form = new Netch.Forms.SettingForm();
+                form.StartPosition = FormStartPosition.Manual;
+                form.Location = new System.Drawing.Point(-2000, -2000);
+                form.Show();
+                Application.DoEvents();
+
+                var tabControl = form.Controls.OfType<TabControl>().FirstOrDefault();
+                if (tabControl != null)
+                {
+                    for (int i = 0; i < tabControl.TabPages.Count; i++)
+                    {
+                        tabControl.SelectedIndex = i;
+                        Application.DoEvents();
+                        using var bmp = new System.Drawing.Bitmap(form.Width, form.Height);
+                        form.DrawToBitmap(bmp, new System.Drawing.Rectangle(0, 0, form.Width, form.Height));
+                        bmp.Save($@"C:\Users\mightnire\.gemini\antigravity\brain\e2001d2d-4e92-4c6b-843b-1ee7e90a765d\setting_form_tab{i}.png");
+                    }
+                }
+
+                form.Close();
+                tcs.SetResult();
+            }
+            catch (Exception ex)
+            {
+                tcs.SetException(ex);
+            }
+        });
+        thread.SetApartmentState(ApartmentState.STA);
+        thread.Start();
+        tcs.Task.Wait(8000);
+    }
+
+    [TestMethod]
     public void TestScanDirectory_Deduplication()
     {
         var tempDir = Path.Combine(Path.GetTempPath(), "NetchScanTest_" + Guid.NewGuid().ToString("N"));
