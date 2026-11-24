@@ -226,7 +226,7 @@ namespace Netch.Forms
             this.ServerPingTypeLabel.Name = "ServerPingTypeLabel";
             this.ServerPingTypeLabel.Size = new System.Drawing.Size(81, 17);
             this.ServerPingTypeLabel.TabIndex = 3;
-            this.ServerPingTypeLabel.Text = "Latency Protocol";
+            this.ServerPingTypeLabel.Text = "Ping Protocol";
             // 
             // ICMPingRadioBtn
             // 
@@ -261,7 +261,7 @@ namespace Netch.Forms
             this.STUNServerLabel.Name = "STUNServerLabel";
             this.STUNServerLabel.Size = new System.Drawing.Size(42, 17);
             this.STUNServerLabel.TabIndex = 6;
-            this.STUNServerLabel.Text = "STUN";
+            this.STUNServerLabel.Text = "STUN Server";
             // 
             // STUN_ServerComboBox
             // 
@@ -517,7 +517,7 @@ namespace Netch.Forms
             this.ChildProcessHandleCheckBox.Name = "ChildProcessHandleCheckBox";
             this.ChildProcessHandleCheckBox.Size = new System.Drawing.Size(103, 21);
             this.ChildProcessHandleCheckBox.TabIndex = 5;
-            this.ChildProcessHandleCheckBox.Text = "Child Process";
+            this.ChildProcessHandleCheckBox.Text = "Handle child process";
             this.ChildProcessHandleCheckBox.UseVisualStyleBackColor = true;
             // 
             // DNSGroupBox
@@ -534,7 +534,7 @@ namespace Netch.Forms
             this.DNSGroupBox.Size = new System.Drawing.Size(444, 160);
             this.DNSGroupBox.TabIndex = 1;
             this.DNSGroupBox.TabStop = false;
-            this.DNSGroupBox.Text = "DNS";
+            this.DNSGroupBox.Text = "DNS Settings";
             // 
             // dnsTable
             // 
@@ -814,7 +814,7 @@ namespace Netch.Forms
             this.OtherTabPage.Padding = new System.Windows.Forms.Padding(12, 10, 12, 10);
             this.OtherTabPage.Size = new System.Drawing.Size(468, 418);
             this.OtherTabPage.TabIndex = 3;
-            this.OtherTabPage.Text = "Other";
+            this.OtherTabPage.Text = "Others";
             // 
             // StartupBehaviorGroupBox
             // 
@@ -830,7 +830,7 @@ namespace Netch.Forms
             this.StartupBehaviorGroupBox.Size = new System.Drawing.Size(444, 180);
             this.StartupBehaviorGroupBox.TabIndex = 0;
             this.StartupBehaviorGroupBox.TabStop = false;
-            this.StartupBehaviorGroupBox.Text = "Startup Behavior";
+            this.StartupBehaviorGroupBox.Text = "Startup & Exit Behavior";
             // 
             // sbPanel
             // 
