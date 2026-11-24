@@ -113,7 +113,7 @@ if ( -Not ( Test-Path ".\Redirector\Redirector.bin" ) -and -Not ( Test-Path ".\R
 			'.\Redirector\Redirector.vcxproj'
 		if ( -Not $? ) { exit $lastExitCode }
 	} else {
-		$gpp = "D:\Program Files\RedPanda-Cpp\MinGW64\bin\g++.exe"
+		$gpp = if (Get-Command g++ -ErrorAction SilentlyContinue) { (Get-Command g++).Source } elseif (Test-Path "D:\Program Files\RedPanda-Cpp\MinGW64\bin\g++.exe") { "D:\Program Files\RedPanda-Cpp\MinGW64\bin\g++.exe" } else { "g++" }
 		Push-Location .\Redirector
 		& $gpp -shared -O3 -std=c++17 -fpermissive -Iinclude Based.cpp DNSHandler.cpp EventHandler.cpp IPEventHandler.cpp Redirector.cpp SocksHelper.cpp TCPHandler.cpp Utils.cpp -Llib -lnfapi -Lstatic -lnfapi -lws2_32 -static-libgcc -static-libstdc++ -o Redirector.bin
 		Pop-Location
@@ -143,7 +143,7 @@ if ( -Not ( Test-Path ".\RouteHelper\RouteHelper.bin" ) -and -Not ( Test-Path ".
 			'.\RouteHelper\RouteHelper.vcxproj'
 		if ( -Not $? ) { exit $lastExitCode }
 	} else {
-		$gpp = "D:\Program Files\RedPanda-Cpp\MinGW64\bin\g++.exe"
+		$gpp = if (Get-Command g++ -ErrorAction SilentlyContinue) { (Get-Command g++).Source } elseif (Test-Path "D:\Program Files\RedPanda-Cpp\MinGW64\bin\g++.exe") { "D:\Program Files\RedPanda-Cpp\MinGW64\bin\g++.exe" } else { "g++" }
 		Push-Location .\RouteHelper
 		& $gpp -shared -O3 -std=c++17 -fpermissive RouteHelper.cpp WaitGroup.cpp -o RouteHelper.bin -liphlpapi -lws2_32 -static-libgcc -static-libstdc++
 		Pop-Location

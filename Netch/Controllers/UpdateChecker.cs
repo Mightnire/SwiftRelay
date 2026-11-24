@@ -36,24 +36,101 @@ public static class UpdateChecker
     {
         try
         {
-            var updater = new GitHubRelease(Owner, Repo);
-            var url = updater.AllReleaseUrl;
+            List<Release>? releases = null;
 
-            var (_, json) = await WebUtil.DownloadStringAsync(WebUtil.CreateRequest(url));
-
-            var releases = JsonSerializer.Deserialize<List<Release>>(json)!;
-            LatestRelease = GetLatestRelease(releases, isPreRelease);
-            Log.Information("Github latest release: {Version}", LatestRelease.tag_name);
-            if (VersionUtil.CompareVersion(LatestRelease.tag_name, Version) > 0)
+            // 1. Try GitHub REST API
+            try
             {
-                Log.Information("Found newer version");
-                NewVersionFound?.Invoke(null, EventArgs.Empty);
+                var updater = new GitHubRelease(Owner, Repo);
+                var url = updater.AllReleaseUrl;
+                var req = WebUtil.CreateRequest(url);
+                var (statusCode, json) = await WebUtil.DownloadStringAsync(req);
+                if (statusCode == HttpStatusCode.OK && !string.IsNullOrWhiteSpace(json))
+                {
+                    releases = JsonSerializer.Deserialize<List<Release>>(json);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                Log.Information("Already the latest version");
+                Log.Warning(ex, "Get releases from GitHub API failed, attempting web fallback");
+            }
+
+            if (releases != null && releases.Count > 0)
+            {
+                var targetRelease = GetLatestRelease(releases, isPreRelease);
+                if (targetRelease != null)
+                {
+                    LatestRelease = targetRelease;
+                    Log.Information("Github latest release: {Version}", LatestRelease.tag_name);
+                    if (VersionUtil.CompareVersion(LatestRelease.tag_name, Version) > 0)
+                    {
+                        Log.Information("Found newer version");
+                        NewVersionFound?.Invoke(null, EventArgs.Empty);
+                    }
+                    else
+                    {
+                        Log.Information("Already the latest version");
+                        NewVersionNotFound?.Invoke(null, EventArgs.Empty);
+                    }
+                    return;
+                }
+            }
+
+            // 2. Fallback: Query web releases/latest (302 redirect reveals the latest tag)
+            var webUrl = $"https://github.com/{Owner}/{Repo}/releases/latest";
+            var webReq = WebUtil.CreateRequest(webUrl);
+            webReq.AllowAutoRedirect = false;
+
+            string? redirectLocation = null;
+            try
+            {
+                using var response = (HttpWebResponse)await webReq.GetResponseAsync();
+                if ((int)response.StatusCode >= 300 && (int)response.StatusCode < 400)
+                {
+                    redirectLocation = response.Headers["Location"];
+                }
+            }
+            catch (WebException we) when (we.Response is HttpWebResponse wr && (int)wr.StatusCode >= 300 && (int)wr.StatusCode < 400)
+            {
+                redirectLocation = wr.Headers["Location"];
+            }
+
+            if (!string.IsNullOrWhiteSpace(redirectLocation) && redirectLocation.Contains("/releases/tag/"))
+            {
+                var tag = redirectLocation.Substring(redirectLocation.LastIndexOf('/') + 1).Trim();
+                LatestRelease = new Release
+                {
+                    tag_name = tag,
+                    html_url = redirectLocation,
+                    body = "",
+                    prerelease = false,
+                    assets = Array.Empty<Asset>()
+                };
+
+                Log.Information("Fallback detected latest release: {Version}", tag);
+                if (VersionUtil.CompareVersion(tag, Version) > 0)
+                {
+                    Log.Information("Found newer version");
+                    NewVersionFound?.Invoke(null, EventArgs.Empty);
+                }
+                else
+                {
+                    Log.Information("Already the latest version");
+                    NewVersionNotFound?.Invoke(null, EventArgs.Empty);
+                }
+                return;
+            }
+
+            // 3. If there are no releases at all on GitHub
+            if (releases != null && releases.Count == 0)
+            {
+                Log.Information("No releases found on repository, current is latest");
                 NewVersionNotFound?.Invoke(null, EventArgs.Empty);
+                return;
             }
+
+            // Failed both API and fallback
+            NewVersionFoundFailed?.Invoke(null, EventArgs.Empty);
         }
         catch (Exception e)
         {
@@ -68,21 +145,35 @@ public static class UpdateChecker
 
     public static (string fileName, string sha256) GetLatestUpdateFileNameAndHash(string? keyword = null)
     {
-        var matches = Regex.Matches(LatestRelease.body, @"^\| (?<filename>.*) \| (?<sha256>.*) \|\r?$", RegexOptions.Multiline).Skip(2);
-        /*
-          Skip(2)
-          
-          | 文件名 | SHA256 |
-          | :- | :- |
-       */
+        if (!string.IsNullOrEmpty(LatestRelease?.body))
+        {
+            var matches = Regex.Matches(LatestRelease.body, @"^\|\s*`?(?<filename>[^`|\r\n]+?)`?\s*\|\s*`?(?<sha256>[a-fA-F0-9]{64})`?\s*\|", RegexOptions.Multiline);
+            foreach (Match m in matches)
+            {
+                var fn = m.Groups["filename"].Value.Trim();
+                var hash = m.Groups["sha256"].Value.Trim();
+                if (keyword == null || fn.Contains(keyword))
+                    return (fn, hash);
+            }
+        }
 
-        Match match = keyword == null ? matches.First() : matches.First(m => m.Groups["filename"].Value.Contains(keyword));
+        if (LatestRelease?.assets != null && LatestRelease.assets.Length > 0)
+        {
+            var asset = keyword == null
+                ? LatestRelease.assets[0]
+                : LatestRelease.assets.FirstOrDefault(a => a.name.Contains(keyword)) ?? LatestRelease.assets[0];
 
-        return (match.Groups["filename"].Value, match.Groups["sha256"].Value);
+            return (asset.name, "");
+        }
+
+        return ("SwiftRelay.7z", "");
     }
 
     public static string GetLatestReleaseContent()
     {
+        if (string.IsNullOrWhiteSpace(LatestRelease?.body))
+            return i18N.Translate("No release notes available.");
+
         var sb = new StringBuilder();
         foreach (string l in LatestRelease.body.GetLines(false).SkipWhile(l => l.FirstOrDefault() != '#'))
         {
@@ -92,15 +183,16 @@ public static class UpdateChecker
             sb.AppendLine(l);
         }
 
-        return sb.ToString();
+        var content = sb.ToString().Trim();
+        return string.IsNullOrEmpty(content) ? LatestRelease.body : content;
     }
 
-    private static Release GetLatestRelease(IEnumerable<Release> releases, bool isPreRelease)
+    private static Release? GetLatestRelease(IEnumerable<Release> releases, bool isPreRelease)
     {
         if (!isPreRelease)
             releases = releases.Where(release => !release.prerelease);
 
         var ordered = releases.OrderByDescending(release => release.tag_name, new VersionUtil.VersionComparer());
-        return ordered.ElementAt(0);
+        return ordered.FirstOrDefault();
     }
 }
