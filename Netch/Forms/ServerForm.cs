@@ -315,7 +315,7 @@ public abstract class ServerForm : Form
         Controls.Add(ConfigurationGroupBox);
         Font = new Font("微软雅黑", 9F, FontStyle.Regular, GraphicsUnit.Point, 134);
         FormBorderStyle = FormBorderStyle.FixedSingle;
-        Icon = Icon.FromHandle(Resources.Netch.GetHicon());
+        Icon = Icon.FromHandle(Resources.SwiftRelay.GetHicon());
         Margin = new Padding(3, 4, 3, 4);
         MaximizeBox = false;
         Name = "ServerForm";

@@ -35,7 +35,7 @@
             // NetchPictureBox
             // 
             this.NetchPictureBox.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.NetchPictureBox.Image = global::Netch.Properties.Resources.Netch;
+            this.NetchPictureBox.Image = global::Netch.Properties.Resources.SwiftRelay;
             this.NetchPictureBox.Location = new System.Drawing.Point(69, 18);
             this.NetchPictureBox.Name = "NetchPictureBox";
             this.NetchPictureBox.Size = new System.Drawing.Size(200, 200);

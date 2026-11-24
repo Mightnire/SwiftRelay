@@ -12,7 +12,7 @@
 > #### [Mightnire](https://github.com/Mightnire) 可以在不通知用户的情况下改变以上的声明。
 
 <p align="center">
-  <img src="Netch/Resources/Netch.png" width="128" alt="SwiftRelay 图标" />
+  <img src="Netch/Resources/SwiftRelay.png" width="128" alt="SwiftRelay 图标" />
 </p>
 
 <div align="center">

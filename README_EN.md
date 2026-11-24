@@ -12,7 +12,7 @@
 > #### The above statements are subject to change by Mightnire (https://github.com/Mightnire) without notice.
 
 <p align="center">
-  <img src="Netch/Resources/Netch.png" width="128" alt="SwiftRelay Logo" />
+  <img src="Netch/Resources/SwiftRelay.png" width="128" alt="SwiftRelay Logo" />
 </p>
 
 <div align="center">

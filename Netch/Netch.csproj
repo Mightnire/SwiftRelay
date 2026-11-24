@@ -12,7 +12,7 @@
     <ApplicationManifest>App.manifest</ApplicationManifest>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
-    <ApplicationIcon>Resources\Netch.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\SwiftRelay.ico</ApplicationIcon>
     <IsPackable>false</IsPackable>
     <!-- event handler async void Warning -->
     <NoWarn>$(NoWarn);VSTHRD100;CA1416;SYSLIB0014;SYSLIB0021;CS8625;VSTHRD002</NoWarn>

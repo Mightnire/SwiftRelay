@@ -123,12 +123,14 @@ namespace Netch.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap Netch {
+        internal static System.Drawing.Bitmap SwiftRelay {
             get {
-                object obj = ResourceManager.GetObject("Netch", resourceCulture);
+                object obj = ResourceManager.GetObject("SwiftRelay", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+
+        internal static System.Drawing.Bitmap Netch => SwiftRelay;
         
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
