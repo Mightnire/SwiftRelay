@@ -249,4 +249,9 @@ public partial class SettingForm : BindingForm
         MessageBoxX.Show(i18N.Translate("Saved"));
         Close();
     }
+
+    private void CancelButton_Click(object sender, EventArgs e)
+    {
+        Close();
+    }
 }

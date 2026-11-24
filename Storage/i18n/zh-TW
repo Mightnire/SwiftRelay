@@ -151,5 +151,22 @@
     "The {0} port is reserved by system.": "連接埠 {0} 是系統保留連接埠",
 
     "{0} won't get developers' support, Please do not report any issues or seek help from developers.": "{0} 將不會得到開發者的支援，請不要報告任何問題或尋求開發人員的協助。",
-    "No Support": "不受支援"
+    "No Support": "不受支援",
+
+    "Import {0} server(s) from Clipboard": "已從剪貼簿匯入 {0} 個節點",
+    "Import {0} server(s) form Clipboard": "已從剪貼簿匯入 {0} 個節點",
+    "General": "一般",
+    "Process Mode": "程序模式",
+    "WinTUN": "TUN 模式",
+    "Others": "其他",
+    "Local Listener & Testing": "本機監聽與測試",
+    "Profiles & Timing": "快捷設定與偵測",
+    "Protocol & Traffic Filtering": "通訊協定與流量過濾",
+    "DNS Hijacking & Resolution": "DNS 劫持與解析",
+    "Host": "劫持主機",
+    "Network Settings": "虛擬網路卡網路參數",
+    "Startup & Exit Behavior": "啟動與結束行為",
+    "Updates & Notifications": "更新與提示",
+    "OK": "確定",
+    "Cancel": "取消"
 }

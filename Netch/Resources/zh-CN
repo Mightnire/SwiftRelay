@@ -151,5 +151,22 @@
     "The {0} port is reserved by system.": "{0} 端口是系统保留端口",
 
     "{0} won't get developers' support, Please do not report any issues or seek help from developers.": "{0} 将不会得到开发者的支持，请不要报告任何问题或寻求开发人员的帮助。",
-    "No Support": "不受支持"
+    "No Support": "不受支持",
+
+    "Import {0} server(s) from Clipboard": "已从剪贴板导入 {0} 个节点",
+    "Import {0} server(s) form Clipboard": "已从剪贴板导入 {0} 个节点",
+    "General": "常规",
+    "Process Mode": "进程模式",
+    "WinTUN": "TUN 模式",
+    "Others": "其他",
+    "Local Listener & Testing": "本地监听与测试",
+    "Profiles & Timing": "快捷配置与检测",
+    "Protocol & Traffic Filtering": "协议与流量过滤",
+    "DNS Hijacking & Resolution": "DNS 劫持与解析",
+    "Host": "劫持主机",
+    "Network Settings": "虚拟网卡网络参数",
+    "Startup & Exit Behavior": "启动与退出行为",
+    "Updates & Notifications": "更新与提示",
+    "OK": "确定",
+    "Cancel": "取消"
 }

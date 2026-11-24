@@ -216,7 +216,7 @@ public partial class MainForm : Form
             server.Group = Constants.DefaultGroup;
 
         Global.Settings.Server.AddRange(servers);
-        NotifyTip(i18N.TranslateFormat("Import {0} server(s) form Clipboard", servers.Count));
+        NotifyTip(i18N.TranslateFormat("Import {0} server(s) from Clipboard", servers.Count));
 
         LoadServers();
         await Configuration.SaveAsync();
