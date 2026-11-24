@@ -170,6 +170,11 @@
     "Protocol Filtering": "协议过滤",
     "DNS Settings": "DNS 设置",
     "Scope & Process": "范围与进程",
+    "IPs": "IP 列表",
+    "Please enter an IP": "请输入 IP 地址",
+    "Please enter a correct IP address": "请输入正确的 IP 地址",
+    "Please select an IP": "请先选择要删除的 IP 地址",
+    "Delete Selected": "删除选中",
     "OK": "确定",
     "Cancel": "取消"
 }

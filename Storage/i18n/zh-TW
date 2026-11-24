@@ -170,6 +170,11 @@
     "Protocol Filtering": "通訊協定過濾",
     "DNS Settings": "DNS 設定",
     "Scope & Process": "範圍與程序",
+    "IPs": "IP 清單",
+    "Please enter an IP": "請輸入 IP 位址",
+    "Please enter a correct IP address": "請輸入正確的 IP 位址",
+    "Please select an IP": "請先選擇要刪除的 IP 位址",
+    "Delete Selected": "刪除選取項目",
     "OK": "確定",
     "Cancel": "取消"
 }

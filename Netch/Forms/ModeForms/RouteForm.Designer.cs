@@ -32,216 +32,39 @@ namespace Netch.Forms.ModeForms
         /// </summary>
         private void InitializeComponent()
         {
-            this.HandleTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.HandleLabel = new System.Windows.Forms.Label();
-            this.HandleContentTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.HandleRuleRichTextBox = new System.Windows.Forms.RichTextBox();
-            this.BypassTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.BypassLabel = new System.Windows.Forms.Label();
-            this.BypassContentTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.BypassRuleRichTextBox = new System.Windows.Forms.RichTextBox();
-            this.HandleDNSCheckBox = new Netch.Forms.SyncGlobalCheckBox();
-            this.DNSLabel = new System.Windows.Forms.Label();
-            this.DNSTextBox = new System.Windows.Forms.TextBox();
-            this.UseCustomDNSCheckBox = new System.Windows.Forms.CheckBox();
-            this.RuleTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.OptionsGroupBox = new System.Windows.Forms.GroupBox();
+            this.ConfigurationGroupBox = new System.Windows.Forms.GroupBox();
             this.RemarkLabel = new System.Windows.Forms.Label();
             this.RemarkTextBox = new System.Windows.Forms.TextBox();
             this.FilenameLabel = new System.Windows.Forms.Label();
             this.FilenameTextBox = new System.Windows.Forms.TextBox();
+            this.HandleGroupBox = new System.Windows.Forms.GroupBox();
+            this.HandleRuleRichTextBox = new System.Windows.Forms.RichTextBox();
+            this.BypassGroupBox = new System.Windows.Forms.GroupBox();
+            this.BypassRuleRichTextBox = new System.Windows.Forms.RichTextBox();
             this.ControlButton = new System.Windows.Forms.Button();
-            this.NamePanel = new System.Windows.Forms.Panel();
-            this.ConfigurationLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.ConfigurationGroupBox = new System.Windows.Forms.GroupBox();
-            this.HandleTableLayoutPanel.SuspendLayout();
-            this.HandleContentTableLayoutPanel.SuspendLayout();
-            this.BypassTableLayoutPanel.SuspendLayout();
-            this.BypassContentTableLayoutPanel.SuspendLayout();
-            this.RuleTableLayoutPanel.SuspendLayout();
-            this.OptionsGroupBox.SuspendLayout();
-            this.NamePanel.SuspendLayout();
-            this.ConfigurationLayoutPanel.SuspendLayout();
+            this.CancelButtonControl = new System.Windows.Forms.Button();
             this.ConfigurationGroupBox.SuspendLayout();
+            this.HandleGroupBox.SuspendLayout();
+            this.BypassGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
-            // HandleTableLayoutPanel
+            // ConfigurationGroupBox
             // 
-            this.HandleTableLayoutPanel.ColumnCount = 1;
-            this.HandleTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.HandleTableLayoutPanel.Controls.Add(this.HandleLabel, 0, 0);
-            this.HandleTableLayoutPanel.Controls.Add(this.HandleContentTableLayoutPanel, 0, 1);
-            this.HandleTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.HandleTableLayoutPanel.Location = new System.Drawing.Point(3, 3);
-            this.HandleTableLayoutPanel.Name = "HandleTableLayoutPanel";
-            this.HandleTableLayoutPanel.RowCount = 2;
-            this.HandleTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.HandleTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.HandleTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.HandleTableLayoutPanel.Size = new System.Drawing.Size(455, 424);
-            this.HandleTableLayoutPanel.TabIndex = 1;
-            // 
-            // HandleLabel
-            // 
-            this.HandleLabel.AutoSize = true;
-            this.HandleLabel.Location = new System.Drawing.Point(3, 0);
-            this.HandleLabel.Name = "HandleLabel";
-            this.HandleLabel.Size = new System.Drawing.Size(81, 17);
-            this.HandleLabel.TabIndex = 0;
-            this.HandleLabel.Text = "Handle rules";
-            // 
-            // HandleContentTableLayoutPanel
-            // 
-            this.HandleContentTableLayoutPanel.ColumnCount = 1;
-            this.HandleContentTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.HandleContentTableLayoutPanel.Controls.Add(this.HandleRuleRichTextBox, 0, 0);
-            this.HandleContentTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.HandleContentTableLayoutPanel.Location = new System.Drawing.Point(3, 20);
-            this.HandleContentTableLayoutPanel.Name = "HandleContentTableLayoutPanel";
-            this.HandleContentTableLayoutPanel.RowCount = 1;
-            this.HandleContentTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.HandleContentTableLayoutPanel.Size = new System.Drawing.Size(449, 401);
-            this.HandleContentTableLayoutPanel.TabIndex = 1;
-            // 
-            // HandleRuleRichTextBox
-            // 
-            this.HandleRuleRichTextBox.DetectUrls = false;
-            this.HandleRuleRichTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.HandleRuleRichTextBox.Location = new System.Drawing.Point(3, 3);
-            this.HandleRuleRichTextBox.Name = "HandleRuleRichTextBox";
-            this.HandleRuleRichTextBox.Size = new System.Drawing.Size(443, 395);
-            this.HandleRuleRichTextBox.TabIndex = 0;
-            this.HandleRuleRichTextBox.Text = "";
-            this.HandleRuleRichTextBox.WordWrap = false;
-            // 
-            // BypassTableLayoutPanel
-            // 
-            this.BypassTableLayoutPanel.ColumnCount = 1;
-            this.BypassTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.BypassTableLayoutPanel.Controls.Add(this.BypassLabel, 0, 0);
-            this.BypassTableLayoutPanel.Controls.Add(this.BypassContentTableLayoutPanel, 0, 1);
-            this.BypassTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.BypassTableLayoutPanel.Location = new System.Drawing.Point(464, 3);
-            this.BypassTableLayoutPanel.Name = "BypassTableLayoutPanel";
-            this.BypassTableLayoutPanel.RowCount = 2;
-            this.BypassTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.BypassTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.BypassTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.BypassTableLayoutPanel.Size = new System.Drawing.Size(455, 424);
-            this.BypassTableLayoutPanel.TabIndex = 2;
-            // 
-            // BypassLabel
-            // 
-            this.BypassLabel.AutoSize = true;
-            this.BypassLabel.Location = new System.Drawing.Point(3, 0);
-            this.BypassLabel.Name = "BypassLabel";
-            this.BypassLabel.Size = new System.Drawing.Size(81, 17);
-            this.BypassLabel.TabIndex = 0;
-            this.BypassLabel.Text = "Bypass rules";
-            // 
-            // BypassContentTableLayoutPanel
-            // 
-            this.BypassContentTableLayoutPanel.ColumnCount = 1;
-            this.BypassContentTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.BypassContentTableLayoutPanel.Controls.Add(this.BypassRuleRichTextBox, 0, 0);
-            this.BypassContentTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.BypassContentTableLayoutPanel.Location = new System.Drawing.Point(3, 20);
-            this.BypassContentTableLayoutPanel.Name = "BypassContentTableLayoutPanel";
-            this.BypassContentTableLayoutPanel.RowCount = 1;
-            this.BypassContentTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.BypassContentTableLayoutPanel.Size = new System.Drawing.Size(449, 401);
-            this.BypassContentTableLayoutPanel.TabIndex = 1;
-            // 
-            // BypassRuleRichTextBox
-            // 
-            this.BypassRuleRichTextBox.DetectUrls = false;
-            this.BypassRuleRichTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.BypassRuleRichTextBox.Location = new System.Drawing.Point(3, 3);
-            this.BypassRuleRichTextBox.Name = "BypassRuleRichTextBox";
-            this.BypassRuleRichTextBox.Size = new System.Drawing.Size(443, 395);
-            this.BypassRuleRichTextBox.TabIndex = 0;
-            this.BypassRuleRichTextBox.Text = "";
-            this.BypassRuleRichTextBox.WordWrap = false;
-            // 
-            // HandleDNSCheckBox
-            // 
-            this.HandleDNSCheckBox.AutoCheck = false;
-            this.HandleDNSCheckBox.AutoSize = true;
-            this.HandleDNSCheckBox.GlobalValue = false;
-            this.HandleDNSCheckBox.Location = new System.Drawing.Point(8, 24);
-            this.HandleDNSCheckBox.Name = "HandleDNSCheckBox";
-            this.HandleDNSCheckBox.Size = new System.Drawing.Size(203, 21);
-            this.HandleDNSCheckBox.SyncGlobal = false;
-            this.HandleDNSCheckBox.TabIndex = 2;
-            this.HandleDNSCheckBox.Text = "Handle DNS (DNS hijacking)";
-            this.HandleDNSCheckBox.ThreeState = true;
-            this.HandleDNSCheckBox.UseVisualStyleBackColor = true;
-            this.HandleDNSCheckBox.Value = false;
-            // 
-            // DNSLabel
-            // 
-            this.DNSLabel.AutoSize = true;
-            this.DNSLabel.Location = new System.Drawing.Point(176, 56);
-            this.DNSLabel.Name = "DNSLabel";
-            this.DNSLabel.Size = new System.Drawing.Size(34, 17);
-            this.DNSLabel.TabIndex = 3;
-            this.DNSLabel.Text = "DNS";
-            // 
-            // DNSTextBox
-            // 
-            this.DNSTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.UseCustomDNSCheckBox, "Checked", true));
-            this.DNSTextBox.Location = new System.Drawing.Point(224, 56);
-            this.DNSTextBox.Name = "DNSTextBox";
-            this.DNSTextBox.Size = new System.Drawing.Size(184, 23);
-            this.DNSTextBox.TabIndex = 4;
-            this.DNSTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // UseCustomDNSCheckBox
-            // 
-            this.UseCustomDNSCheckBox.AutoSize = true;
-            this.UseCustomDNSCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.HandleDNSCheckBox, "Checked", true));
-            this.UseCustomDNSCheckBox.Location = new System.Drawing.Point(8, 56);
-            this.UseCustomDNSCheckBox.Name = "UseCustomDNSCheckBox";
-            this.UseCustomDNSCheckBox.Size = new System.Drawing.Size(125, 21);
-            this.UseCustomDNSCheckBox.TabIndex = 7;
-            this.UseCustomDNSCheckBox.Text = "Use custom DNS";
-            this.UseCustomDNSCheckBox.ThreeState = true;
-            this.UseCustomDNSCheckBox.UseVisualStyleBackColor = true;
-            // 
-            // RuleTableLayoutPanel
-            // 
-            this.RuleTableLayoutPanel.ColumnCount = 2;
-            this.RuleTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.RuleTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.RuleTableLayoutPanel.Controls.Add(this.HandleTableLayoutPanel, 0, 0);
-            this.RuleTableLayoutPanel.Controls.Add(this.BypassTableLayoutPanel, 1, 0);
-            this.RuleTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.RuleTableLayoutPanel.Location = new System.Drawing.Point(3, 206);
-            this.RuleTableLayoutPanel.Name = "RuleTableLayoutPanel";
-            this.RuleTableLayoutPanel.RowCount = 1;
-            this.RuleTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.RuleTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 430F));
-            this.RuleTableLayoutPanel.Size = new System.Drawing.Size(922, 430);
-            this.RuleTableLayoutPanel.TabIndex = 2;
-            // 
-            // OptionsGroupBox
-            // 
-            this.OptionsGroupBox.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.OptionsGroupBox.Controls.Add(this.HandleDNSCheckBox);
-            this.OptionsGroupBox.Controls.Add(this.UseCustomDNSCheckBox);
-            this.OptionsGroupBox.Controls.Add(this.DNSLabel);
-            this.OptionsGroupBox.Controls.Add(this.DNSTextBox);
-            this.OptionsGroupBox.Location = new System.Drawing.Point(15, 81);
-            this.OptionsGroupBox.Name = "OptionsGroupBox";
-            this.OptionsGroupBox.Size = new System.Drawing.Size(898, 119);
-            this.OptionsGroupBox.TabIndex = 1;
-            this.OptionsGroupBox.TabStop = false;
-            this.OptionsGroupBox.Visible = false;
+            this.ConfigurationGroupBox.Controls.Add(this.RemarkLabel);
+            this.ConfigurationGroupBox.Controls.Add(this.RemarkTextBox);
+            this.ConfigurationGroupBox.Controls.Add(this.FilenameLabel);
+            this.ConfigurationGroupBox.Controls.Add(this.FilenameTextBox);
+            this.ConfigurationGroupBox.Location = new System.Drawing.Point(12, 10);
+            this.ConfigurationGroupBox.Name = "ConfigurationGroupBox";
+            this.ConfigurationGroupBox.Size = new System.Drawing.Size(816, 85);
+            this.ConfigurationGroupBox.TabIndex = 0;
+            this.ConfigurationGroupBox.TabStop = false;
+            this.ConfigurationGroupBox.Text = "Configuration";
             // 
             // RemarkLabel
             // 
             this.RemarkLabel.AutoSize = true;
-            this.RemarkLabel.Location = new System.Drawing.Point(8, 8);
+            this.RemarkLabel.Location = new System.Drawing.Point(16, 25);
             this.RemarkLabel.Name = "RemarkLabel";
             this.RemarkLabel.Size = new System.Drawing.Size(53, 17);
             this.RemarkLabel.TabIndex = 0;
@@ -249,16 +72,16 @@ namespace Netch.Forms.ModeForms
             // 
             // RemarkTextBox
             // 
-            this.RemarkTextBox.Location = new System.Drawing.Point(72, 8);
+            this.RemarkTextBox.Location = new System.Drawing.Point(75, 22);
             this.RemarkTextBox.Name = "RemarkTextBox";
-            this.RemarkTextBox.Size = new System.Drawing.Size(341, 23);
+            this.RemarkTextBox.Size = new System.Drawing.Size(725, 23);
             this.RemarkTextBox.TabIndex = 1;
             this.RemarkTextBox.TextChanged += new System.EventHandler(this.RemarkTextBox_TextChanged);
             // 
             // FilenameLabel
             // 
             this.FilenameLabel.AutoSize = true;
-            this.FilenameLabel.Location = new System.Drawing.Point(8, 40);
+            this.FilenameLabel.Location = new System.Drawing.Point(16, 54);
             this.FilenameLabel.Name = "FilenameLabel";
             this.FilenameLabel.Size = new System.Drawing.Size(59, 17);
             this.FilenameLabel.TabIndex = 2;
@@ -266,114 +89,118 @@ namespace Netch.Forms.ModeForms
             // 
             // FilenameTextBox
             // 
-            this.FilenameTextBox.Location = new System.Drawing.Point(72, 40);
+            this.FilenameTextBox.Location = new System.Drawing.Point(75, 51);
             this.FilenameTextBox.Name = "FilenameTextBox";
             this.FilenameTextBox.ReadOnly = true;
-            this.FilenameTextBox.Size = new System.Drawing.Size(341, 23);
+            this.FilenameTextBox.Size = new System.Drawing.Size(725, 23);
             this.FilenameTextBox.TabIndex = 3;
+            // 
+            // HandleGroupBox
+            // 
+            this.HandleGroupBox.Controls.Add(this.HandleRuleRichTextBox);
+            this.HandleGroupBox.Location = new System.Drawing.Point(12, 102);
+            this.HandleGroupBox.Name = "HandleGroupBox";
+            this.HandleGroupBox.Size = new System.Drawing.Size(402, 425);
+            this.HandleGroupBox.TabIndex = 1;
+            this.HandleGroupBox.TabStop = false;
+            this.HandleGroupBox.Text = "Proxy Rule IPs";
+            // 
+            // HandleRuleRichTextBox
+            // 
+            this.HandleRuleRichTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.HandleRuleRichTextBox.DetectUrls = false;
+            this.HandleRuleRichTextBox.Font = new System.Drawing.Font("Consolas", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.HandleRuleRichTextBox.Location = new System.Drawing.Point(12, 25);
+            this.HandleRuleRichTextBox.Name = "HandleRuleRichTextBox";
+            this.HandleRuleRichTextBox.Size = new System.Drawing.Size(378, 385);
+            this.HandleRuleRichTextBox.TabIndex = 0;
+            this.HandleRuleRichTextBox.Text = "";
+            this.HandleRuleRichTextBox.WordWrap = false;
+            // 
+            // BypassGroupBox
+            // 
+            this.BypassGroupBox.Controls.Add(this.BypassRuleRichTextBox);
+            this.BypassGroupBox.Location = new System.Drawing.Point(426, 102);
+            this.BypassGroupBox.Name = "BypassGroupBox";
+            this.BypassGroupBox.Size = new System.Drawing.Size(402, 425);
+            this.BypassGroupBox.TabIndex = 2;
+            this.BypassGroupBox.TabStop = false;
+            this.BypassGroupBox.Text = "Bypass Rule IPs";
+            // 
+            // BypassRuleRichTextBox
+            // 
+            this.BypassRuleRichTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.BypassRuleRichTextBox.DetectUrls = false;
+            this.BypassRuleRichTextBox.Font = new System.Drawing.Font("Consolas", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.BypassRuleRichTextBox.Location = new System.Drawing.Point(12, 25);
+            this.BypassRuleRichTextBox.Name = "BypassRuleRichTextBox";
+            this.BypassRuleRichTextBox.Size = new System.Drawing.Size(378, 385);
+            this.BypassRuleRichTextBox.TabIndex = 0;
+            this.BypassRuleRichTextBox.Text = "";
+            this.BypassRuleRichTextBox.WordWrap = false;
             // 
             // ControlButton
             // 
-            this.ControlButton.Location = new System.Drawing.Point(424, 40);
+            this.ControlButton.Location = new System.Drawing.Point(636, 538);
             this.ControlButton.Name = "ControlButton";
-            this.ControlButton.Size = new System.Drawing.Size(75, 23);
-            this.ControlButton.TabIndex = 4;
+            this.ControlButton.Size = new System.Drawing.Size(90, 28);
+            this.ControlButton.TabIndex = 3;
             this.ControlButton.Text = "Save";
             this.ControlButton.UseVisualStyleBackColor = true;
             this.ControlButton.Click += new System.EventHandler(this.ControlButton_Click);
             // 
-            // NamePanel
+            // CancelButtonControl
             // 
-            this.NamePanel.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.NamePanel.Controls.Add(this.RemarkLabel);
-            this.NamePanel.Controls.Add(this.RemarkTextBox);
-            this.NamePanel.Controls.Add(this.FilenameLabel);
-            this.NamePanel.Controls.Add(this.FilenameTextBox);
-            this.NamePanel.Controls.Add(this.ControlButton);
-            this.NamePanel.Location = new System.Drawing.Point(208, 3);
-            this.NamePanel.Name = "NamePanel";
-            this.NamePanel.Size = new System.Drawing.Size(512, 72);
-            this.NamePanel.TabIndex = 0;
-            // 
-            // ConfigurationLayoutPanel
-            // 
-            this.ConfigurationLayoutPanel.ColumnCount = 1;
-            this.ConfigurationLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.ConfigurationLayoutPanel.Controls.Add(this.NamePanel, 0, 0);
-            this.ConfigurationLayoutPanel.Controls.Add(this.OptionsGroupBox, 0, 1);
-            this.ConfigurationLayoutPanel.Controls.Add(this.RuleTableLayoutPanel, 0, 2);
-            this.ConfigurationLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ConfigurationLayoutPanel.Location = new System.Drawing.Point(3, 19);
-            this.ConfigurationLayoutPanel.Name = "ConfigurationLayoutPanel";
-            this.ConfigurationLayoutPanel.RowCount = 3;
-            this.ConfigurationLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.ConfigurationLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.ConfigurationLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.ConfigurationLayoutPanel.Size = new System.Drawing.Size(928, 639);
-            this.ConfigurationLayoutPanel.TabIndex = 0;
-            // 
-            // ConfigurationGroupBox
-            // 
-            this.ConfigurationGroupBox.Controls.Add(this.ConfigurationLayoutPanel);
-            this.ConfigurationGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ConfigurationGroupBox.Location = new System.Drawing.Point(0, 0);
-            this.ConfigurationGroupBox.Name = "ConfigurationGroupBox";
-            this.ConfigurationGroupBox.Size = new System.Drawing.Size(934, 661);
-            this.ConfigurationGroupBox.TabIndex = 1;
-            this.ConfigurationGroupBox.TabStop = false;
-            this.ConfigurationGroupBox.Text = "Configuration";
+            this.CancelButtonControl.Location = new System.Drawing.Point(738, 538);
+            this.CancelButtonControl.Name = "CancelButtonControl";
+            this.CancelButtonControl.Size = new System.Drawing.Size(90, 28);
+            this.CancelButtonControl.TabIndex = 4;
+            this.CancelButtonControl.Text = "Cancel";
+            this.CancelButtonControl.UseVisualStyleBackColor = true;
+            this.CancelButtonControl.Click += new System.EventHandler(this.CancelButton_Click);
             // 
             // RouteForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(934, 661);
+            this.AcceptButton = this.ControlButton;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.CancelButton = this.CancelButtonControl;
+            this.ClientSize = new System.Drawing.Size(840, 580);
             this.Controls.Add(this.ConfigurationGroupBox);
-            this.MinimumSize = new System.Drawing.Size(950, 700);
+            this.Controls.Add(this.HandleGroupBox);
+            this.Controls.Add(this.BypassGroupBox);
+            this.Controls.Add(this.ControlButton);
+            this.Controls.Add(this.CancelButtonControl);
+            this.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
             this.Name = "RouteForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Create Route Table Rule";
             this.Load += new System.EventHandler(this.Route_Load);
-            this.HandleTableLayoutPanel.ResumeLayout(false);
-            this.HandleTableLayoutPanel.PerformLayout();
-            this.HandleContentTableLayoutPanel.ResumeLayout(false);
-            this.BypassTableLayoutPanel.ResumeLayout(false);
-            this.BypassTableLayoutPanel.PerformLayout();
-            this.BypassContentTableLayoutPanel.ResumeLayout(false);
-            this.RuleTableLayoutPanel.ResumeLayout(false);
-            this.OptionsGroupBox.ResumeLayout(false);
-            this.OptionsGroupBox.PerformLayout();
-            this.NamePanel.ResumeLayout(false);
-            this.NamePanel.PerformLayout();
-            this.ConfigurationLayoutPanel.ResumeLayout(false);
             this.ConfigurationGroupBox.ResumeLayout(false);
+            this.ConfigurationGroupBox.PerformLayout();
+            this.HandleGroupBox.ResumeLayout(false);
+            this.BypassGroupBox.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.TableLayoutPanel HandleTableLayoutPanel;
-        private System.Windows.Forms.Label HandleLabel;
-        private System.Windows.Forms.TableLayoutPanel HandleContentTableLayoutPanel;
-        private System.Windows.Forms.RichTextBox HandleRuleRichTextBox;
-        private System.Windows.Forms.TableLayoutPanel BypassTableLayoutPanel;
-        private System.Windows.Forms.Label BypassLabel;
-        private System.Windows.Forms.TableLayoutPanel BypassContentTableLayoutPanel;
-        private System.Windows.Forms.RichTextBox BypassRuleRichTextBox;
-        private SyncGlobalCheckBox HandleDNSCheckBox;
-        private System.Windows.Forms.Label DNSLabel;
-        private System.Windows.Forms.TextBox DNSTextBox;
-        private System.Windows.Forms.TableLayoutPanel RuleTableLayoutPanel;
-        private System.Windows.Forms.GroupBox OptionsGroupBox;
+        private System.Windows.Forms.GroupBox ConfigurationGroupBox;
         private System.Windows.Forms.Label RemarkLabel;
         private System.Windows.Forms.TextBox RemarkTextBox;
         private System.Windows.Forms.Label FilenameLabel;
         private System.Windows.Forms.TextBox FilenameTextBox;
-        private System.Windows.Forms.Panel NamePanel;
-        private System.Windows.Forms.TableLayoutPanel ConfigurationLayoutPanel;
-        private System.Windows.Forms.CheckBox UseCustomDNSCheckBox;
+
+        private System.Windows.Forms.GroupBox HandleGroupBox;
+        private System.Windows.Forms.RichTextBox HandleRuleRichTextBox;
+
+        private System.Windows.Forms.GroupBox BypassGroupBox;
+        private System.Windows.Forms.RichTextBox BypassRuleRichTextBox;
+
         private System.Windows.Forms.Button ControlButton;
-        private System.Windows.Forms.GroupBox ConfigurationGroupBox;
+        private System.Windows.Forms.Button CancelButtonControl;
     }
 }

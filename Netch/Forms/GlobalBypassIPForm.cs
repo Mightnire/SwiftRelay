@@ -58,4 +58,9 @@ public partial class GlobalBypassIPForm : Form
         MessageBoxX.Show(i18N.Translate("Saved"));
         Close();
     }
+
+    private void CancelButton_Click(object sender, EventArgs e)
+    {
+        Close();
+    }
 }

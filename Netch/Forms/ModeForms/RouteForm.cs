@@ -101,4 +101,9 @@ public partial class RouteForm : BindingForm
             FilenameTextBox.Text = FilenameTextBox.Text = ModeEditorUtils.GetCustomModeRelativePath(RemarkTextBox.Text);
         });
     }
+
+    private void CancelButton_Click(object sender, EventArgs e)
+    {
+        Close();
+    }
 }

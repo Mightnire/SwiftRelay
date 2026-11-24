@@ -330,7 +330,9 @@ namespace Netch.Forms.ModeForms
             // 
             // HandleRuleRichTextBox
             // 
+            this.HandleRuleRichTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.HandleRuleRichTextBox.DetectUrls = false;
+            this.HandleRuleRichTextBox.Font = new System.Drawing.Font("Consolas", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.HandleRuleRichTextBox.Location = new System.Drawing.Point(12, 48);
             this.HandleRuleRichTextBox.Name = "HandleRuleRichTextBox";
             this.HandleRuleRichTextBox.Size = new System.Drawing.Size(378, 270);
@@ -372,7 +374,9 @@ namespace Netch.Forms.ModeForms
             // 
             // BypassRuleRichTextBox
             // 
+            this.BypassRuleRichTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.BypassRuleRichTextBox.DetectUrls = false;
+            this.BypassRuleRichTextBox.Font = new System.Drawing.Font("Consolas", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.BypassRuleRichTextBox.Location = new System.Drawing.Point(12, 48);
             this.BypassRuleRichTextBox.Name = "BypassRuleRichTextBox";
             this.BypassRuleRichTextBox.Size = new System.Drawing.Size(378, 270);
