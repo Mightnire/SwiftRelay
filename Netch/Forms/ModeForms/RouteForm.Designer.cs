@@ -38,9 +38,9 @@ namespace Netch.Forms.ModeForms
             this.FilenameLabel = new System.Windows.Forms.Label();
             this.FilenameTextBox = new System.Windows.Forms.TextBox();
             this.HandleGroupBox = new System.Windows.Forms.GroupBox();
-            this.HandleRuleRichTextBox = new System.Windows.Forms.RichTextBox();
+            this.HandleRuleRichTextBox = new System.Windows.Forms.TextBox();
             this.BypassGroupBox = new System.Windows.Forms.GroupBox();
-            this.BypassRuleRichTextBox = new System.Windows.Forms.RichTextBox();
+            this.BypassRuleRichTextBox = new System.Windows.Forms.TextBox();
             this.ControlButton = new System.Windows.Forms.Button();
             this.CancelButtonControl = new System.Windows.Forms.Button();
             this.ConfigurationGroupBox.SuspendLayout();
@@ -107,14 +107,14 @@ namespace Netch.Forms.ModeForms
             // 
             // HandleRuleRichTextBox
             // 
-            this.HandleRuleRichTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.HandleRuleRichTextBox.DetectUrls = false;
+            this.HandleRuleRichTextBox.AcceptsReturn = true;
             this.HandleRuleRichTextBox.Font = new System.Drawing.Font("Consolas", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.HandleRuleRichTextBox.Location = new System.Drawing.Point(12, 25);
+            this.HandleRuleRichTextBox.Multiline = true;
             this.HandleRuleRichTextBox.Name = "HandleRuleRichTextBox";
+            this.HandleRuleRichTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.HandleRuleRichTextBox.Size = new System.Drawing.Size(378, 385);
             this.HandleRuleRichTextBox.TabIndex = 0;
-            this.HandleRuleRichTextBox.Text = "";
             this.HandleRuleRichTextBox.WordWrap = false;
             // 
             // BypassGroupBox
@@ -129,14 +129,14 @@ namespace Netch.Forms.ModeForms
             // 
             // BypassRuleRichTextBox
             // 
-            this.BypassRuleRichTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.BypassRuleRichTextBox.DetectUrls = false;
+            this.BypassRuleRichTextBox.AcceptsReturn = true;
             this.BypassRuleRichTextBox.Font = new System.Drawing.Font("Consolas", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.BypassRuleRichTextBox.Location = new System.Drawing.Point(12, 25);
+            this.BypassRuleRichTextBox.Multiline = true;
             this.BypassRuleRichTextBox.Name = "BypassRuleRichTextBox";
+            this.BypassRuleRichTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.BypassRuleRichTextBox.Size = new System.Drawing.Size(378, 385);
             this.BypassRuleRichTextBox.TabIndex = 0;
-            this.BypassRuleRichTextBox.Text = "";
             this.BypassRuleRichTextBox.WordWrap = false;
             // 
             // ControlButton
@@ -161,7 +161,6 @@ namespace Netch.Forms.ModeForms
             // 
             // RouteForm
             // 
-            this.AcceptButton = this.ControlButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.CancelButton = this.CancelButtonControl;
@@ -195,10 +194,10 @@ namespace Netch.Forms.ModeForms
         private System.Windows.Forms.TextBox FilenameTextBox;
 
         private System.Windows.Forms.GroupBox HandleGroupBox;
-        private System.Windows.Forms.RichTextBox HandleRuleRichTextBox;
+        private System.Windows.Forms.TextBox HandleRuleRichTextBox;
 
         private System.Windows.Forms.GroupBox BypassGroupBox;
-        private System.Windows.Forms.RichTextBox BypassRuleRichTextBox;
+        private System.Windows.Forms.TextBox BypassRuleRichTextBox;
 
         private System.Windows.Forms.Button ControlButton;
         private System.Windows.Forms.Button CancelButtonControl;

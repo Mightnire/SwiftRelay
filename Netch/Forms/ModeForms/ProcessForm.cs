@@ -86,7 +86,7 @@ public partial class ProcessForm : BindingForm
 
     private void SelectButton_Click(object sender, EventArgs e)
     {
-        RichTextBox ruleRichTextBox;
+        TextBox ruleRichTextBox;
         if (sender == HandleSelectButton)
             ruleRichTextBox = HandleRuleRichTextBox;
         else if (sender == BypassSelectButton)
@@ -163,7 +163,7 @@ public partial class ProcessForm : BindingForm
 
     private void ScanButton_Click(object sender, EventArgs e)
     {
-        RichTextBox ruleRichTextBox;
+        TextBox ruleRichTextBox;
         if (sender == HandleScanButton)
             ruleRichTextBox = HandleRuleRichTextBox;
         else if (sender == BypassScanButton)
