@@ -167,8 +167,6 @@ namespace Netch.Forms.ModeForms
             // 
             this.HandleDNSCheckBox.AutoCheck = false;
             this.HandleDNSCheckBox.AutoSize = true;
-            this.HandleDNSCheckBox.BackColor = System.Drawing.Color.Yellow;
-            this.HandleDNSCheckBox.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point);
             this.HandleDNSCheckBox.GlobalValue = false;
             this.HandleDNSCheckBox.Location = new System.Drawing.Point(8, 24);
             this.HandleDNSCheckBox.Name = "HandleDNSCheckBox";

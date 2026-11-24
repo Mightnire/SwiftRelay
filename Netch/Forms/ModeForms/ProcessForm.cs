@@ -215,4 +215,9 @@ public partial class ProcessForm : BindingForm
         else
             MessageBoxX.Show("Fine");
     }
+
+    private void CancelButton_Click(object sender, EventArgs e)
+    {
+        Close();
+    }
 }

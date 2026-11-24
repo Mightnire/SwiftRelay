@@ -5,6 +5,7 @@ public class SyncGlobalCheckBox : CheckBox
     public SyncGlobalCheckBox()
     {
         AutoCheck = false;
+        UseVisualStyleBackColor = true;
         OnSyncGlobalChanged();
     }
 
@@ -73,15 +74,8 @@ public class SyncGlobalCheckBox : CheckBox
 
     private void OnSyncGlobalChanged()
     {
-        if (_syncGlobal)
-        {
-            Font = new Font(Font, FontStyle.Regular);
-            BackColor = SystemColors.Control;
-        }
-        else
-        {
-            Font = new Font(Font, FontStyle.Bold | FontStyle.Italic);
-            BackColor = Color.Yellow;
-        }
+        Font = new Font(Font, FontStyle.Regular);
+        BackColor = Color.Transparent;
+        UseVisualStyleBackColor = true;
     }
 }
