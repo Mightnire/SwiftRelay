@@ -18,12 +18,18 @@ public static class ServerHelper
 
     public static IServerUtil GetUtilByTypeName(string typeName)
     {
-        return ServerUtilDictionary.GetValueOrDefault(typeName) ?? throw new NotSupportedException("Specified server type is not supported.");
+        var util = ServerUtilDictionary.Values.FirstOrDefault(i =>
+            i.TypeName.Equals(typeName, StringComparison.OrdinalIgnoreCase) ||
+            i.FullName.Equals(typeName, StringComparison.OrdinalIgnoreCase) ||
+            i.ShortName.Equals(typeName, StringComparison.OrdinalIgnoreCase) ||
+            (typeName.Equals("Socks5", StringComparison.OrdinalIgnoreCase) && i.TypeName.Equals("SOCKS", StringComparison.OrdinalIgnoreCase)));
+
+        return util ?? throw new NotSupportedException($"Specified server type '{typeName}' is not supported.");
     }
 
     public static IServerUtil? GetUtilByUriScheme(string scheme)
     {
-        return ServerUtilDictionary.Values.SingleOrDefault(i => i.UriScheme.Any(s => s.Equals(scheme)));
+        return ServerUtilDictionary.Values.FirstOrDefault(i => i.UriScheme.Any(s => s.Equals(scheme, StringComparison.OrdinalIgnoreCase)));
     }
 
     public static Type GetTypeByTypeName(string typeName)
