@@ -225,13 +225,41 @@ public abstract class ServerForm : Form
 
     private void ControlButton_Click(object sender, EventArgs e)
     {
+        // Auto-split host:port if user pasted something like 1.2.3.4:1080 into Address
+        var addrText = AddressTextBox.Text.Trim();
+        if (!addrText.StartsWith("[") && addrText.Contains(':') && addrText.IndexOf(':') == addrText.LastIndexOf(':'))
+        {
+            var parts = addrText.Split(':');
+            if (ushort.TryParse(parts[1], out var parsedPort) && parsedPort > 0)
+            {
+                AddressTextBox.Text = parts[0].Trim();
+                PortTextBox.Text = parts[1].Trim();
+            }
+        }
+
+        if (string.IsNullOrWhiteSpace(AddressTextBox.Text))
+        {
+            MessageBoxX.Show(i18N.Translate("Please enter a server address"));
+            AddressTextBox.Focus();
+            return;
+        }
+
+        if (!ushort.TryParse(PortTextBox.Text, out var port) || port == 0)
+        {
+            MessageBoxX.Show(i18N.Translate("Please enter a valid port (1-65535)"));
+            PortTextBox.Focus();
+            return;
+        }
+
         Utils.Utils.ComponentIterator(this, component => Utils.Utils.ChangeControlForeColor(component, Color.Black));
 
         var flag = true;
         foreach (var pair in _checkActions.Where(pair => !pair.Value.Invoke(pair.Key.Text)))
         {
             Utils.Utils.ChangeControlForeColor(pair.Key, Color.Red);
+            pair.Key.Focus();
             flag = false;
+            break;
         }
 
         if (!flag)

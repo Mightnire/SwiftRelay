@@ -98,9 +98,10 @@
   <Target Condition="'$(PublishSingleFile)' == 'true'" AfterTargets="_ComputeFilesToBundle" Name="RemoveDupeAssemblies">
     <ItemGroup>
       <_FilesToBundle Remove="$(PkgMicrosoft_Diagnostics_Tracing_TraceEvent)\build\native\x86\**" />
-      <_FilesToBundle Remove="**\microsoft.windowsdesktop.app.runtime.win-x64\**" Condition="'$(SelfContained)' == 'false'" />
-      <_FilesToBundle Remove="**\microsoft.netcore.app.runtime.win-x64\**" Condition="'$(SelfContained)' == 'false'" />
-      <_FilesToBundle Remove="**\*.resources.dll" Condition="'$(SelfContained)' == 'false'" />
+      <_FilesToBundle Remove="@(_FilesToBundle)" Condition="'$(SelfContained)' == 'false' and $([System.String]::Copy('%(_FilesToBundle.Identity)').Contains('microsoft.windowsdesktop.app.runtime.win-x64'))" />
+      <_FilesToBundle Remove="@(_FilesToBundle)" Condition="'$(SelfContained)' == 'false' and $([System.String]::Copy('%(_FilesToBundle.Identity)').Contains('microsoft.netcore.app.runtime.win-x64'))" />
+      <_FilesToBundle Remove="@(_FilesToBundle)" Condition="'$(SelfContained)' == 'false' and $([System.String]::Copy('%(_FilesToBundle.Identity)').EndsWith('.resources.dll'))" />
+      <_FilesToBundle Remove="@(_FilesToBundle)" Condition="'$(SelfContained)' == 'false' and '%(_FilesToBundle.Culture)' != ''" />
     </ItemGroup>
   </Target>
 

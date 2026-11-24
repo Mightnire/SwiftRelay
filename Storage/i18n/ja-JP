@@ -152,6 +152,8 @@
 
     "{0} won't get developers' support, Please do not report any issues or seek help from developers.": "{0} は開発者のサポート対象外です。",
     "No Support": "サポート対象外",
+    "Please enter a server address": "サーバーアドレスを入力してください",
+    "Please enter a valid port (1-65535)": "有効なポート番号を入力してください (1-65535)",
     "System": "システムに従う",
     "LanguageName": "日本語"
 }

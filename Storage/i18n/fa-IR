@@ -152,6 +152,8 @@
 
     "{0} won't get developers' support, Please do not report any issues or seek help from developers.": "{0} مورد پشتیبانی توسعه‌دهندگان قرار نمی‌گیرد.",
     "No Support": "پشتیبانی نمی‌شود",
+    "Please enter a server address": "لطفاً آدرس سرور را وارد کنید",
+    "Please enter a valid port (1-65535)": "لطفاً یک پورت معتبر وارد کنید (1-65535)",
     "System": "سیستم",
     "LanguageName": "فارسی"
 }

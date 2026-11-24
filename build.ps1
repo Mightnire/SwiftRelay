@@ -89,10 +89,17 @@ dotnet publish `
 	'.\Netch\Netch.csproj'
 if ( -Not $? ) { exit $lastExitCode }
 
-if (Test-Path "$IntermediateOutput\SwiftRelay.exe") {
-	cp -Force "$IntermediateOutput\SwiftRelay.exe" $OutputPath
-} else {
-	cp -Force "$IntermediateOutput\Netch.exe" $OutputPath
+$TargetExe = if (Test-Path "$IntermediateOutput\SwiftRelay.exe") { "$IntermediateOutput\SwiftRelay.exe" } else { "$IntermediateOutput\Netch.exe" }
+$DestExe = Join-Path $OutputPath (Split-Path $TargetExe -Leaf)
+try {
+    cp -Force $TargetExe $OutputPath -ErrorAction Stop
+} catch {
+    try {
+        Move-Item -LiteralPath $DestExe -Destination ($DestExe + '.old.' + (Get-Random)) -Force -ErrorAction SilentlyContinue
+        cp -Force $TargetExe $OutputPath
+    } catch {
+        Write-Warning "Could not copy $TargetExe to ${OutputPath}: $_"
+    }
 }
 
 if ( -Not ( Test-Path ".\Redirector\Redirector.bin" ) -and -Not ( Test-Path ".\Redirector\bin\$Configuration\Redirector.bin" ) ) {

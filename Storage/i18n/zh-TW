@@ -177,6 +177,8 @@
     "Delete Selected": "刪除選取項目",
     "OK": "確定",
     "Cancel": "取消",
+    "Please enter a server address": "請輸入伺服器位址",
+    "Please enter a valid port (1-65535)": "請輸入有效的埠號 (1-65535)",
     "Status": "狀態",
     "Terminating": "結束中",
     "System": "跟隨系統",

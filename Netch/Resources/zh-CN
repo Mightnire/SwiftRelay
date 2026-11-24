@@ -177,6 +177,8 @@
     "Delete Selected": "删除选中",
     "OK": "确定",
     "Cancel": "取消",
+    "Please enter a server address": "请输入服务器地址",
+    "Please enter a valid port (1-65535)": "请输入有效的端口号 (1-65535)",
     "Status": "状态",
     "Terminating": "退出中",
     "System": "跟随系统",
