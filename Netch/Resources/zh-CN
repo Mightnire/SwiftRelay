@@ -176,5 +176,7 @@
     "Please select an IP": "请先选择要删除的 IP 地址",
     "Delete Selected": "删除选中",
     "OK": "确定",
-    "Cancel": "取消"
+    "Cancel": "取消",
+    "Status": "状态",
+    "Terminating": "退出中"
 }
