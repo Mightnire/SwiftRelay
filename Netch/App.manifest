@@ -9,7 +9,8 @@
     </security>
   </trustInfo>
   <asmv3:application>
-    <asmv3:windowsSettings xmlns="http://schemas.microsoft.com/SMI/2005/WindowsSettings">
+    <asmv3:windowsSettings>
+      <gdiScaling xmlns="http://schemas.microsoft.com/SMI/2017/WindowsSettings">true</gdiScaling>
     </asmv3:windowsSettings>
   </asmv3:application>
 

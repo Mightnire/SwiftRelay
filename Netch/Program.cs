@@ -30,6 +30,8 @@ public static class Program
     [STAThread]
     public static void Main(string[] args)
     {
+        Application.SetHighDpiMode(HighDpiMode.DpiUnawareGdiScaled);
+
         // handle arguments
         if (args.Contains(Constants.Parameter.ForceUpdate))
             Flags.AlwaysShowNewVersionFound = true;

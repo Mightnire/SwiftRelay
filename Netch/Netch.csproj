@@ -10,6 +10,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <ApplicationManifest>App.manifest</ApplicationManifest>
+    <ApplicationHighDpiMode>DpiUnawareGdiScaled</ApplicationHighDpiMode>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
     <ApplicationIcon>Resources\SwiftRelay.ico</ApplicationIcon>
