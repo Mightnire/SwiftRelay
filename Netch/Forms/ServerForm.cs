@@ -10,24 +10,40 @@ namespace Netch.Forms;
 [Fody.ConfigureAwait(true)]
 public abstract class ServerForm : Form
 {
-    private const int ControlLineHeight = 28;
-    private const int InputBoxWidth = 294;
+    private const int MarginX = 14;
+    private const int MarginY = 12;
+    private const int GroupBoxWidth = 442;
+    private const int LabelStartX = 18;
+    private const int InputStartX = 105;
+    private const int StandardInputWidth = 320;
+    private const int AddressWidth = 235;
+    private const int ColonGap = 4;
+    private const int ColonWidth = 12;
+    private const int PortWidth = 65;
+    private const int StartY = 28;
+    private const int RowSpacing = 36;
+    private const int InputHeight = 23;
+    private const int GroupBoxBottomPadding = 18;
+    private const int ButtonWidth = 84;
+    private const int ButtonHeight = 28;
+    private const int ButtonSpacingY = 12;
+    private const int ButtonGap = 8;
 
     private readonly Dictionary<Control, Func<string, bool>> _checkActions = new();
-
     private readonly Dictionary<Control, Action<object>> _saveActions = new();
-
-    private int _controlLines = 2;
-    private Label AddressLabel;
-    protected TextBox AddressTextBox;
+    private readonly List<(Label Label, Control Input, Func<bool> IsVisible)> _dynamicRows = new();
 
     private readonly IContainer components = null;
 
     private GroupBox ConfigurationGroupBox;
-    private Label PortLabel;
-    private TextBox PortTextBox;
     private Label RemarkLabel;
     protected TextBox RemarkTextBox;
+    private Label AddressLabel;
+    protected TextBox AddressTextBox;
+    private Label PortLabel;
+    private TextBox PortTextBox;
+    private Button ControlButton;
+    private Button CancelButtonControl;
 
     protected ServerForm()
     {
@@ -36,7 +52,7 @@ public abstract class ServerForm : Form
         _checkActions.Add(RemarkTextBox, s => true);
         _saveActions.Add(RemarkTextBox, s => Server.Remark = (string)s);
 
-        _checkActions.Add(AddressTextBox, s => s != string.Empty);
+        _checkActions.Add(AddressTextBox, s => !string.IsNullOrWhiteSpace(s));
         _saveActions.Add(AddressTextBox, s => Server.Hostname = (string)s);
 
         _checkActions.Add(PortTextBox, s => ushort.TryParse(s, out var port) && port != 0);
@@ -65,122 +81,146 @@ public abstract class ServerForm : Form
 
         RemarkTextBox.Text = Server.Remark;
         AddressTextBox.Text = Server.Hostname;
-        PortTextBox.Text = Server.Port.ToString();
+        PortTextBox.Text = Server.Port == 0 ? string.Empty : Server.Port.ToString();
 
-        AddSaveButton();
+        RelayoutForm();
         i18N.TranslateForm(this);
 
         ConfigurationGroupBox.Enabled = !Server.IsInGroup();
-
-        ConfigurationGroupBox.ResumeLayout(false);
-        ConfigurationGroupBox.PerformLayout();
-        ResumeLayout(false);
-        PerformLayout();
+        ControlButton.Enabled = !Server.IsInGroup();
     }
 
-    protected (Label,TextBox) CreateTextBox(string name,
+    public void RelayoutForm()
+    {
+        SuspendLayout();
+        ConfigurationGroupBox.SuspendLayout();
+
+        int currentY = StartY;
+
+        // Row 0: Remark
+        RemarkLabel.Location = new Point(LabelStartX, currentY + 4);
+        RemarkTextBox.Location = new Point(InputStartX, currentY);
+        RemarkTextBox.Size = new Size(StandardInputWidth, InputHeight);
+        currentY += RowSpacing;
+
+        // Row 1: Address & Port
+        AddressLabel.Location = new Point(LabelStartX, currentY + 4);
+        AddressTextBox.Location = new Point(InputStartX, currentY);
+        AddressTextBox.Size = new Size(AddressWidth, InputHeight);
+
+        PortLabel.Location = new Point(InputStartX + AddressWidth + ColonGap, currentY + 2);
+        PortLabel.Size = new Size(ColonWidth, 20);
+
+        PortTextBox.Location = new Point(InputStartX + AddressWidth + ColonGap + ColonWidth + ColonGap, currentY);
+        PortTextBox.Size = new Size(PortWidth, InputHeight);
+        currentY += RowSpacing;
+
+        // Dynamic rows (Username, Password, Version, RemoteHostname, etc.)
+        foreach (var (label, input, isVisible) in _dynamicRows)
+        {
+            if (isVisible != null && !isVisible())
+            {
+                label.Visible = false;
+                input.Visible = false;
+                continue;
+            }
+
+            label.Visible = true;
+            input.Visible = true;
+            label.Location = new Point(LabelStartX, currentY + 4);
+            input.Location = new Point(InputStartX, currentY);
+            input.Size = new Size(StandardInputWidth, InputHeight);
+            currentY += RowSpacing;
+        }
+
+        int groupBoxHeight = currentY - RowSpacing + InputHeight + GroupBoxBottomPadding;
+        ConfigurationGroupBox.Location = new Point(MarginX, MarginY);
+        ConfigurationGroupBox.Size = new Size(GroupBoxWidth, groupBoxHeight);
+
+        int buttonY = ConfigurationGroupBox.Bottom + ButtonSpacingY;
+        CancelButtonControl.Location = new Point(ConfigurationGroupBox.Right - ButtonWidth, buttonY);
+        ControlButton.Location = new Point(CancelButtonControl.Left - ButtonGap - ButtonWidth, buttonY);
+
+        ClientSize = new Size(ConfigurationGroupBox.Right + MarginX, CancelButtonControl.Bottom + MarginY);
+
+        ConfigurationGroupBox.ResumeLayout(true);
+        ResumeLayout(true);
+    }
+
+    protected (Label, TextBox) CreateTextBox(string name,
         string remark,
         Func<string, bool> check,
         Action<string> save,
         string value,
-        int width = InputBoxWidth)
+        int width = StandardInputWidth,
+        Func<bool> isVisible = null)
     {
-        _controlLines++;
-
         var textBox = new TextBox
         {
-            Location = new Point(120, ControlLineHeight * _controlLines),
             Name = $"{name}TextBox",
-            Size = new Size(width, 23),
-            TextAlign = HorizontalAlignment.Center,
+            Size = new Size(width, InputHeight),
+            TextAlign = HorizontalAlignment.Left,
             Text = value
         };
 
         _checkActions.Add(textBox, check);
         _saveActions.Add(textBox, o => save.Invoke((string)o));
+
         var label = new Label
         {
             AutoSize = true,
-            Location = new Point(10, ControlLineHeight * _controlLines),
             Name = $"{name}Label",
-            Size = new Size(56, 17),
             Text = remark
         };
 
-        ConfigurationGroupBox.Controls.AddRange(new Control[]
-        {
-            label,
-            textBox
-        });
+        ConfigurationGroupBox.Controls.Add(label);
+        ConfigurationGroupBox.Controls.Add(textBox);
+
+        _dynamicRows.Add((label, textBox, isVisible));
         return (label, textBox);
     }
 
-    protected void CreateComboBox(string name, string remark, List<string> values, Action<string> save, string value, int width = InputBoxWidth)
+    protected void CreateComboBox(string name, string remark, List<string> values, Action<string> save, string value, int width = StandardInputWidth, Func<bool> isVisible = null)
     {
-        _controlLines++;
-
         var comboBox = new ComboBox
         {
-            Location = new Point(120, ControlLineHeight * _controlLines),
             Name = $"{name}ComboBox",
-            Size = new Size(width, 23),
-            DrawMode = DrawMode.OwnerDrawFixed,
+            Size = new Size(width, InputHeight),
             DropDownStyle = ComboBoxStyle.DropDownList,
+            FlatStyle = FlatStyle.System,
             FormattingEnabled = true
         };
 
         comboBox.Items.AddRange(values.ToArray());
         comboBox.SelectedIndex = values.IndexOf(value);
-        comboBox.DrawItem += Utils.Utils.DrawCenterComboBox;
         _saveActions.Add(comboBox, o => save.Invoke((string)o));
-        ConfigurationGroupBox.Controls.AddRange(new Control[]
+
+        var label = new Label
         {
-            comboBox,
-            new Label
-            {
-                AutoSize = true,
-                Location = new Point(10, ControlLineHeight * _controlLines),
-                Name = $"{name}Label",
-                Size = new Size(56, 17),
-                Text = remark
-            }
-        });
+            AutoSize = true,
+            Name = $"{name}Label",
+            Text = remark
+        };
+
+        ConfigurationGroupBox.Controls.Add(label);
+        ConfigurationGroupBox.Controls.Add(comboBox);
+
+        _dynamicRows.Add((label, comboBox, isVisible));
     }
 
-    protected void CreateCheckBox(string name, string remark, Action<bool> save, bool value)
+    protected void CreateCheckBox(string name, string remark, Action<bool> save, bool value, Func<bool> isVisible = null)
     {
-        _controlLines++;
-
         var checkBox = new CheckBox
         {
             AutoSize = true,
-            Location = new Point(120, ControlLineHeight * _controlLines),
             Name = $"{name}CheckBox",
             Checked = value,
             Text = remark
         };
 
         _saveActions.Add(checkBox, o => save.Invoke((bool)o));
-        ConfigurationGroupBox.Controls.AddRange(new Control[]
-        {
-            checkBox
-        });
-    }
-
-    private void AddSaveButton()
-    {
-        _controlLines++;
-        var control = new Button
-        {
-            Location = new Point(340, _controlLines * ControlLineHeight + 10),
-            Name = "ControlButton",
-            Size = new Size(75, 23),
-            Text = "Save",
-            UseVisualStyleBackColor = true
-        };
-
-        control.Click += ControlButton_Click;
-        ConfigurationGroupBox.Controls.Add(control);
+        ConfigurationGroupBox.Controls.Add(checkBox);
+        _dynamicRows.Add((new Label { Visible = false }, checkBox, isVisible));
     }
 
     private void ControlButton_Click(object sender, EventArgs e)
@@ -233,93 +273,128 @@ public abstract class ServerForm : Form
         RemarkTextBox = new TextBox();
         RemarkLabel = new Label();
         PortLabel = new Label();
+        ControlButton = new Button();
+        CancelButtonControl = new Button();
+
         ConfigurationGroupBox.SuspendLayout();
         SuspendLayout();
+
         // 
         // ConfigurationGroupBox
         // 
-        ConfigurationGroupBox.AutoSize = true;
-        ConfigurationGroupBox.AutoSizeMode = AutoSizeMode.GrowAndShrink;
         ConfigurationGroupBox.Controls.Add(AddressLabel);
         ConfigurationGroupBox.Controls.Add(PortTextBox);
         ConfigurationGroupBox.Controls.Add(AddressTextBox);
         ConfigurationGroupBox.Controls.Add(RemarkTextBox);
         ConfigurationGroupBox.Controls.Add(RemarkLabel);
         ConfigurationGroupBox.Controls.Add(PortLabel);
-        ConfigurationGroupBox.Dock = DockStyle.Fill;
-        ConfigurationGroupBox.Location = new Point(5, 5);
+        ConfigurationGroupBox.Location = new Point(MarginX, MarginY);
         ConfigurationGroupBox.Name = "ConfigurationGroupBox";
-        ConfigurationGroupBox.Size = new Size(434, 127);
+        ConfigurationGroupBox.Size = new Size(GroupBoxWidth, 213);
         ConfigurationGroupBox.TabIndex = 0;
         ConfigurationGroupBox.TabStop = false;
         ConfigurationGroupBox.Text = "Configuration";
-        // 
-        // AddressLabel
-        // 
-        AddressLabel.AutoSize = true;
-        AddressLabel.Location = new Point(10, ControlLineHeight * 2);
-        AddressLabel.Name = "AddressLabel";
-        AddressLabel.Size = new Size(56, 17);
-        AddressLabel.TabIndex = 2;
-        AddressLabel.Text = "Address";
-        // 
-        // PortTextBox
-        // 
-        PortTextBox.Location = new Point(358, ControlLineHeight * 2);
-        PortTextBox.Name = "PortTextBox";
-        PortTextBox.Size = new Size(56, 23);
-        PortTextBox.TabIndex = 5;
-        PortTextBox.TextAlign = HorizontalAlignment.Center;
-        // 
-        // AddressTextBox
-        // 
-        AddressTextBox.Location = new Point(120, ControlLineHeight * 2);
-        AddressTextBox.Name = "AddressTextBox";
-        AddressTextBox.Size = new Size(232, 23);
-        AddressTextBox.TabIndex = 3;
-        AddressTextBox.TextAlign = HorizontalAlignment.Center;
-        // 
-        // RemarkTextBox
-        // 
-        RemarkTextBox.Location = new Point(120, ControlLineHeight);
-        RemarkTextBox.Name = "RemarkTextBox";
-        RemarkTextBox.Size = new Size(294, 23);
-        RemarkTextBox.TabIndex = 1;
-        RemarkTextBox.TextAlign = HorizontalAlignment.Center;
+
         // 
         // RemarkLabel
         // 
         RemarkLabel.AutoSize = true;
-        RemarkLabel.Location = new Point(10, ControlLineHeight);
+        RemarkLabel.Location = new Point(LabelStartX, StartY + 4);
         RemarkLabel.Name = "RemarkLabel";
         RemarkLabel.Size = new Size(53, 17);
         RemarkLabel.TabIndex = 0;
         RemarkLabel.Text = "Remark";
+
+        // 
+        // RemarkTextBox
+        // 
+        RemarkTextBox.Location = new Point(InputStartX, StartY);
+        RemarkTextBox.Name = "RemarkTextBox";
+        RemarkTextBox.Size = new Size(StandardInputWidth, InputHeight);
+        RemarkTextBox.TabIndex = 1;
+        RemarkTextBox.TextAlign = HorizontalAlignment.Left;
+
+        // 
+        // AddressLabel
+        // 
+        AddressLabel.AutoSize = true;
+        AddressLabel.Location = new Point(LabelStartX, StartY + RowSpacing + 4);
+        AddressLabel.Name = "AddressLabel";
+        AddressLabel.Size = new Size(56, 17);
+        AddressLabel.TabIndex = 2;
+        AddressLabel.Text = "Address";
+
+        // 
+        // AddressTextBox
+        // 
+        AddressTextBox.Location = new Point(InputStartX, StartY + RowSpacing);
+        AddressTextBox.Name = "AddressTextBox";
+        AddressTextBox.Size = new Size(AddressWidth, InputHeight);
+        AddressTextBox.TabIndex = 3;
+        AddressTextBox.TextAlign = HorizontalAlignment.Left;
+
         // 
         // PortLabel
         // 
-        PortLabel.AutoSize = true;
-        PortLabel.Location = new Point(351, ControlLineHeight * 2);
+        PortLabel.AutoSize = false;
+        PortLabel.Location = new Point(InputStartX + AddressWidth + ColonGap, StartY + RowSpacing + 2);
         PortLabel.Name = "PortLabel";
-        PortLabel.Size = new Size(11, 17);
+        PortLabel.Size = new Size(ColonWidth, 20);
         PortLabel.TabIndex = 4;
         PortLabel.Text = ":";
+        PortLabel.TextAlign = ContentAlignment.MiddleCenter;
+
+        // 
+        // PortTextBox
+        // 
+        PortTextBox.Location = new Point(InputStartX + AddressWidth + ColonGap + ColonWidth + ColonGap, StartY + RowSpacing);
+        PortTextBox.Name = "PortTextBox";
+        PortTextBox.Size = new Size(PortWidth, InputHeight);
+        PortTextBox.TabIndex = 5;
+        PortTextBox.TextAlign = HorizontalAlignment.Center;
+
+        // 
+        // ControlButton (Save)
+        // 
+        ControlButton.Name = "ControlButton";
+        ControlButton.Size = new Size(ButtonWidth, ButtonHeight);
+        ControlButton.TabIndex = 1;
+        ControlButton.Text = "Save";
+        ControlButton.UseVisualStyleBackColor = true;
+        ControlButton.Click += ControlButton_Click;
+
+        // 
+        // CancelButtonControl (Cancel)
+        // 
+        CancelButtonControl.Name = "CancelButtonControl";
+        CancelButtonControl.Size = new Size(ButtonWidth, ButtonHeight);
+        CancelButtonControl.TabIndex = 2;
+        CancelButtonControl.Text = "Cancel";
+        CancelButtonControl.UseVisualStyleBackColor = true;
+        CancelButtonControl.Click += (s, e) => Close();
+
         // 
         // ServerForm
         // 
+        AcceptButton = ControlButton;
         AutoScaleDimensions = new SizeF(96F, 96F);
         AutoScaleMode = AutoScaleMode.Dpi;
-        AutoSize = true;
-        AutoSizeMode = AutoSizeMode.GrowAndShrink;
-        ClientSize = new Size(444, 137);
+        CancelButton = CancelButtonControl;
+        ClientSize = new Size(470, 279);
         Controls.Add(ConfigurationGroupBox);
-        Font = new Font("微软雅黑", 9F, FontStyle.Regular, GraphicsUnit.Point, 134);
-        FormBorderStyle = FormBorderStyle.FixedSingle;
+        Controls.Add(ControlButton);
+        Controls.Add(CancelButtonControl);
+        Font = new Font("Microsoft YaHei UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+        FormBorderStyle = FormBorderStyle.FixedDialog;
         Icon = Icon.FromHandle(Resources.SwiftRelay.GetHicon());
-        Margin = new Padding(3, 4, 3, 4);
         MaximizeBox = false;
+        MinimizeBox = false;
+        ShowInTaskbar = false;
         Name = "ServerForm";
-        Padding = new Padding(11, 5, 11, 4);
-        StartPosition = FormStartPosition.CenterScreen;
+        StartPosition = FormStartPosition.CenterParent;
+
+        ConfigurationGroupBox.ResumeLayout(false);
+        ConfigurationGroupBox.PerformLayout();
+        ResumeLayout(false);
     }
 }

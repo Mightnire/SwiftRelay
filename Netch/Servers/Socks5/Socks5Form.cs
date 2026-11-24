@@ -6,6 +6,10 @@ namespace Netch.Servers;
 [Fody.ConfigureAwait(true)]
 public class Socks5Form : ServerForm
 {
+    private bool _showRemoteHostname;
+    private readonly Label _remoteHostnameLabel;
+    private readonly TextBox _remoteHostnameTextBox;
+
     public Socks5Form(Socks5Server? server = default)
     {
         server ??= new Socks5Server();
@@ -21,18 +25,17 @@ public class Socks5Form : ServerForm
             "Remote Address",
             s => true,
             s => server.RemoteHostname = s,
-            server.RemoteHostname.ValueOrDefault());
+            server.RemoteHostname.ValueOrDefault(),
+            isVisible: () => _showRemoteHostname);
 
         AddressTextBox.TextChanged += AddressTextBoxOnTextChanged;
         AddressTextBoxOnTextChanged(null!, null!);
     }
 
-    private readonly Label _remoteHostnameLabel;
-    private readonly TextBox _remoteHostnameTextBox;
-
     private void AddressTextBoxOnTextChanged(object? sender, EventArgs e)
     {
-        _remoteHostnameLabel.Visible = _remoteHostnameTextBox.Visible = IsPrivateAddress(AddressTextBox.Text);
+        _showRemoteHostname = IsPrivateAddress(AddressTextBox.Text);
+        RelayoutForm();
     }
 
     private bool IsPrivateAddress(string address)

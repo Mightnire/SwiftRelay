@@ -21,6 +21,7 @@
     <CodeAnalysisTreatWarningsAsErrors>false</CodeAnalysisTreatWarningsAsErrors>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     <TargetFramework>net6.0-windows</TargetFramework>
+    <ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -97,8 +98,9 @@
   <Target Condition="'$(PublishSingleFile)' == 'true'" AfterTargets="_ComputeFilesToBundle" Name="RemoveDupeAssemblies">
     <ItemGroup>
       <_FilesToBundle Remove="$(PkgMicrosoft_Diagnostics_Tracing_TraceEvent)\build\native\x86\**" />
-      <_FilesToBundle Remove="*microsoft.windowsdesktop.app.runtime.win-x64\**" Condition="'$(SelfContained)' == 'false'" />
-      <_FilesToBundle Remove="*microsoft.netcore.app.runtime.win-x64\**" Condition="'$(SelfContained)' == 'false'" />
+      <_FilesToBundle Remove="**\microsoft.windowsdesktop.app.runtime.win-x64\**" Condition="'$(SelfContained)' == 'false'" />
+      <_FilesToBundle Remove="**\microsoft.netcore.app.runtime.win-x64\**" Condition="'$(SelfContained)' == 'false'" />
+      <_FilesToBundle Remove="**\*.resources.dll" Condition="'$(SelfContained)' == 'false'" />
     </ItemGroup>
   </Target>
 
