@@ -151,5 +151,7 @@
     "The {0} port is reserved by system.": "{0} がシステムに予約されました",
 
     "{0} won't get developers' support, Please do not report any issues or seek help from developers.": "{0} は開発者のサポート対象外です。",
-    "No Support": "サポート対象外"
+    "No Support": "サポート対象外",
+    "System": "システムに従う",
+    "LanguageName": "日本語"
 }

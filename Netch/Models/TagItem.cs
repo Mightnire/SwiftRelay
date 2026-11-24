@@ -4,15 +4,21 @@ namespace Netch.Models;
 
 internal class TagItem<T>
 {
-    private readonly string _text;
+    private readonly Func<string> _textFunc;
 
     public TagItem(T value, string text)
     {
-        _text = text;
+        _textFunc = () => i18N.Translate(text);
         Value = value;
     }
 
-    public string Text => i18N.Translate(_text);
+    public TagItem(T value, Func<string> textFunc)
+    {
+        _textFunc = textFunc;
+        Value = value;
+    }
+
+    public string Text => _textFunc();
 
     public T Value { get; }
 }

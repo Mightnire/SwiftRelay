@@ -69,7 +69,7 @@ public partial class SettingForm : BindingForm
             Global.Settings.STUN_Server + ":" + Global.Settings.STUN_Server_Port,
             stuns);
 
-        BindListComboBox(LanguageComboBox, o => Global.Settings.Language = o.ToString(), i18N.GetTranslateList(), Global.Settings.Language);
+        BindListComboBox(LanguageComboBox, o => Global.Settings.Language = o.ToString(), i18N.GetTranslateList(), Global.Settings.Language, i18N.GetLanguageDisplayName);
 
         #endregion
 

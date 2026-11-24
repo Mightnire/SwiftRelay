@@ -52,12 +52,12 @@ public class BindingForm : Form
         _saveActions.Add(control, c => save(((RadioButton)c).Checked));
     }
 
-    protected void BindListComboBox<T>(ComboBox comboBox, Action<T> save, IEnumerable<T> values, T value) where T : notnull
+    protected void BindListComboBox<T>(ComboBox comboBox, Action<T> save, IEnumerable<T> values, T value, Func<T, string>? displayFunc = null) where T : notnull
     {
         if (comboBox.DropDownStyle != ComboBoxStyle.DropDownList)
             throw new ArgumentOutOfRangeException();
 
-        var tagItems = values.Select(o => new TagItem<T>(o, o.ToString()!)).ToArray();
+        var tagItems = values.Select(o => displayFunc != null ? new TagItem<T>(o, () => displayFunc(o)) : new TagItem<T>(o, o.ToString()!)).ToArray();
         comboBox.Items.AddRange(tagItems.Cast<object>().ToArray());
 
         comboBox.ValueMember = nameof(TagItem<T>.Value);

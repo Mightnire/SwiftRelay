@@ -180,9 +180,5 @@
     "Status": "狀態",
     "Terminating": "結束中",
     "System": "跟隨系統",
-    "zh-CN": "簡體中文",
-    "zh-TW": "繁體中文",
-    "en-US": "English",
-    "ja-JP": "日本語",
-    "fa-IR": "波斯語"
+    "LanguageName": "繁體中文"
 }

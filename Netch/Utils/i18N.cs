@@ -109,6 +109,60 @@ public static class i18N
         return translateFile;
     }
 
+    private static readonly Dictionary<string, string> _cachedLanguageNames = new(StringComparer.OrdinalIgnoreCase);
+
+    public static string GetLanguageDisplayName(string langCode)
+    {
+        if (langCode.Equals("System", StringComparison.OrdinalIgnoreCase))
+            return Translate("System");
+
+        if (_cachedLanguageNames.TryGetValue(langCode, out var cached))
+            return cached;
+
+        var name = LoadLanguageName(langCode);
+        _cachedLanguageNames[langCode] = name;
+        return name;
+    }
+
+    private static string LoadLanguageName(string langCode)
+    {
+        try
+        {
+            if (langCode.Equals("en-US", StringComparison.OrdinalIgnoreCase))
+                return "English";
+
+            string? json = null;
+            if (langCode.Equals("zh-CN", StringComparison.OrdinalIgnoreCase))
+            {
+                json = Encoding.UTF8.GetString(Resources.zh_CN);
+            }
+            else
+            {
+                var filePath = Path.Combine("i18n", langCode);
+                if (File.Exists(filePath))
+                    json = File.ReadAllText(filePath);
+            }
+
+            if (!string.IsNullOrEmpty(json))
+            {
+                var dict = JsonSerializer.Deserialize<Dictionary<string, string>>(json);
+                if (dict != null)
+                {
+                    if (dict.TryGetValue("LanguageName", out var langName) && !string.IsNullOrWhiteSpace(langName))
+                        return langName;
+                    if (dict.TryGetValue(langCode, out var codeName) && !string.IsNullOrWhiteSpace(codeName))
+                        return codeName;
+                }
+            }
+
+            return new CultureInfo(langCode).NativeName;
+        }
+        catch
+        {
+            return langCode;
+        }
+    }
+
     public static void TranslateForm(in Control c)
     {
         Utils.ComponentIterator(c,

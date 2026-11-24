@@ -151,5 +151,7 @@
     "The {0} port is reserved by system.": "پورت {0} توسط سیستم رزرو شده است",
 
     "{0} won't get developers' support, Please do not report any issues or seek help from developers.": "{0} مورد پشتیبانی توسعه‌دهندگان قرار نمی‌گیرد.",
-    "No Support": "پشتیبانی نمی‌شود"
+    "No Support": "پشتیبانی نمی‌شود",
+    "System": "سیستم",
+    "LanguageName": "فارسی"
 }
