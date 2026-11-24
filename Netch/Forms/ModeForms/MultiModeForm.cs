@@ -49,9 +49,6 @@ public class MultiModeForm : Form
 
     private void InitializeComponents()
     {
-        AutoScaleDimensions = new SizeF(96F, 96F);
-        AutoScaleMode = AutoScaleMode.Dpi;
-
         Text = i18N.Translate("Multi-Mode Selector");
         Font = new Font("Microsoft YaHei UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
         Size = new Size(820, 560);
