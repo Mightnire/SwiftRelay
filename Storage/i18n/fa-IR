@@ -163,6 +163,8 @@
     "A mode group with the same name already exists. Overwrite?": "گروهی با این نام از قبل وجود دارد. آیا جایگزین شود؟",
     "Save mode group failed": "ذخیره گروه حالت ناموفق بود",
     "Selected: {0} mode(s)": "انتخاب شده: {0} حالت",
+    "Selected: {0} mode(s), {1} rule(s)": "انتخاب شده: {0} حالت، مجموعاً {1} قانون",
+    "Selected: 0 modes": "انتخاب شده: 0 حالت",
     "{0} distinct rules": "{0} قانون متمایز",
     "Run multiple modes simultaneously / Mode group management": "اجرای همزمان چند حالت / مدیریت گروه‌ها",
     "Accelerated Processes": "پردازش‌های تحت شتاب",
@@ -171,5 +173,12 @@
     "On": "روشن",
     "Off": "خاموش",
     "Mode Group": "گروه حالت",
-    "Temporary": "موقت"
+    "Temporary": "موقت",
+    "Verify Core Files Integrity": "اعتبارسنجی یکپارچگی اجزای اصلی",
+    "All core files in bin directory passed integrity verification.": "تمام فایل‌های اصلی در دایرکتوری bin تأیید یکپارچگی را گذراندند.",
+    "Verification Passed": "تأیید شد",
+    "The following files in the bin directory have been modified, replaced, or are missing:\n\n{0}\n\nRunning modified binary files may pose security risks or cause system instability.\nDo you want to continue running anyway?": "فایل‌های زیر در دایرکتوری bin تغییر یافته، جایگزین شده یا وجود ندارند:\n\n{0}\n\nاجرای فایل‌های باینری اصلاح‌شده ممکن است خطرات امنیتی به همراه داشته باشد یا باعث بی‌ثباتی سیستم شود.\nآیا با این وجود می‌خواهید ادامه دهید؟",
+    "Missing file: {0}": "[ناموجود] {0}",
+    "Modified file: {0}": "[تغییر یافته/خراب] {0}",
+    "Security Warning": "هشدار امنیتی"
 }

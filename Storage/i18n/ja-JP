@@ -163,6 +163,8 @@
     "A mode group with the same name already exists. Overwrite?": "同名のモードグループが既に存在します。上書きしますか？",
     "Save mode group failed": "モードグループの保存に失敗しました",
     "Selected: {0} mode(s)": "選択中: {0} 個のモード",
+    "Selected: {0} mode(s), {1} rule(s)": "選択中: {0} 個のモード、合計 {1} 件のルール",
+    "Selected: 0 modes": "選択中: 0 個のモード",
     "{0} distinct rules": "合計 {0} 件の一意のルール",
     "Run multiple modes simultaneously / Mode group management": "複数のモードを同時に実行 / グループ管理",
     "Accelerated Processes": "プロキシ対象プロセス",
@@ -171,5 +173,12 @@
     "On": "オン",
     "Off": "オフ",
     "Mode Group": "モードグループ",
-    "Temporary": "一時"
+    "Temporary": "一時",
+    "Verify Core Files Integrity": "コアコンポーネントの完全性を検証",
+    "All core files in bin directory passed integrity verification.": "bin ディレクトリ内のすべてのコアファイルの完全性検証に合格しました。",
+    "Verification Passed": "検証成功",
+    "The following files in the bin directory have been modified, replaced, or are missing:\n\n{0}\n\nRunning modified binary files may pose security risks or cause system instability.\nDo you want to continue running anyway?": "bin ディレクトリ内の次のファイルが変更、置換、または欠落していることが検出されました：\n\n{0}\n\n変更されたバイナリファイルを実行すると、セキュリティ上のリスクやシステムの不安定化を招く可能性があります。\nそれでも続行しますか？",
+    "Missing file: {0}": "[欠落] {0}",
+    "Modified file: {0}": "[変更/破損] {0}",
+    "Security Warning": "セキュリティ警告"
 }

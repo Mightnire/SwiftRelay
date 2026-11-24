@@ -68,40 +68,6 @@ cp -Force '.\Other\release\*.bin' "$OutputPath\bin"
 cp -Force '.\Other\release\*.dll' "$OutputPath\bin"
 cp -Force '.\Other\release\*.exe' "$OutputPath\bin"
 
-Write-Host
-Write-Host 'Building SwiftRelay'
-
-$IntermediateOutput = if ($SelfContained) { ".\Netch\bin\$Configuration" } else { ".\Netch\bin\$Configuration-FDD" }
-
-dotnet publish `
-	-c $Configuration `
-	-r 'win-x64' `
-	-p:Platform='x64' `
-	-p:SelfContained=$SelfContained `
-	-p:PublishTrimmed=$PublishReadyToRun `
-	-p:PublishSingleFile=$PublishSingleFile `
-	-p:EnableCompressionInSingleFile=$SelfContained `
-	-p:PublishReadyToRun=$PublishReadyToRun `
-	-p:PublishReadyToRunShowWarnings=$PublishReadyToRun `
-	-p:IncludeNativeLibrariesForSelfExtract=$SelfContained `
-	-p:UseSharedCompilation=false `
-	-o "$IntermediateOutput" `
-	'.\Netch\Netch.csproj'
-if ( -Not $? ) { exit $lastExitCode }
-
-$TargetExe = if (Test-Path "$IntermediateOutput\SwiftRelay.exe") { "$IntermediateOutput\SwiftRelay.exe" } else { "$IntermediateOutput\Netch.exe" }
-$DestExe = Join-Path $OutputPath (Split-Path $TargetExe -Leaf)
-try {
-    cp -Force $TargetExe $OutputPath -ErrorAction Stop
-} catch {
-    try {
-        Move-Item -LiteralPath $DestExe -Destination ($DestExe + '.old.' + (Get-Random)) -Force -ErrorAction SilentlyContinue
-        cp -Force $TargetExe $OutputPath
-    } catch {
-        Write-Warning "Could not copy $TargetExe to ${OutputPath}: $_"
-    }
-}
-
 if ( -Not ( Test-Path ".\Redirector\Redirector.bin" ) -and -Not ( Test-Path ".\Redirector\bin\$Configuration\Redirector.bin" ) ) {
 	Write-Host
 	Write-Host 'Building Redirector'
@@ -154,6 +120,50 @@ if (Test-Path ".\RouteHelper\bin\$Configuration\RouteHelper.bin") {
 	cp -Force ".\RouteHelper\bin\$Configuration\RouteHelper.bin" "$OutputPath\bin"
 } else {
 	cp -Force ".\RouteHelper\RouteHelper.bin" "$OutputPath\bin"
+}
+
+# Generate checksums for all bin directory binaries
+$binFiles = Get-ChildItem -Path "$OutputPath\bin" -File | Where-Object { $_.Name -ne 'checksums.sha256' }
+$checksumLines = foreach ($f in ($binFiles | Sort-Object Name)) {
+	$hash = (Get-FileHash -Path $f.FullName -Algorithm SHA256).Hash.ToLowerInvariant()
+	"$hash *$($f.Name)"
+}
+$checksumContent = ($checksumLines -join "`r`n") + "`r`n"
+Set-Content -Path "$OutputPath\bin\checksums.sha256" -Value $checksumContent -NoNewline
+Set-Content -Path "$ScriptDir\Netch\Resources\checksums.sha256" -Value $checksumContent -NoNewline
+
+Write-Host
+Write-Host 'Building SwiftRelay'
+
+$IntermediateOutput = if ($SelfContained) { ".\Netch\bin\$Configuration" } else { ".\Netch\bin\$Configuration-FDD" }
+
+dotnet publish `
+	-c $Configuration `
+	-r 'win-x64' `
+	-p:Platform='x64' `
+	-p:SelfContained=$SelfContained `
+	-p:PublishTrimmed=$PublishReadyToRun `
+	-p:PublishSingleFile=$PublishSingleFile `
+	-p:EnableCompressionInSingleFile=$SelfContained `
+	-p:PublishReadyToRun=$PublishReadyToRun `
+	-p:PublishReadyToRunShowWarnings=$PublishReadyToRun `
+	-p:IncludeNativeLibrariesForSelfExtract=$SelfContained `
+	-p:UseSharedCompilation=false `
+	-o "$IntermediateOutput" `
+	'.\Netch\Netch.csproj'
+if ( -Not $? ) { exit $lastExitCode }
+
+$TargetExe = if (Test-Path "$IntermediateOutput\SwiftRelay.exe") { "$IntermediateOutput\SwiftRelay.exe" } else { "$IntermediateOutput\Netch.exe" }
+$DestExe = Join-Path $OutputPath (Split-Path $TargetExe -Leaf)
+try {
+    cp -Force $TargetExe $OutputPath -ErrorAction Stop
+} catch {
+    try {
+        Move-Item -LiteralPath $DestExe -Destination ($DestExe + '.old.' + (Get-Random)) -Force -ErrorAction SilentlyContinue
+        cp -Force $TargetExe $OutputPath
+    } catch {
+        Write-Warning "Could not copy $TargetExe to ${OutputPath}: $_"
+    }
 }
 
 if ( $Configuration.Equals('Release') ) {

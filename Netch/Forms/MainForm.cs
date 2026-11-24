@@ -70,6 +70,12 @@ public partial class MainForm : Form
 
     private void MainForm_Load(object sender, EventArgs e)
     {
+        if (!BinIntegrityService.CheckBinFiles(this))
+        {
+            Close();
+            return;
+        }
+
         // 计算 ComboBox绘制 目标宽度
         RecordSize();
 
@@ -331,6 +337,11 @@ public partial class MainForm : Form
         {
             StatusText();
         }
+    }
+
+    private void VerifyBinFilesToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        BinIntegrityService.CheckBinFiles(this, silentIfValid: false);
     }
 
     private async void UninstallServiceToolStripMenuItem_Click(object sender, EventArgs e)

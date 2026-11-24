@@ -189,6 +189,8 @@
     "A mode group with the same name already exists. Overwrite?": "已存在同名的模式組，是否覆蓋？",
     "Save mode group failed": "保存模式組失敗",
     "Selected: {0} mode(s)": "已選擇: {0} 個模式",
+    "Selected: {0} mode(s), {1} rule(s)": "已選擇: {0} 個模式，共 {1} 條規則",
+    "Selected: 0 modes": "已選擇: 0 個模式",
     "{0} distinct rules": "共 {0} 條獨立規則",
     "Run multiple modes simultaneously / Mode group management": "同時運行多個模式 / 組合管理",
     "Accelerated Processes": "加速進程",
@@ -197,5 +199,12 @@
     "On": "開啟",
     "Off": "關閉",
     "Mode Group": "模式組",
-    "Temporary": "臨時"
+    "Temporary": "臨時",
+    "Verify Core Files Integrity": "校驗核心組件完整性",
+    "All core files in bin directory passed integrity verification.": "bin 目錄下的所有核心檔案均已通過完整性校驗。",
+    "Verification Passed": "校驗通過",
+    "The following files in the bin directory have been modified, replaced, or are missing:\n\n{0}\n\nRunning modified binary files may pose security risks or cause system instability.\nDo you want to continue running anyway?": "檢測到 bin 目錄下的以下檔案已被修改、替換或缺失：\n\n{0}\n\n運行被修改的二進位檔案可能存在安全隱患或導致系統不穩定。\n是否仍要繼續運行？",
+    "Missing file: {0}": "[缺失] {0}",
+    "Modified file: {0}": "[修改/損壞] {0}",
+    "Security Warning": "安全警告"
 }

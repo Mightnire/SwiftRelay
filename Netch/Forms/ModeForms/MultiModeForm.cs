@@ -77,12 +77,13 @@ public class MultiModeForm : Form
         var searchPanel = new Panel
         {
             Dock = DockStyle.Top,
-            Height = 32
+            AutoSize = true,
+            AutoSizeMode = AutoSizeMode.GrowAndShrink
         };
 
         _searchTextBox = new TextBox
         {
-            Dock = DockStyle.Fill,
+            Dock = DockStyle.Top,
             Font = new Font("Microsoft YaHei UI", 9.5F),
             PlaceholderText = i18N.Translate("Search mode name or process...")
         };
@@ -92,10 +93,10 @@ public class MultiModeForm : Form
         var quickActionPanel = new FlowLayoutPanel
         {
             Dock = DockStyle.Top,
-            Height = 32,
+            Height = 36,
             FlowDirection = FlowDirection.LeftToRight,
             WrapContents = false,
-            Padding = new Padding(0, 4, 0, 4)
+            Padding = new Padding(0, 6, 0, 6)
         };
 
         _btnSelectAll = new Button
@@ -301,7 +302,7 @@ public class MultiModeForm : Form
             Font = new Font("Microsoft YaHei UI", 9F, FontStyle.Bold),
             ForeColor = Color.FromArgb(40, 40, 40),
             Text = i18N.Translate("Selected: 0 modes"),
-            Margin = new Padding(0, 3, 8, 0)
+            Margin = new Padding(0, 3, 0, 0)
         };
 
         _lblRulesSummary = new Label
@@ -309,11 +310,11 @@ public class MultiModeForm : Form
             AutoSize = true,
             ForeColor = Color.Gray,
             Text = "",
-            Margin = new Padding(0, 3, 0, 0)
+            Margin = new Padding(0, 3, 0, 0),
+            Visible = false
         };
 
         leftInfoPanel.Controls.Add(_lblCount);
-        leftInfoPanel.Controls.Add(_lblRulesSummary);
 
         bottomPanel.Controls.Add(leftInfoPanel);
         bottomPanel.Controls.Add(rightButtonPanel);
@@ -562,17 +563,18 @@ public class MultiModeForm : Form
     private void UpdateSelectionSummary()
     {
         var count = _checkedModes.Count;
-        _lblCount.Text = i18N.TranslateFormat("Selected: {0} mode(s)", count);
 
         if (count > 0)
         {
             var totalHandles = _checkedModes.SelectMany(m => m.Handle).Distinct().Count();
-            _lblRulesSummary.Text = $"({i18N.TranslateFormat("{0} distinct rules", totalHandles)})";
+            _lblCount.Text = i18N.TranslateFormat("Selected: {0} mode(s), {1} rule(s)", count, totalHandles);
+            _lblRulesSummary.Text = "";
             _btnApply.Enabled = true;
             _btnSaveAsGroup.Enabled = count >= 2;
         }
         else
         {
+            _lblCount.Text = i18N.Translate("Selected: 0 modes");
             _lblRulesSummary.Text = "";
             _btnApply.Enabled = false;
             _btnSaveAsGroup.Enabled = false;

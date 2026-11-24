@@ -189,6 +189,8 @@
     "A mode group with the same name already exists. Overwrite?": "已存在同名的模式组，是否覆盖？",
     "Save mode group failed": "保存模式组失败",
     "Selected: {0} mode(s)": "已选择: {0} 个模式",
+    "Selected: {0} mode(s), {1} rule(s)": "已选择: {0} 个模式，共 {1} 条规则",
+    "Selected: 0 modes": "已选择: 0 个模式",
     "{0} distinct rules": "共 {0} 条独立规则",
     "Run multiple modes simultaneously / Mode group management": "同时运行多个模式 / 组合管理",
     "Accelerated Processes": "加速进程",
@@ -197,5 +199,12 @@
     "On": "开启",
     "Off": "关闭",
     "Mode Group": "模式组",
-    "Temporary": "临时"
+    "Temporary": "临时",
+    "Verify Core Files Integrity": "校验核心组件完整性",
+    "All core files in bin directory passed integrity verification.": "bin 目录下的所有核心文件均已通过完整性校验。",
+    "Verification Passed": "校验通过",
+    "The following files in the bin directory have been modified, replaced, or are missing:\n\n{0}\n\nRunning modified binary files may pose security risks or cause system instability.\nDo you want to continue running anyway?": "检测到 bin 目录下的以下文件已被修改、替换或缺失：\n\n{0}\n\n运行被修改的二进制文件可能存在安全隐患或导致系统不稳定。\n是否仍要继续运行？",
+    "Missing file: {0}": "[缺失] {0}",
+    "Modified file: {0}": "[修改/损坏] {0}",
+    "Security Warning": "安全警告"
 }

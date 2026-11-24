@@ -41,6 +41,7 @@
             this.OpenDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ShowHideConsoleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.CleanDNSCacheToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.VerifyBinFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.UninstallServiceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.RemoveNetchFirewallRulesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.HelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -186,6 +187,7 @@
             this.OpenDirectoryToolStripMenuItem,
             this.ShowHideConsoleToolStripMenuItem,
             this.CleanDNSCacheToolStripMenuItem,
+            this.VerifyBinFilesToolStripMenuItem,
             this.UninstallServiceToolStripMenuItem,
             this.RemoveNetchFirewallRulesToolStripMenuItem});
             this.OptionsToolStripMenuItem.Margin = new System.Windows.Forms.Padding(0, 0, 0, 1);
@@ -213,6 +215,13 @@
             this.CleanDNSCacheToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
             this.CleanDNSCacheToolStripMenuItem.Text = "Clean DNS Cache";
             this.CleanDNSCacheToolStripMenuItem.Click += new System.EventHandler(this.CleanDNSCacheToolStripMenuItem_Click);
+            // 
+            // VerifyBinFilesToolStripMenuItem
+            // 
+            this.VerifyBinFilesToolStripMenuItem.Name = "VerifyBinFilesToolStripMenuItem";
+            this.VerifyBinFilesToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
+            this.VerifyBinFilesToolStripMenuItem.Text = "Verify Core Files Integrity";
+            this.VerifyBinFilesToolStripMenuItem.Click += new System.EventHandler(this.VerifyBinFilesToolStripMenuItem_Click);
             // 
             // UninstallServiceToolStripMenuItem
             // 
@@ -753,6 +762,7 @@
 
         private System.Windows.Forms.ToolStripButton AboutToolStripButton;
         private System.Windows.Forms.ToolStripMenuItem CleanDNSCacheToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem VerifyBinFilesToolStripMenuItem;
         private System.Windows.Forms.TableLayoutPanel configLayoutPanel;
         private System.Windows.Forms.GroupBox ConfigurationGroupBox;
         private System.Windows.Forms.Button ControlButton;
