@@ -30,6 +30,9 @@ public struct SuffixVersion : IComparable, IComparable<SuffixVersion>
         if (value == null)
             throw new ArgumentNullException(nameof(value));
 
+        if (value.StartsWith("v", StringComparison.OrdinalIgnoreCase))
+            value = value[1..];
+
         var strings = value.Split('-');
 
         var version = Version.Parse(strings[0]);

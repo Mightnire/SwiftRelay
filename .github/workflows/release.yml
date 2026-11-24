@@ -1,8 +1,9 @@
-name: Netch Release CI
+name: SwiftRelay Release CI
 on:
   push:
     tags:
       - '*.*.*'
+      - 'v*.*.*'
 
 jobs:
   build:
@@ -78,7 +79,9 @@ jobs:
         shell: pwsh
         run: |
           7z a -mx9 SwiftRelay.7z release
+          7z rn SwiftRelay.7z release SwiftRelay
           7z a -mx9 SwiftRelay-Framework-Dependent.7z release-framework-dependent
+          7z rn SwiftRelay-Framework-Dependent.7z release-framework-dependent SwiftRelay
 
       - name: Checksum
         shell: pwsh
@@ -99,8 +102,35 @@ jobs:
             SwiftRelay.7z
             SwiftRelay-Framework-Dependent.7z
           body: |
-            ## 校验和 / Checksums
-            | 文件名 / File | 说明 / Description | SHA256 |
-            | :- | :- | :- |
-            | `SwiftRelay.7z` | 独立版 (Self-Contained，内置运行环境) | `${{ env.SWIFTRELAY_SHA256 }}` |
-            | `SwiftRelay-Framework-Dependent.7z` | 依赖运行库版 (需安装 .NET 6.0 桌面运行时) | `${{ env.SWIFTRELAY_FDD_SHA256 }}` |
+            # SwiftRelay 1.0.0 正式发布 🎉
+
+            欢迎使用 **SwiftRelay 1.0.0**！这是 SwiftRelay 的首个正式版本，在继承与革新中带来了大量功能改进、界面现代化重构与体验优化。
+
+            ---
+
+            ### ✨ 亮点与更新内容 (What's New)
+
+            - **全新品牌与视觉焕新**：正式演进为 SwiftRelay，全新高清应用图标与统一设计风格。
+            - **设置界面现代化重构**：
+              - 优化进程模式与 TUN 模式设置排版，ICMP 协议与延时选项合并为逻辑组。
+              - 修复 DNS 劫持主机标签与文本行重叠的问题。
+            - **服务器配置对话框体验升级**：
+              - 采用原生 Windows 风格对话框规范，提供更均衡舒适的行间距与字体渲染。
+              - 文本框与端口号精准对齐，版本选择使用原生下拉菜单控件。
+              - 采用标准右下角【保存】/【取消】按钮栏，并支持 `Enter` 保存与 `Esc` 退出。
+              - 强化输入合法性校验，缺少地址或非法端口号时弹窗提醒并自动聚焦错误输入框。
+              - 智能支持在地址栏直接粘贴 `IP:Port` 格式并自动拆分。
+            - **更地道的全界面国际化 (i18n)**：
+              - 补全主界面底部状态栏（如“等待命令中”）等多处未汉化文本。
+              - 语言下拉列表使用各自母语名称（简体中文、繁體中文、English 等），保留“跟随系统”选项。
+            - **提供无运行环境轻量依赖版**：
+              - 除了包含内置完整运行时的独立版（Self-Contained），新增依赖运行库的轻量版本（Framework-Dependent），压缩包仅约 **7.5 MB**！
+
+            ---
+
+            ### 📦 文件说明与校验和 / Packages & Checksums
+
+            | 文件名 / File | 大小 / Size | 说明 / Description | SHA-256 |
+            | :-- | :-- | :-- | :-- |
+            | `SwiftRelay.7z` | ~34 MB | **独立版 (推荐)**：自带全部运行环境，开箱即用，免配置。 | `${{ env.SWIFTRELAY_SHA256 }}` |
+            | `SwiftRelay-Framework-Dependent.7z` | ~7.5 MB | **轻量依赖版**：体积小巧，需预先安装 [.NET 6.0 Desktop Runtime (x64)](https://dotnet.microsoft.com/download/dotnet/6.0)。 | `${{ env.SWIFTRELAY_FDD_SHA256 }}` |
