@@ -137,7 +137,7 @@ public static class Program
 
         var frameworkName = new FrameworkName(framework);
 
-        if (frameworkName.Version.Major != Environment.Version.Major)
+        if (Environment.Version.Major < frameworkName.Version.Major)
         {
             Log.Information("CLR: {Version}", Environment.Version);
             Flags.NoSupport = true;
@@ -146,6 +146,10 @@ public static class Program
                     i18N.TranslateFormat("{0} won't get developers' support, Please do not report any issues or seek help from developers.",
                         "CLR " + Environment.Version),
                     LogLevel.WARNING);
+        }
+        else
+        {
+            Log.Information("CLR: {Version} (Supported)", Environment.Version);
         }
     }
 
