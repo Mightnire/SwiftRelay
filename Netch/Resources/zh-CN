@@ -167,6 +167,9 @@
     "Network Settings": "虚拟网卡网络参数",
     "Startup & Exit Behavior": "启动与退出行为",
     "Updates & Notifications": "更新与提示",
+    "Protocol Filtering": "协议过滤",
+    "DNS Settings": "DNS 设置",
+    "Scope & Process": "范围与进程",
     "OK": "确定",
     "Cancel": "取消"
 }

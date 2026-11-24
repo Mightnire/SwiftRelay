@@ -167,6 +167,9 @@
     "Network Settings": "虛擬網路卡網路參數",
     "Startup & Exit Behavior": "啟動與結束行為",
     "Updates & Notifications": "更新與提示",
+    "Protocol Filtering": "通訊協定過濾",
+    "DNS Settings": "DNS 設定",
+    "Scope & Process": "範圍與程序",
     "OK": "確定",
     "Cancel": "取消"
 }
