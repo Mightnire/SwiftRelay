@@ -178,5 +178,11 @@
     "OK": "确定",
     "Cancel": "取消",
     "Status": "状态",
-    "Terminating": "退出中"
+    "Terminating": "退出中",
+    "System": "跟随系统",
+    "zh-CN": "简体中文",
+    "zh-TW": "繁体中文",
+    "en-US": "English",
+    "ja-JP": "日本語",
+    "fa-IR": "波斯语"
 }
