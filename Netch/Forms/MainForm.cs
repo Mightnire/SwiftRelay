@@ -70,12 +70,6 @@ public partial class MainForm : Form
 
     private void MainForm_Load(object sender, EventArgs e)
     {
-        if (!BinIntegrityService.CheckBinFiles(this))
-        {
-            Close();
-            return;
-        }
-
         // 计算 ComboBox绘制 目标宽度
         RecordSize();
 
@@ -510,6 +504,9 @@ public partial class MainForm : Form
             MessageBoxX.Show(i18N.Translate("Please select a mode first"));
             return;
         }
+
+        if (!BinIntegrityService.CheckBinFiles(this))
+            return;
 
         State = State.Starting;
 

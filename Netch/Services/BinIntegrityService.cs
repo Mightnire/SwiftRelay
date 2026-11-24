@@ -11,7 +11,7 @@ public static class BinIntegrityService
     /// <summary>
     /// Loads the expected SHA-256 hashes for core binaries.
     /// Prefers the tamper-proof embedded assembly manifest,
-    /// falling back to the on-disk checksums.sha256 file if present.
+    /// falling back to the on-disk checksums.sha256 file if present during development.
     /// </summary>
     public static Dictionary<string, string> LoadExpectedHashes()
     {
@@ -41,24 +41,7 @@ public static class BinIntegrityService
             }
         }
 
-        // 2. Fall back to bin/checksums.sha256 on disk
-        var binChecksumPath = Path.Combine(Global.NetchDir, "bin", ChecksumsFileName);
-        if (File.Exists(binChecksumPath))
-        {
-            try
-            {
-                var content = File.ReadAllText(binChecksumPath);
-                ParseChecksumContent(content, result);
-                if (result.Count > 0)
-                    return result;
-            }
-            catch (Exception ex)
-            {
-                Log.Warning(ex, "Failed to read bin/checksums.sha256 file");
-            }
-        }
-
-        // 3. Fall back to root checksums.sha256
+        // 2. Fall back to root checksums.sha256 if present
         var rootChecksumPath = Path.Combine(Global.NetchDir, ChecksumsFileName);
         if (File.Exists(rootChecksumPath))
         {
@@ -96,6 +79,10 @@ public static class BinIntegrityService
             var hash = line[..spaceIdx].Trim().ToLowerInvariant();
             var fileName = line[spaceIdx..].Trim().TrimStart('*').Trim();
 
+            // stun.txt is user-customizable and explicitly exempt from integrity checks
+            if (fileName.Equals("stun.txt", StringComparison.OrdinalIgnoreCase))
+                continue;
+
             if (!string.IsNullOrEmpty(fileName) && !string.IsNullOrEmpty(hash))
             {
                 target[fileName] = hash;
@@ -121,6 +108,10 @@ public static class BinIntegrityService
 
         foreach (var (fileName, expectedHash) in expected)
         {
+            // stun.txt is user-customizable and explicitly exempt from integrity checks
+            if (fileName.Equals("stun.txt", StringComparison.OrdinalIgnoreCase))
+                continue;
+
             var filePath = Path.Combine(binDir, fileName);
             if (!File.Exists(filePath))
             {

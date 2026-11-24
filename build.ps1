@@ -122,15 +122,17 @@ if (Test-Path ".\RouteHelper\bin\$Configuration\RouteHelper.bin") {
 	cp -Force ".\RouteHelper\RouteHelper.bin" "$OutputPath\bin"
 }
 
-# Generate checksums for all bin directory binaries
-$binFiles = Get-ChildItem -Path "$OutputPath\bin" -File | Where-Object { $_.Name -ne 'checksums.sha256' }
+# Generate checksums for all bin directory binaries (excluding customizable text files like stun.txt)
+$binFiles = Get-ChildItem -Path "$OutputPath\bin" -File | Where-Object { $_.Name -ne 'checksums.sha256' -and $_.Name -ne 'stun.txt' }
 $checksumLines = foreach ($f in ($binFiles | Sort-Object Name)) {
 	$hash = (Get-FileHash -Path $f.FullName -Algorithm SHA256).Hash.ToLowerInvariant()
 	"$hash *$($f.Name)"
 }
 $checksumContent = ($checksumLines -join "`r`n") + "`r`n"
-Set-Content -Path "$OutputPath\bin\checksums.sha256" -Value $checksumContent -NoNewline
 Set-Content -Path "$ScriptDir\Netch\Resources\checksums.sha256" -Value $checksumContent -NoNewline
+if (Test-Path "$OutputPath\bin\checksums.sha256") {
+	Remove-Item -Force "$OutputPath\bin\checksums.sha256"
+}
 
 Write-Host
 Write-Host 'Building SwiftRelay'
