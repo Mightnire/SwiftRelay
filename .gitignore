@@ -1,5 +1,7 @@
 /.vs
 /.idea
 /release
+/release-framework-dependent
 /packages
 /TestResults
+*.7z

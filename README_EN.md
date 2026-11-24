@@ -49,6 +49,30 @@ A lightweight, pure Socks proxy and game routing client for Windows.
 - **Socks4a** (Supports remote domain name resolution via proxy)
 - **Socks4** (Standard Socks4 proxy support based on IPv4 addresses)
 
+## 💻 Runtime Requirements & Downloads
+
+SwiftRelay provides two different release packages:
+
+| Edition | File | Archive Size | Description |
+| :--- | :--- | :--- | :--- |
+| **Self-Contained** | `SwiftRelay.7z` | ~38 MB | **Ready to use out-of-the-box**. Bundles the complete .NET runtime. Recommended if you do not want to install extra runtimes. |
+| **Framework-Dependent** | `SwiftRelay-Framework-Dependent.7z` | ~11 MB | **Ultra-lightweight**. Excludes the bundled runtime to drastically reduce download size. **Requires** the .NET 6.0 Desktop Runtime to be installed on your system. |
+
+### Required Runtimes (For Framework-Dependent Edition)
+
+If you download the **Framework-Dependent** edition, make sure the following runtime libraries are installed on your Windows machine:
+
+1. **[.NET Desktop Runtime 6.0 (x64)](https://aka.ms/dotnet/6.0/windowsdesktop-runtime-win-x64.exe)** (Required)
+   - Direct Installer Download: [windowsdesktop-runtime-6.0.*-win-x64.exe](https://aka.ms/dotnet/6.0/windowsdesktop-runtime-win-x64.exe)
+   - Microsoft Official Page: [Microsoft .NET 6.0 Download Center](https://dotnet.microsoft.com/download/dotnet/6.0)
+   > [!IMPORTANT]
+   > Make sure to install the **.NET Desktop Runtime (x64)**. The standard .NET Runtime or ASP.NET Core Runtime does not include Windows Forms / Desktop UI components.
+
+2. **[Microsoft Visual C++ 2015-2022 Redistributable (x64)](https://aka.ms/vs/17/release/vc_redist.x64.exe)** (Required)
+   - Direct Installer Download: [vc_redist.x64.exe](https://aka.ms/vs/17/release/vc_redist.x64.exe)
+   > [!NOTE]
+   > SwiftRelay's native core redirection drivers (NetFilter), WinTUN, and routing helpers are written in native C++ and require the 64-bit VC++ redistributable. Most gaming PCs already have this installed.
+
 ## 🛠️ Building from Source
 
 ### Prerequisites
@@ -59,12 +83,17 @@ A lightweight, pure Socks proxy and game routing client for Windows.
 
 ### Build Commands
 
+Run the build script in PowerShell:
+
 ```powershell
-# Run the build script
-.\build.ps1 -Configuration Release -OutputPath release
+# 1. Build Self-Contained edition (bundled runtime, outputs to release/ directory)
+.\build.ps1 -Configuration Release -OutputPath release -SelfContained $True
+
+# 2. Build Framework-Dependent edition (lightweight, outputs to release-framework-dependent/ directory)
+.\build.ps1 -Configuration Release -OutputPath release-framework-dependent -SelfContained $False
 ```
 
-The output single-file executable `SwiftRelay.exe` and its supporting native drivers/binaries will be placed in the `release/` directory.
+The output single-file executable `SwiftRelay.exe` and its supporting native drivers/binaries will be placed in the specified output directory.
 
 ## 🙏 Acknowledgments
 

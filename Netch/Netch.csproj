@@ -97,6 +97,8 @@
   <Target Condition="'$(PublishSingleFile)' == 'true'" AfterTargets="_ComputeFilesToBundle" Name="RemoveDupeAssemblies">
     <ItemGroup>
       <_FilesToBundle Remove="$(PkgMicrosoft_Diagnostics_Tracing_TraceEvent)\build\native\x86\**" />
+      <_FilesToBundle Remove="*microsoft.windowsdesktop.app.runtime.win-x64\**" Condition="'$(SelfContained)' == 'false'" />
+      <_FilesToBundle Remove="*microsoft.netcore.app.runtime.win-x64\**" Condition="'$(SelfContained)' == 'false'" />
     </ItemGroup>
   </Target>
 

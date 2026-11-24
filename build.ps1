@@ -25,22 +25,38 @@ param (
 Push-Location (Split-Path $MyInvocation.MyCommand.Path -Parent)
 
 if ( Test-Path -Path $OutputPath ) {
-    rm -Recurse -Force $OutputPath
+    try {
+        rm -Recurse -Force $OutputPath -ErrorAction Stop
+    } catch {
+        Get-ChildItem -Path $OutputPath -Exclude '*.old*' | ForEach-Object {
+            try { rm -Recurse -Force $_.FullName -ErrorAction Stop } catch {
+                try { Move-Item -LiteralPath $_.FullName -Destination ($_.FullName + '.old.' + (Get-Random)) -Force -ErrorAction SilentlyContinue } catch {}
+            }
+        }
+    }
 }
-New-Item -ItemType Directory -Name $OutputPath | Out-Null
+if ( -Not (Test-Path -Path $OutputPath) ) {
+    New-Item -ItemType Directory -Name $OutputPath | Out-Null
+}
 
-Push-Location $OutputPath
-New-Item -ItemType Directory -Name 'bin'  | Out-Null
-cp -Recurse -Force '..\Storage\i18n' '.'  | Out-Null
-cp -Recurse -Force '..\Storage\mode' '.'  | Out-Null
-cp -Recurse -Force '..\Storage\stun.txt' 'bin'  | Out-Null
-cp -Recurse -Force '..\Storage\nfdriver.sys' 'bin'  | Out-Null
+$ScriptDir = Split-Path $MyInvocation.MyCommand.Path -Parent
+
+if ( -Not (Test-Path "$OutputPath\bin") ) {
+    New-Item -ItemType Directory -Path "$OutputPath\bin" | Out-Null
+}
+cp -Recurse -Force "$ScriptDir\Storage\i18n" "$OutputPath"  | Out-Null
+cp -Recurse -Force "$ScriptDir\Storage\mode" "$OutputPath"  | Out-Null
+cp -Recurse -Force "$ScriptDir\Storage\stun.txt" "$OutputPath\bin"  | Out-Null
+cp -Recurse -Force "$ScriptDir\Storage\nfdriver.sys" "$OutputPath\bin"  | Out-Null
 try {
-    Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/Loyalsoldier/geoip/release/Country.mmdb' -OutFile 'bin\GeoLite2-Country.mmdb'
+    if (Test-Path "$ScriptDir\release\bin\GeoLite2-Country.mmdb") {
+        cp -Force "$ScriptDir\release\bin\GeoLite2-Country.mmdb" "$OutputPath\bin"
+    } else {
+        Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/Loyalsoldier/geoip/release/Country.mmdb' -OutFile "$OutputPath\bin\GeoLite2-Country.mmdb"
+    }
 } catch {}
-cp -Recurse -Force '..\Storage\tun2socks.bin' 'bin'  | Out-Null
-cp -Recurse -Force '..\Storage\README.md' 'bin'  | Out-Null
-Pop-Location
+cp -Recurse -Force "$ScriptDir\Storage\tun2socks.bin" "$OutputPath\bin"  | Out-Null
+cp -Recurse -Force "$ScriptDir\Storage\README.md" "$OutputPath\bin"  | Out-Null
 
 if ( -Not ( Test-Path '.\Other\release' ) ) {
 	.\Other\build.ps1
@@ -55,6 +71,8 @@ cp -Force '.\Other\release\*.exe' "$OutputPath\bin"
 Write-Host
 Write-Host 'Building SwiftRelay'
 
+$IntermediateOutput = if ($SelfContained) { ".\Netch\bin\$Configuration" } else { ".\Netch\bin\$Configuration-FDD" }
+
 dotnet publish `
 	-c $Configuration `
 	-r 'win-x64' `
@@ -62,18 +80,19 @@ dotnet publish `
 	-p:SelfContained=$SelfContained `
 	-p:PublishTrimmed=$PublishReadyToRun `
 	-p:PublishSingleFile=$PublishSingleFile `
-	-p:EnableCompressionInSingleFile=true `
+	-p:EnableCompressionInSingleFile=$SelfContained `
 	-p:PublishReadyToRun=$PublishReadyToRun `
 	-p:PublishReadyToRunShowWarnings=$PublishReadyToRun `
 	-p:IncludeNativeLibrariesForSelfExtract=$SelfContained `
-	-o ".\Netch\bin\$Configuration" `
+	-p:UseSharedCompilation=false `
+	-o "$IntermediateOutput" `
 	'.\Netch\Netch.csproj'
 if ( -Not $? ) { exit $lastExitCode }
 
-if (Test-Path ".\Netch\bin\$Configuration\SwiftRelay.exe") {
-	cp -Force ".\Netch\bin\$Configuration\SwiftRelay.exe" $OutputPath
+if (Test-Path "$IntermediateOutput\SwiftRelay.exe") {
+	cp -Force "$IntermediateOutput\SwiftRelay.exe" $OutputPath
 } else {
-	cp -Force ".\Netch\bin\$Configuration\Netch.exe" $OutputPath
+	cp -Force "$IntermediateOutput\Netch.exe" $OutputPath
 }
 
 if ( -Not ( Test-Path ".\Redirector\Redirector.bin" ) -and -Not ( Test-Path ".\Redirector\bin\$Configuration\Redirector.bin" ) ) {

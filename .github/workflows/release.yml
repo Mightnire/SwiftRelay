@@ -71,19 +71,22 @@ jobs:
       - name: Build
         shell: pwsh
         run: |
-          .\build.ps1 -Configuration Release -OutputPath release
+          .\build.ps1 -Configuration Release -OutputPath release -SelfContained $True
+          .\build.ps1 -Configuration Release -OutputPath release-framework-dependent -SelfContained $False
 
       - name: Package
         shell: pwsh
         run: |
-          7z a -mx9 Netch.7z release
-          7z rn Netch.7z release Netch
+          7z a -mx9 SwiftRelay.7z release
+          7z a -mx9 SwiftRelay-Framework-Dependent.7z release-framework-dependent
 
       - name: Checksum
         shell: pwsh
         run: |
-          $hash=(Get-FileHash Netch.7z -Algorithm SHA256).Hash.ToLower()
-          echo "NETCH_SHA256=$hash" | Out-File -Append -Encoding UTF8 -FilePath $Env:GITHUB_ENV
+          $hash1=(Get-FileHash SwiftRelay.7z -Algorithm SHA256).Hash.ToLower()
+          $hash2=(Get-FileHash SwiftRelay-Framework-Dependent.7z -Algorithm SHA256).Hash.ToLower()
+          echo "SWIFTRELAY_SHA256=$hash1" | Out-File -Append -Encoding UTF8 -FilePath $Env:GITHUB_ENV
+          echo "SWIFTRELAY_FDD_SHA256=$hash2" | Out-File -Append -Encoding UTF8 -FilePath $Env:GITHUB_ENV
 
       - name: Release
         uses: softprops/action-gh-release@v1
@@ -93,16 +96,11 @@ jobs:
           prerelease: ${{ contains(github.ref, '-') }}
           draft: false
           files: |
-            Netch.7z
+            SwiftRelay.7z
+            SwiftRelay-Framework-Dependent.7z
           body: |
-            [![](https://img.shields.io/badge/Telegram-Channel-blue)](https://t.me/netch_channel) [![](https://img.shields.io/badge/Telegram-Group-green)](https://t.me/netch_group)
-            ## Changelogs
-            * This is an automated deployment of GitHub Actions, the change log should be updated manually soon
-            
-            ## 更新日志
-            * 这是 GitHub Actions 自动化部署，更新日志应该很快会手动更新
-
-            ## 校验和
-            | 文件名 | SHA256 |
-            | :- | :- |
-            | Netch.7z | ${{ env.Netch_SHA256 }} |
+            ## 校验和 / Checksums
+            | 文件名 / File | 说明 / Description | SHA256 |
+            | :- | :- | :- |
+            | `SwiftRelay.7z` | 独立版 (Self-Contained，内置运行环境) | `${{ env.SWIFTRELAY_SHA256 }}` |
+            | `SwiftRelay-Framework-Dependent.7z` | 依赖运行库版 (需安装 .NET 6.0 桌面运行时) | `${{ env.SWIFTRELAY_FDD_SHA256 }}` |

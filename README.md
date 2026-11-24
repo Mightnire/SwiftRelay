@@ -52,6 +52,30 @@
 - **Socks4a**（支持通过代理端进行远程域名解析）
 - **Socks4**（标准 Socks4 协议，基于 IPv4 地址转发）
 
+## 💻 运行环境与安装说明
+
+SwiftRelay 发布页面提供两种版本供您选择：
+
+| 版本 | 文件名 | 压缩包体积 | 说明 |
+| :--- | :--- | :--- | :--- |
+| **独立版 (Self-Contained)** | `SwiftRelay.7z` | 约 38 MB | **开箱即用**。内置完整 .NET 运行时，解压后双击即可运行，适合不希望在系统中安装额外运行库的用户。 |
+| **依赖运行库版 (Framework-Dependent)** | `SwiftRelay-Framework-Dependent.7z` | 约 11 MB | **极简轻量**。移除了内置运行时，大幅减少下载体积与磁盘占用。运行前**必须**确保系统中已安装所需的桌面运行时。 |
+
+### 运行库下载（使用“依赖运行库版”必须安装）
+
+如果使用**依赖运行库版**，请在启动前下载并安装以下运行库：
+
+1. **[.NET Desktop Runtime 6.0 (x64) 桌面运行时](https://aka.ms/dotnet/6.0/windowsdesktop-runtime-win-x64.exe)**（必须）
+   - 官方直链下载：[windowsdesktop-runtime-6.0.*-win-x64.exe](https://aka.ms/dotnet/6.0/windowsdesktop-runtime-win-x64.exe)
+   - 微软官方总览页：[Microsoft .NET 6.0 下载中心](https://dotnet.microsoft.com/download/dotnet/6.0)
+   > [!IMPORTANT]
+   > 请务必选择 **.NET Desktop Runtime（桌面运行时）x64** 版本。普通的 .NET Runtime 或 ASP.NET Core Runtime 不包含 Windows 桌面图形界面组件。
+
+2. **[Microsoft Visual C++ 2015-2022 Redistributable (x64)](https://aka.ms/vs/17/release/vc_redist.x64.exe)**（必须）
+   - 官方直链下载：[vc_redist.x64.exe](https://aka.ms/vs/17/release/vc_redist.x64.exe)
+   > [!NOTE]
+   > SwiftRelay 的流量重定向驱动（NetFilter）、WinTUN 以及底层路由辅助模块由原生 C++ 编写，需要 64 位 VC++ 运行库支持。大多数游戏电脑通常已预装此运行库，如遇到闪退或提示缺少 DLL，请安装此包。
+
 ## 🛠️ 源码编译指南
 
 ### 编译环境要求
@@ -65,11 +89,14 @@
 在项目根目录下通过 PowerShell 运行打包脚本：
 
 ```powershell
-# 运行打包脚本生成发布文件
-.\build.ps1 -Configuration Release -OutputPath release
+# 1. 编译生成独立版（Self-Contained，内置运行环境，输出至 release/ 目录）
+.\build.ps1 -Configuration Release -OutputPath release -SelfContained $True
+
+# 2. 编译生成依赖运行库版（Framework-Dependent，需安装.NET 6桌面运行时，输出至 release-framework-dependent/ 目录）
+.\build.ps1 -Configuration Release -OutputPath release-framework-dependent -SelfContained $False
 ```
 
-打包完成后，单文件可执行程序 `SwiftRelay.exe` 及其所依赖的驱动与原生动态库将输出在 `release/` 目录下。
+打包完成后，单文件可执行程序 `SwiftRelay.exe` 及其所依赖的驱动与原生动态库将输出在指定的输出目录下。
 
 ## 🙏 鸣谢
 
