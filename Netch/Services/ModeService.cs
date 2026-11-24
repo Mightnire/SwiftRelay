@@ -2,6 +2,7 @@
 using Netch.Interfaces;
 using Netch.Models;
 using Netch.Models.Modes;
+using Netch.Models.Modes.ProcessMode;
 using Netch.Utils;
 
 namespace Netch.Services;
@@ -30,6 +31,10 @@ public class ModeService
     {
         Global.Modes.Clear();
         LoadCore(ModeDirectoryFullName);
+        foreach (var composite in Global.Modes.OfType<CompositeMode>())
+        {
+            composite.ResolveAndMerge();
+        }
         Sort();
         Global.MainForm.LoadModes();
     }

@@ -5,10 +5,8 @@
     "Process": "程序",
     "Share": "共享",
     "ModeType_Tooltip": "[1] 程序模式 (ProcessMode): 攔截並代理指定程序網路流量\n[2] 網路共享 (ShareMode): 透過網路卡將代理共享給區域網路主機\n[3] 網路卡代理 (TunMode): 建立虛擬網路卡接管特定或全部網路流量",
-
     "Missing File or runtime components": "缺少檔案或執行階段元件",
     "Please extract all files then run the program!": "請先解壓縮所有檔案再執行程式！",
-
     "Start": "啟動",
     "Stop": "停止",
     "Waiting for command": "等待指令中",
@@ -23,7 +21,6 @@
     "Test failed": "測試失敗",
     "Installing netfilter2 driver": "正在安裝 netfilter2 驅動程式",
     "Assigning unicast IP": "正在分配單播 IP",
-
     "Server": "伺服器",
     "Import Servers From Clipboard": "從剪貼簿匯入伺服器",
     "Add [{0}] Server": "新增 [{0}] 伺服器",
@@ -45,7 +42,6 @@
     "Handle rules": "處理規則",
     "Bypass rules": "分流規則",
     "Handle DNS through proxy": "經過代理處理 DNS",
-
     "Address": "位址",
     "Username": "使用者名稱",
     "User": "使用者",
@@ -53,7 +49,6 @@
     "Version": "版本",
     "Saved": "儲存成功",
     "Remote Address": "遠端位址",
-
     "Options": "選項",
     "NF Service": "NF 服務",
     "TUN/TAP driver": "TUN/TAP 驅動程式",
@@ -63,25 +58,19 @@
     "Clean DNS Cache": "清理 DNS 快取",
     "DNS cache cleanup succeeded": "DNS 快取清理成功",
     "Remove SwiftRelay Firewall Rules": "移除 SwiftRelay 防火牆規則",
-
     "Open Directory": "開啟資料夾",
     "Show/Hide Console": "顯示/隱藏主控台",
-
     "About": "關於",
     "FAQ": "常見問題",
-
     "Configuration": "設定資訊",
-
     "Please press Stop button first": "請先點擊停止按鈕",
     "Please select a server first": "請先選擇一個伺服器",
     "Please select a mode first": "請先選擇一個模式",
     "Please enter a profile name first": "請先為該設定檔命名",
     "No saved profile here. Save a profile first by Ctrl+Click on the button": "目前按鈕下沒有儲存設定檔，請先使用 CTRL + 左鍵 點擊該按鈕儲存一個設定檔",
     "Lookup Server hostname failed": "解析伺服器主機名稱失敗",
-
     "Used": "已使用",
     "Testing": "測試中",
-
     "Remark": "備註",
     "Filename": "檔案名稱",
     "Add": "新增",
@@ -102,11 +91,9 @@
     "File already exists.\n Please Change the filename": "此檔案名稱已存在，請重新命名",
     "Please enter a mode filename": "請輸入模式的檔案名稱",
     "Above rules does not conform to C++ regular expression syntax": "以上規則不符合 C++ 規則運算式語法",
-
     "Proxy Rule IPs": "代理規則 IP",
     "Bypass Rule IPs": "繞過規則 IP",
     "Delete": "刪除",
-
     "Settings": "設定",
     "Start when opened": "開啟軟體時自動啟動加速",
     "Minimize when started": "啟動加速後最小化到系統匣",
@@ -139,20 +126,15 @@
     "STUN Server": "STUN 伺服器",
     "Language": "語言",
     "Disable Support Warning": "停用支援警告",
-
     "Profile": "設定檔",
     "Profiles": "設定檔",
     "None": "無",
-
     "Show": "顯示",
     "Exit": "結束",
-
     "The {0} port is in use.": "連接埠 {0} 已被佔用",
     "The {0} port is reserved by system.": "連接埠 {0} 是系統保留連接埠",
-
     "{0} won't get developers' support, Please do not report any issues or seek help from developers.": "{0} 將不會得到開發者的支援，請不要報告任何問題或尋求開發人員的協助。",
     "No Support": "不受支援",
-
     "Import {0} server(s) from Clipboard": "已從剪貼簿匯入 {0} 個節點",
     "Import {0} server(s) form Clipboard": "已從剪貼簿匯入 {0} 個節點",
     "General": "一般",
@@ -182,5 +164,30 @@
     "Status": "狀態",
     "Terminating": "結束中",
     "System": "跟隨系統",
-    "LanguageName": "繁體中文"
+    "LanguageName": "繁體中文",
+    "Group": "組",
+    "Multi-Mode Selector": "多模式選擇器",
+    "Multi-Mode Selector / Group Manager...": "多模式選擇器 / 模式組管理...",
+    "Select multiple process modes or manage mode groups": "組合多個進程模式或管理模式組",
+    "Search mode name or process...": "搜尋模式名稱或進程...",
+    "Select All": "全選",
+    "Invert": "反選",
+    "Clear": "清空",
+    "Mode Name": "模式名稱",
+    "Category": "分類",
+    "Rules": "規則數",
+    "Rule Preview": "規則預覽",
+    "Accelerated Processes (Handle)": "加速進程 (Handle)",
+    "Bypass Rules (Bypass)": "分流直連規則 (Bypass)",
+    "Click a mode on the left to preview its rules": "點擊左側模式查看包含的加速進程與規則詳情",
+    "Save as Mode Group...": "另存為模式組...",
+    "Save as Mode Group": "另存為模式組",
+    "Apply": "套用臨時組合",
+    "Please enter a name for this mode group:": "請輸入此模式組的名稱：",
+    "Please select at least two process modes to create a group.": "請至少勾選兩個進程模式以創建模式組。",
+    "Please select at least one process mode.": "請至少勾選一個進程模式。",
+    "A mode group with the same name already exists. Overwrite?": "已存在同名的模式組，是否覆蓋？",
+    "Save mode group failed": "保存模式組失敗",
+    "Selected: {0} mode(s)": "已選擇: {0} 個模式",
+    "{0} distinct rules": "共 {0} 條獨立規則"
 }

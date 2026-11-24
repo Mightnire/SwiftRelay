@@ -35,6 +35,7 @@
             this.ModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.CreateProcessModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.CreateRouteTableRuleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.MultiModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ReloadModesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.OptionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.OpenDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -65,6 +66,7 @@
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.EditModePictureBox = new System.Windows.Forms.PictureBox();
             this.DeleteModePictureBox = new System.Windows.Forms.PictureBox();
+            this.MultiModePictureBox = new System.Windows.Forms.PictureBox();
             this.StatusStrip = new System.Windows.Forms.StatusStrip();
             this.StatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.UsedBandwidthLabel = new System.Windows.Forms.ToolStripStatusLabel();
@@ -95,6 +97,7 @@
             this.tableLayoutPanel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.EditModePictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DeleteModePictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.MultiModePictureBox)).BeginInit();
             this.StatusStrip.SuspendLayout();
             this.NotifyMenu.SuspendLayout();
             this.ProfileGroupBox.SuspendLayout();
@@ -142,6 +145,7 @@
             this.ModeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.CreateProcessModeToolStripMenuItem,
             this.CreateRouteTableRuleToolStripMenuItem,
+            this.MultiModeToolStripMenuItem,
             this.ReloadModesToolStripMenuItem});
             this.ModeToolStripMenuItem.Margin = new System.Windows.Forms.Padding(0, 0, 0, 1);
             this.ModeToolStripMenuItem.Name = "ModeToolStripMenuItem";
@@ -161,6 +165,13 @@
             this.CreateRouteTableRuleToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
             this.CreateRouteTableRuleToolStripMenuItem.Text = "Create Route Table Rule";
             this.CreateRouteTableRuleToolStripMenuItem.Click += new System.EventHandler(this.createRouteTableModeToolStripMenuItem_Click);
+            // 
+            // MultiModeToolStripMenuItem
+            // 
+            this.MultiModeToolStripMenuItem.Name = "MultiModeToolStripMenuItem";
+            this.MultiModeToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
+            this.MultiModeToolStripMenuItem.Text = "Multi-Mode Selector / Group Manager...";
+            this.MultiModeToolStripMenuItem.Click += new System.EventHandler(this.MultiModeToolStripMenuItem_Click);
             // 
             // ReloadModesToolStripMenuItem
             // 
@@ -463,6 +474,7 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel3.Controls.Add(this.EditModePictureBox, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.DeleteModePictureBox, 1, 0);
+            this.tableLayoutPanel3.Controls.Add(this.MultiModePictureBox, 2, 0);
             this.tableLayoutPanel3.Location = new System.Drawing.Point(606, 33);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
@@ -493,6 +505,17 @@
             this.DeleteModePictureBox.TabIndex = 13;
             this.DeleteModePictureBox.TabStop = false;
             this.DeleteModePictureBox.Click += new System.EventHandler(this.DeleteModePictureBox_Click);
+            // 
+            // MultiModePictureBox
+            // 
+            this.MultiModePictureBox.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.MultiModePictureBox.Location = new System.Drawing.Point(49, 3);
+            this.MultiModePictureBox.Name = "MultiModePictureBox";
+            this.MultiModePictureBox.Size = new System.Drawing.Size(16, 16);
+            this.MultiModePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.MultiModePictureBox.TabIndex = 14;
+            this.MultiModePictureBox.TabStop = false;
+            this.MultiModePictureBox.Click += new System.EventHandler(this.MultiModePictureBox_Click);
             // 
             // StatusStrip
             // 
@@ -711,6 +734,7 @@
             this.tableLayoutPanel3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.EditModePictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.DeleteModePictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.MultiModePictureBox)).EndInit();
             this.StatusStrip.ResumeLayout(false);
             this.StatusStrip.PerformLayout();
             this.NotifyMenu.ResumeLayout(false);
@@ -735,6 +759,8 @@
         private System.Windows.Forms.PictureBox CopyLinkPictureBox;
         private System.Windows.Forms.ToolStripMenuItem CreateProcessModeToolStripMenuItem;
         private System.Windows.Forms.PictureBox DeleteModePictureBox;
+        private System.Windows.Forms.PictureBox MultiModePictureBox;
+        private System.Windows.Forms.ToolStripMenuItem MultiModeToolStripMenuItem;
         private System.Windows.Forms.PictureBox DeleteServerPictureBox;
         private System.Windows.Forms.ToolStripStatusLabel DownloadSpeedLabel;
         private System.Windows.Forms.PictureBox EditModePictureBox;

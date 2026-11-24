@@ -16,7 +16,7 @@ public abstract class Mode
     public string FullName { get; set; } = string.Empty;
 
     [JsonIgnore]
-    public string TypeText => Type switch
+    public virtual string TypeText => Type switch
     {
         ModeType.ProcessMode => i18N.Translate("Process"),
         ModeType.ShareMode => i18N.Translate("Share"),

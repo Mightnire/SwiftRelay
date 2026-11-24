@@ -12,6 +12,7 @@ using Netch.Forms.ModeForms;
 using Netch.Interfaces;
 using Netch.Models;
 using Netch.Models.Modes;
+using Netch.Models.Modes.ProcessMode;
 using Netch.Properties;
 using Netch.Services;
 using Netch.Utils;
@@ -87,6 +88,9 @@ public partial class MainForm : Form
         var modeToolTip = new ToolTip();
         modeToolTip.SetToolTip(ModeLabel, modeTip);
         modeToolTip.SetToolTip(ModeComboBox, modeTip);
+
+        MultiModePictureBox.Image = CreateMultiModeIcon();
+        modeToolTip.SetToolTip(MultiModePictureBox, i18N.Translate("Select multiple process modes or manage mode groups"));
 
         // 隐藏 ConnectivityStatusLabel
         ConnectivityStatusVisible(false);
@@ -253,6 +257,11 @@ public partial class MainForm : Form
         Hide();
         new RouteForm().ShowDialog();
         Show();
+    }
+
+    private void MultiModeToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        OpenMultiModeForm();
     }
 
     private void ReloadModesToolStripMenuItem_Click(object sender, EventArgs e)
@@ -729,6 +738,12 @@ public partial class MainForm : Form
             return;
         }
 
+        if (mode is CompositeMode)
+        {
+            OpenMultiModeForm();
+            return;
+        }
+
         switch (mode.Type)
         {
             case ModeType.ProcessMode:
@@ -747,6 +762,96 @@ public partial class MainForm : Form
                 Utils.Utils.Open(mode.FullName);
                 break;
         }
+    }
+
+    private void MultiModePictureBox_Click(object? sender, EventArgs e)
+    {
+        OpenMultiModeForm();
+    }
+
+    private void OpenMultiModeForm()
+    {
+        IEnumerable<Redirector>? preselected = null;
+        if (ModeComboBox.SelectedItem is CompositeMode compositeMode)
+        {
+            var resolved = new List<Redirector>();
+            foreach (var subPath in compositeMode.SubModes)
+            {
+                var match = Global.Modes.OfType<Redirector>().FirstOrDefault(m =>
+                    m.FullName.EndsWith(subPath, StringComparison.OrdinalIgnoreCase) ||
+                    Path.GetFileName(m.FullName).Equals(Path.GetFileName(subPath), StringComparison.OrdinalIgnoreCase));
+                if (match != null)
+                    resolved.Add(match);
+            }
+            if (resolved.Count > 0)
+                preselected = resolved;
+        }
+        else if (ModeComboBox.SelectedItem is Redirector redirector)
+        {
+            preselected = new[] { redirector };
+        }
+
+        Hide();
+        using var form = new MultiModeForm(preselected);
+        var result = form.ShowDialog();
+        Show();
+
+        if (result == DialogResult.OK && form.ResultMode != null)
+        {
+            if (form.ResultMode is CompositeMode comp && comp.IsTemporary)
+            {
+                if (!ModeComboBox.Items.Contains(comp))
+                {
+                    ModeComboBox.Items.Add(comp);
+                }
+                ModeComboBox.SelectedItem = comp;
+            }
+            else
+            {
+                LoadModes();
+                var found = ModeComboBox.Items.OfType<Mode>().FirstOrDefault(m =>
+                    (!string.IsNullOrEmpty(form.ResultMode.FullName) && m.FullName.Equals(form.ResultMode.FullName, StringComparison.OrdinalIgnoreCase)) ||
+                    m.i18NRemark.Equals(form.ResultMode.i18NRemark, StringComparison.OrdinalIgnoreCase));
+                if (found != null)
+                {
+                    ModeComboBox.SelectedItem = found;
+                }
+            }
+        }
+    }
+
+    private static Bitmap CreateMultiModeIcon()
+    {
+        var bmp = new Bitmap(32, 32);
+        using var g = Graphics.FromImage(bmp);
+        g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+        g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+        g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
+        g.Clear(Color.Transparent);
+
+        // Back card / window
+        using var penBack = new Pen(Color.FromArgb(120, 120, 120), 2.0f);
+        g.DrawRectangle(penBack, 9, 3, 18, 18);
+
+        // Front card / window (fill with background color to occlude back card)
+        using var brushFront = new SolidBrush(SystemColors.Control);
+        g.FillRectangle(brushFront, 3, 9, 18, 18);
+
+        using var penFront = new Pen(Color.FromArgb(40, 40, 40), 2.0f);
+        g.DrawRectangle(penFront, 3, 9, 18, 18);
+
+        // Checkmark on front card
+        using var penCheck = new Pen(Color.FromArgb(0, 120, 215), 2.5f);
+        penCheck.StartCap = System.Drawing.Drawing2D.LineCap.Round;
+        penCheck.EndCap = System.Drawing.Drawing2D.LineCap.Round;
+        g.DrawLines(penCheck, new[]
+        {
+            new Point(7, 18),
+            new Point(11, 22),
+            new Point(17, 14)
+        });
+
+        return bmp;
     }
 
     private void DeleteModePictureBox_Click(object sender, EventArgs e)
@@ -929,7 +1034,8 @@ public partial class MainForm : Form
             void StartDisableItems(bool enabled)
             {
                 ServerComboBox.Enabled = ModeComboBox.Enabled = EditModePictureBox.Enabled =
-                    EditServerPictureBox.Enabled = DeleteModePictureBox.Enabled = DeleteServerPictureBox.Enabled = enabled;
+                    EditServerPictureBox.Enabled = DeleteModePictureBox.Enabled = DeleteServerPictureBox.Enabled =
+                    MultiModePictureBox.Enabled = enabled;
 
                 // 启动需要禁用的控件
                 ServerToolStripMenuItem.Enabled = ModeToolStripMenuItem.Enabled =

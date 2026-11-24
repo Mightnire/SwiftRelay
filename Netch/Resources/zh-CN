@@ -5,10 +5,8 @@
     "Process": "进程",
     "Share": "共享",
     "ModeType_Tooltip": "[1] 进程模式 (ProcessMode): 拦截并代理指定进程网络流量\n[2] 网络共享 (ShareMode): 通过网卡将代理共享给局域网主机\n[3] 网卡代理 (TunMode): 创建虚拟网卡接管特定或全部网络流量",
-
     "Missing File or runtime components": "缺少文件或运行库",
     "Please extract all files then run the program!": "请先解压所有文件再执行程序！",
-
     "Start": "启动",
     "Stop": "停止",
     "Waiting for command": "等待命令中",
@@ -23,7 +21,6 @@
     "Test failed": "测试失败",
     "Installing netfilter2 driver": "正在安装 netfilter2 驱动",
     "Assigning unicast IP": "正在分配单播 IP",
-
     "Server": "服务器",
     "Import Servers From Clipboard": "从剪贴板导入服务器",
     "Add [{0}] Server": "添加 [{0}] 服务器",
@@ -45,7 +42,6 @@
     "Handle rules": "处理规则",
     "Bypass rules": "分流规则",
     "Handle DNS through proxy": "经过代理处理 DNS",
-
     "Address": "地址",
     "Username": "用户名",
     "User": "用户",
@@ -53,7 +49,6 @@
     "Version": "版本",
     "Saved": "保存成功",
     "Remote Address": "远端地址",
-
     "Options": "选项",
     "NF Service": "NF 服务",
     "TUN/TAP driver": "TUN/TAP 驱动",
@@ -63,25 +58,19 @@
     "Clean DNS Cache": "清理 DNS 缓存",
     "DNS cache cleanup succeeded": "DNS 缓存清理成功",
     "Remove SwiftRelay Firewall Rules": "移除 SwiftRelay 防火墙规则",
-
     "Open Directory": "打开目录",
     "Show/Hide Console": "显示/隐藏控制台",
-
     "About": "关于",
     "FAQ": "常见问题",
-
     "Configuration": "配置信息",
-
     "Please press Stop button first": "请先点击停止按钮",
     "Please select a server first": "请先选择一个服务器",
     "Please select a mode first": "请先选择一个模式",
     "Please enter a profile name first": "请先为该配置设置一个名称",
     "No saved profile here. Save a profile first by Ctrl+Click on the button": "当前按钮下没有保存配置，请先使用 CTRL + 左键 点击该按钮保存一个配置",
     "Lookup Server hostname failed": "解析服务器主机名失败",
-
     "Used": "已使用",
     "Testing": "测试中",
-
     "Remark": "备注",
     "Filename": "文件名",
     "Add": "添加",
@@ -102,11 +91,9 @@
     "File already exists.\n Please Change the filename": "文件名已存在，请修改文件名",
     "Please enter a mode filename": "请输入模式的文件名",
     "Above rules does not conform to C++ regular expression syntax": "以上规则不符合 C++ 正则表达式语法",
-
     "Proxy Rule IPs": "代理规则 IP",
     "Bypass Rule IPs": "绕过规则 IP",
     "Delete": "删除",
-
     "Settings": "设置",
     "Start when opened": "打开软件时启动加速",
     "Minimize when started": "启动加速后隐藏",
@@ -139,20 +126,15 @@
     "STUN Server": "STUN 服务器",
     "Language": "语言",
     "Disable Support Warning": "停用支持警告",
-
     "Profile": "配置名",
     "Profiles": "配置",
     "None": "无",
-
     "Show": "显示",
     "Exit": "退出",
-
     "The {0} port is in use.": "{0} 端口已被占用",
     "The {0} port is reserved by system.": "{0} 端口是系统保留端口",
-
     "{0} won't get developers' support, Please do not report any issues or seek help from developers.": "{0} 将不会得到开发者的支持，请不要报告任何问题或寻求开发人员的帮助。",
     "No Support": "不受支持",
-
     "Import {0} server(s) from Clipboard": "已从剪贴板导入 {0} 个节点",
     "Import {0} server(s) form Clipboard": "已从剪贴板导入 {0} 个节点",
     "General": "常规",
@@ -182,5 +164,30 @@
     "Status": "状态",
     "Terminating": "退出中",
     "System": "跟随系统",
-    "LanguageName": "简体中文"
+    "LanguageName": "简体中文",
+    "Group": "组",
+    "Multi-Mode Selector": "多模式选择器",
+    "Multi-Mode Selector / Group Manager...": "多模式选择器 / 模式组管理...",
+    "Select multiple process modes or manage mode groups": "组合多个进程模式或管理模式组",
+    "Search mode name or process...": "搜索模式名称或进程...",
+    "Select All": "全选",
+    "Invert": "反选",
+    "Clear": "清空",
+    "Mode Name": "模式名称",
+    "Category": "分类",
+    "Rules": "规则数",
+    "Rule Preview": "规则预览",
+    "Accelerated Processes (Handle)": "加速进程 (Handle)",
+    "Bypass Rules (Bypass)": "分流直连规则 (Bypass)",
+    "Click a mode on the left to preview its rules": "点击左侧模式查看包含的加速进程与规则详情",
+    "Save as Mode Group...": "另存为模式组...",
+    "Save as Mode Group": "另存为模式组",
+    "Apply": "应用临时组合",
+    "Please enter a name for this mode group:": "请输入该模式组的名称：",
+    "Please select at least two process modes to create a group.": "请至少勾选两个进程模式以创建模式组。",
+    "Please select at least one process mode.": "请至少勾选一个进程模式。",
+    "A mode group with the same name already exists. Overwrite?": "已存在同名的模式组，是否覆盖？",
+    "Save mode group failed": "保存模式组失败",
+    "Selected: {0} mode(s)": "已选择: {0} 个模式",
+    "{0} distinct rules": "共 {0} 条独立规则"
 }

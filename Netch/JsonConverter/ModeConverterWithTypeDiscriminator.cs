@@ -24,15 +24,23 @@ public class ModeConverterWithTypeDiscriminator : JsonConverter<Mode>
             _ => throw new JsonException()
         };
 
+        var isComposite = jsonElement.TryGetProperty("subModes", out _) || jsonElement.TryGetProperty("SubModes", out _);
+
         var modeType = modeTypeEnum switch
         {
-            ModeType.ProcessMode => typeof(Redirector),
+            ModeType.ProcessMode => isComposite ? typeof(CompositeMode) : typeof(Redirector),
             ModeType.TunMode => typeof(TunMode),
             ModeType.ShareMode => typeof(ShareMode),
             _ => throw new ArgumentOutOfRangeException()
         };
 
-        return (Mode?)jsonElement.Deserialize(modeType, options);
+        var mode = (Mode?)jsonElement.Deserialize(modeType, options);
+        if (mode is CompositeMode composite)
+        {
+            composite.ResolveAndMerge();
+        }
+
+        return mode;
     }
 
     public override void Write(Utf8JsonWriter writer, Mode value, JsonSerializerOptions options)

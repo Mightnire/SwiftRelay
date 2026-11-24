@@ -5,10 +5,8 @@
     "Process": "فرآیند",
     "Share": "اشتراک",
     "ModeType_Tooltip": "[1] حالت فرآیند (ProcessMode): ترافیک فرآیندهای مشخص شده را از طریق پروکسی عبور دهید\n[2] اشتراک شبکه (ShareMode): اشتراک‌گذاری پروکسی به دستگاه‌های موجود در شبکه محلی\n[3] حالت کارت شبکه مجازی (TunMode): مسیریابی ترافیک IP از طریق کارت شبکه مجازی",
-
     "Missing File or runtime components": "فایل های لازم یا زمان اجرا یافت نشد.",
     "Please extract all files then run the program!": "تمام فایل ها را استخراج کنید تا برنامه اجرا شود!",
-
     "Start": "شروع",
     "Stop": "توقف",
     "Waiting for command": "در انتظار دستور",
@@ -23,7 +21,6 @@
     "Test failed": "آزمایش ناموفق بود",
     "Installing netfilter2 driver": "در حال نصب درایور netfilter2",
     "Assigning unicast IP": "در حال تخصیص IP یونیکست",
-
     "Server": "سرور",
     "Import Servers From Clipboard": "تنظیمات سرور را از کلیپ‌بورد وارد کنید",
     "Add [{0}] Server": "افزودن سرور [{0}]",
@@ -45,7 +42,6 @@
     "Handle rules": "قوانین پردازش",
     "Bypass rules": "قوانین دور زدن",
     "Handle DNS through proxy": "پردازش DNS از طریق پروکسی",
-
     "Address": "آدرس سرور",
     "Username": "نام کاربری",
     "User": "کاربر",
@@ -53,7 +49,6 @@
     "Version": "نسخه",
     "Saved": "ذخیره شد",
     "Remote Address": "آدرس راه دور",
-
     "Options": "گزینه‌ها",
     "NF Service": "سرویس NF",
     "TUN/TAP driver": "درایور TUN/TAP",
@@ -63,25 +58,19 @@
     "Clean DNS Cache": "پاک‌سازی حافظه پنهان DNS",
     "DNS cache cleanup succeeded": "حافظه پنهان DNS با موفقیت پاک شد",
     "Remove SwiftRelay Firewall Rules": "حذف قوانین فایروال SwiftRelay",
-
     "Open Directory": "باز کردن پوشه",
     "Show/Hide Console": "نمایش/پنهان کردن کنسول",
-
     "About": "درباره",
     "FAQ": "پرسش‌های متداول",
-
     "Configuration": "پیکربندی",
-
     "Please press Stop button first": "لطفاً ابتدا روی دکمه توقف کلیک کنید",
     "Please select a server first": "لطفاً ابتدا یک سرور را انتخاب کنید",
     "Please select a mode first": "لطفاً ابتدا یک حالت را انتخاب کنید",
     "Please enter a profile name first": "لطفاً ابتدا نامی برای پروفایل وارد کنید",
     "No saved profile here. Save a profile first by Ctrl+Click on the button": "پروفایلی ذخیره نشده است. با کلید ترکیبی Ctrl + کلیک چپ، پروفایل را ذخیره کنید",
     "Lookup Server hostname failed": "خطا در یافتن آدرس میزبان سرور",
-
     "Used": "استفاده شده",
     "Testing": "در حال آزمایش",
-
     "Remark": "توضیحات",
     "Filename": "نام فایل",
     "Add": "افزودن",
@@ -102,11 +91,9 @@
     "File already exists.\n Please Change the filename": "فایلی با این نام وجود دارد. لطفاً نام فایل را تغییر دهید",
     "Please enter a mode filename": "لطفاً نام فایل حالت را وارد کنید",
     "Above rules does not conform to C++ regular expression syntax": "قوانین بالا با ساختار عبارت منظم C++ مطابقت ندارد",
-
     "Proxy Rule IPs": "IPهای قوانین پروکسی",
     "Bypass Rule IPs": "IPهای قوانین دور زدن",
     "Delete": "حذف",
-
     "Settings": "تنظیمات",
     "Start when opened": "راه‌اندازی خودکار هنگام باز شدن برنامه",
     "Minimize when started": "کمینه کردن پنجره پس از شروع",
@@ -139,21 +126,42 @@
     "STUN Server": "سرور STUN",
     "Language": "زبان",
     "Disable Support Warning": "غیرفعال‌سازی هشدار پشتیبانی",
-
     "Profile": "پروفایل",
     "Profiles": "پروفایل‌ها",
     "None": "هیچ‌کدام",
-
     "Show": "نمایش",
     "Exit": "خروج",
-
     "The {0} port is in use.": "پورت {0} در حال حاضر استفاده می‌شود",
     "The {0} port is reserved by system.": "پورت {0} توسط سیستم رزرو شده است",
-
     "{0} won't get developers' support, Please do not report any issues or seek help from developers.": "{0} مورد پشتیبانی توسعه‌دهندگان قرار نمی‌گیرد.",
     "No Support": "پشتیبانی نمی‌شود",
     "Please enter a server address": "لطفاً آدرس سرور را وارد کنید",
     "Please enter a valid port (1-65535)": "لطفاً یک پورت معتبر وارد کنید (1-65535)",
     "System": "سیستم",
-    "LanguageName": "فارسی"
+    "LanguageName": "فارسی",
+    "Group": "گروه",
+    "Multi-Mode Selector": "انتخابگر چندحالتی",
+    "Multi-Mode Selector / Group Manager...": "انتخابگر چندحالتی / مدیریت گروه‌ها...",
+    "Select multiple process modes or manage mode groups": "ترکیب چند حالت پردازش یا مدیریت گروه‌ها",
+    "Search mode name or process...": "جستجوی نام حالت یا پردازش...",
+    "Select All": "انتخاب همه",
+    "Invert": "معکوس",
+    "Clear": "پاک کردن",
+    "Mode Name": "نام حالت",
+    "Category": "دسته‌بندی",
+    "Rules": "قوانین",
+    "Rule Preview": "پیش‌نمایش قوانین",
+    "Accelerated Processes (Handle)": "پردازش‌های تحت شتاب (Handle)",
+    "Bypass Rules (Bypass)": "قوانین دور زدن (Bypass)",
+    "Click a mode on the left to preview its rules": "برای پیش‌نمایش قوانین، حالتی را از سمت چپ انتخاب کنید",
+    "Save as Mode Group...": "ذخیره به عنوان گروه حالت...",
+    "Save as Mode Group": "ذخیره به عنوان گروه حالت",
+    "Apply": "اعمال موقت",
+    "Please enter a name for this mode group:": "لطفاً نامی برای این گروه حالت وارد کنید:",
+    "Please select at least two process modes to create a group.": "لطفاً حداقل دو حالت پردازش را برای ایجاد گروه انتخاب کنید.",
+    "Please select at least one process mode.": "لطفاً حداقل یک حالت پردازش را انتخاب کنید.",
+    "A mode group with the same name already exists. Overwrite?": "گروهی با این نام از قبل وجود دارد. آیا جایگزین شود؟",
+    "Save mode group failed": "ذخیره گروه حالت ناموفق بود",
+    "Selected: {0} mode(s)": "انتخاب شده: {0} حالت",
+    "{0} distinct rules": "{0} قانون متمایز"
 }

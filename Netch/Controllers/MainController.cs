@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.Threading;
 using Netch.Interfaces;
 using Netch.Models;
 using Netch.Models.Modes;
+using Netch.Models.Modes.ProcessMode;
 using Netch.Servers;
 using Netch.Services;
 using Netch.Utils;
@@ -43,6 +44,9 @@ public static class MainController
 
         try
         {
+            if (mode is CompositeMode compositeMode)
+                compositeMode.ResolveAndMerge();
+
             ModeController = ModeService.GetModeControllerByType(mode.Type, out var modePort, out var portName);
 
             if (modePort != null)
