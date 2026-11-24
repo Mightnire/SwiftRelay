@@ -1,4 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Windows.Forms;
 using Netch.Models.Modes;
 using Netch.Models.Modes.ProcessMode;
 using Netch.Services;
@@ -91,5 +92,45 @@ public class CompositeModeTests
     {
         var comp = new CompositeMode();
         Assert.IsTrue(comp.TypeText.Contains("组") || comp.TypeText.Contains("Group"));
+    }
+
+    [TestMethod]
+    public void MultiModeForm_Layout_VerifyRender()
+    {
+        var tcs = new TaskCompletionSource();
+        var thread = new Thread(() =>
+        {
+            try
+            {
+                using var form = new Netch.Forms.ModeForms.MultiModeForm();
+                form.StartPosition = FormStartPosition.Manual;
+                form.Location = new System.Drawing.Point(-2000, -2000);
+                form.Show();
+                form.Size = new System.Drawing.Size(820, 560);
+                Application.DoEvents();
+
+                void Dump(Control c, string indent)
+                {
+                    Console.WriteLine($"{indent}{c.GetType().Name} [{c.Name}] Text='{c.Text}' Bounds={c.Bounds}");
+                    foreach (Control child in c.Controls)
+                        Dump(child, indent + "  ");
+                }
+                Dump(form, "");
+
+                using var bmp = new System.Drawing.Bitmap(form.Width, form.Height);
+                form.DrawToBitmap(bmp, new System.Drawing.Rectangle(0, 0, form.Width, form.Height));
+                bmp.Save(@"C:\Users\mightnire\.gemini\antigravity\brain\e2001d2d-4e92-4c6b-843b-1ee7e90a765d\multi_mode_preview_fixed.png");
+
+                form.Close();
+                tcs.SetResult();
+            }
+            catch (Exception ex)
+            {
+                tcs.SetException(ex);
+            }
+        });
+        thread.SetApartmentState(ApartmentState.STA);
+        thread.Start();
+        tcs.Task.Wait(5000);
     }
 }

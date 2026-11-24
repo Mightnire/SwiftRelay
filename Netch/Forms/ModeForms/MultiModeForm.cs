@@ -58,16 +58,14 @@ public class MultiModeForm : Form
         var bottomPanel = new Panel
         {
             Dock = DockStyle.Bottom,
-            Height = 52,
-            Padding = new Padding(12, 10, 12, 10)
+            Height = 48,
+            Padding = new Padding(12, 8, 12, 8)
         };
 
         _splitContainer = new SplitContainer
         {
             Dock = DockStyle.Fill,
-            SplitterDistance = 430,
-            SplitterWidth = 6,
-            FixedPanel = FixedPanel.Panel1
+            SplitterWidth = 6
         };
 
         // ----------------- Left Panel (Mode List) -----------------
@@ -94,33 +92,37 @@ public class MultiModeForm : Form
             Dock = DockStyle.Top,
             Height = 32,
             FlowDirection = FlowDirection.LeftToRight,
+            WrapContents = false,
             Padding = new Padding(0, 4, 0, 4)
         };
 
         _btnSelectAll = new Button
         {
             Text = i18N.Translate("Select All"),
-            AutoSize = true,
+            Width = 65,
             Height = 24,
-            FlatStyle = FlatStyle.System
+            FlatStyle = FlatStyle.System,
+            Margin = new Padding(0, 0, 4, 0)
         };
         _btnSelectAll.Click += BtnSelectAll_Click;
 
         _btnInvert = new Button
         {
             Text = i18N.Translate("Invert"),
-            AutoSize = true,
+            Width = 65,
             Height = 24,
-            FlatStyle = FlatStyle.System
+            FlatStyle = FlatStyle.System,
+            Margin = new Padding(0, 0, 4, 0)
         };
         _btnInvert.Click += BtnInvert_Click;
 
         _btnClear = new Button
         {
             Text = i18N.Translate("Clear"),
-            AutoSize = true,
+            Width = 65,
             Height = 24,
-            FlatStyle = FlatStyle.System
+            FlatStyle = FlatStyle.System,
+            Margin = new Padding(0, 0, 0, 0)
         };
         _btnClear.Click += BtnClear_Click;
 
@@ -139,9 +141,9 @@ public class MultiModeForm : Form
             BorderStyle = BorderStyle.FixedSingle,
             HeaderStyle = ColumnHeaderStyle.Nonclickable
         };
-        _modeListView.Columns.Add(i18N.Translate("Mode Name"), 230);
-        _modeListView.Columns.Add(i18N.Translate("Category"), 90);
-        _modeListView.Columns.Add(i18N.Translate("Rules"), 65, HorizontalAlignment.Right);
+        _modeListView.Columns.Add(i18N.Translate("Mode Name"), 210);
+        _modeListView.Columns.Add(i18N.Translate("Category"), 85);
+        _modeListView.Columns.Add(i18N.Translate("Rules"), 55, HorizontalAlignment.Right);
 
         _modeListView.ItemChecked += ModeListView_ItemChecked;
         _modeListView.SelectedIndexChanged += ModeListView_SelectedIndexChanged;
@@ -241,40 +243,20 @@ public class MultiModeForm : Form
         rightPanel.Controls.Add(previewGroupBox);
 
         // ----------------- Bottom Control Bar -----------------
-        _lblCount = new Label
-        {
-            Dock = DockStyle.Left,
-            AutoSize = true,
-            TextAlign = ContentAlignment.MiddleLeft,
-            Font = new Font("Microsoft YaHei UI", 9F, FontStyle.Bold),
-            ForeColor = Color.FromArgb(40, 40, 40),
-            Text = i18N.Translate("Selected: 0 modes")
-        };
-
-        _lblRulesSummary = new Label
-        {
-            Dock = DockStyle.Left,
-            AutoSize = true,
-            TextAlign = ContentAlignment.MiddleLeft,
-            ForeColor = Color.Gray,
-            Padding = new Padding(12, 0, 0, 0),
-            Text = ""
-        };
-
-        var rightButtonPanel = new FlowLayoutPanel
+        var rightButtonPanel = new Panel
         {
             Dock = DockStyle.Right,
-            AutoSize = true,
-            FlowDirection = FlowDirection.LeftToRight
+            Width = 345,
+            Height = 32
         };
 
         _btnSaveAsGroup = new Button
         {
             Text = i18N.Translate("Save as Mode Group..."),
             Height = 30,
-            Width = 135,
-            FlatStyle = FlatStyle.System,
-            Margin = new Padding(4, 0, 4, 0)
+            Width = 150,
+            Location = new Point(0, 1),
+            FlatStyle = FlatStyle.System
         };
         _btnSaveAsGroup.Click += BtnSaveAsGroup_Click;
 
@@ -283,8 +265,8 @@ public class MultiModeForm : Form
             Text = i18N.Translate("Apply"),
             Height = 30,
             Width = 85,
-            FlatStyle = FlatStyle.System,
-            Margin = new Padding(4, 0, 4, 0)
+            Location = new Point(158, 1),
+            FlatStyle = FlatStyle.System
         };
         _btnApply.Click += BtnApply_Click;
 
@@ -293,8 +275,8 @@ public class MultiModeForm : Form
             Text = i18N.Translate("Cancel"),
             Height = 30,
             Width = 80,
-            FlatStyle = FlatStyle.System,
-            Margin = new Padding(4, 0, 0, 0)
+            Location = new Point(251, 1),
+            FlatStyle = FlatStyle.System
         };
         _btnCancel.Click += (_, _) => { DialogResult = DialogResult.Cancel; Close(); };
 
@@ -302,8 +284,35 @@ public class MultiModeForm : Form
         rightButtonPanel.Controls.Add(_btnApply);
         rightButtonPanel.Controls.Add(_btnCancel);
 
-        bottomPanel.Controls.Add(_lblRulesSummary);
-        bottomPanel.Controls.Add(_lblCount);
+        var leftInfoPanel = new FlowLayoutPanel
+        {
+            Dock = DockStyle.Fill,
+            FlowDirection = FlowDirection.LeftToRight,
+            WrapContents = false,
+            Padding = new Padding(0, 4, 0, 0)
+        };
+
+        _lblCount = new Label
+        {
+            AutoSize = true,
+            Font = new Font("Microsoft YaHei UI", 9F, FontStyle.Bold),
+            ForeColor = Color.FromArgb(40, 40, 40),
+            Text = i18N.Translate("Selected: 0 modes"),
+            Margin = new Padding(0, 3, 8, 0)
+        };
+
+        _lblRulesSummary = new Label
+        {
+            AutoSize = true,
+            ForeColor = Color.Gray,
+            Text = "",
+            Margin = new Padding(0, 3, 0, 0)
+        };
+
+        leftInfoPanel.Controls.Add(_lblCount);
+        leftInfoPanel.Controls.Add(_lblRulesSummary);
+
+        bottomPanel.Controls.Add(leftInfoPanel);
         bottomPanel.Controls.Add(rightButtonPanel);
 
         Controls.Add(_splitContainer);
@@ -311,6 +320,35 @@ public class MultiModeForm : Form
 
         AcceptButton = _btnApply;
         CancelButton = _btnCancel;
+    }
+
+    protected override void OnLoad(EventArgs e)
+    {
+        base.OnLoad(e);
+        try
+        {
+            if (_splitContainer.Width > 560)
+            {
+                _splitContainer.Panel1MinSize = 280;
+                _splitContainer.Panel2MinSize = 280;
+
+                var desiredDistance = (int)(ClientSize.Width * 0.46);
+                if (desiredDistance >= _splitContainer.Panel1MinSize &&
+                    desiredDistance <= _splitContainer.Width - _splitContainer.Panel2MinSize)
+                {
+                    _splitContainer.SplitterDistance = desiredDistance;
+                }
+                else
+                {
+                    _splitContainer.SplitterDistance = Math.Max(_splitContainer.Panel1MinSize, 380);
+                }
+                _splitContainer.FixedPanel = FixedPanel.Panel1;
+            }
+        }
+        catch (Exception ex)
+        {
+            Log.Warning(ex, "Failed to set SplitContainer.SplitterDistance");
+        }
     }
 
     private void LoadModes(IEnumerable<Redirector>? preselected)
