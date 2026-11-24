@@ -72,6 +72,7 @@ public partial class MainForm : Form
     {
         // 计算 ComboBox绘制 目标宽度
         RecordSize();
+        ServerComboBox.SizeChanged += (_, _) => RecordSize();
 
         LoadServers();
         SelectLastServer();
