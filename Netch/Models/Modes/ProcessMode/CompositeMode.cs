@@ -11,9 +11,13 @@ public class CompositeMode : Redirector
     public bool IsTemporary { get; set; }
 
     [JsonIgnore]
-    public override string TypeText => i18N.Translate("Group");
+    public override string TypeText => $"{i18N.Translate("Process")}][{i18N.Translate("Mode Group")}";
 
-    public override string ToString() => $"[1·{TypeText}] {i18NRemark}";
+    public override string ToString()
+    {
+        var tempSuffix = IsTemporary ? $" ({i18N.Translate("Temporary")})" : "";
+        return $"[1·{TypeText}] {i18NRemark}{tempSuffix}";
+    }
 
     public static CompositeMode FromModes(IEnumerable<Redirector> modes, string remark, bool isTemp = false)
     {

@@ -12,6 +12,8 @@ public class MultiModeForm : Form
     private readonly List<Redirector> _allProcessModes = new();
     private readonly HashSet<Redirector> _checkedModes = new();
     private bool _updatingCheckState;
+    private int _sortColumn;
+    private bool _sortAscending = true;
 
     // Controls
     private SplitContainer _splitContainer = null!;
@@ -139,14 +141,15 @@ public class MultiModeForm : Form
             MultiSelect = false,
             GridLines = false,
             BorderStyle = BorderStyle.FixedSingle,
-            HeaderStyle = ColumnHeaderStyle.Nonclickable
+            HeaderStyle = ColumnHeaderStyle.Clickable
         };
-        _modeListView.Columns.Add(i18N.Translate("Mode Name"), 210);
-        _modeListView.Columns.Add(i18N.Translate("Category"), 85);
-        _modeListView.Columns.Add(i18N.Translate("Rules"), 55, HorizontalAlignment.Right);
+        _modeListView.Columns.Add(i18N.Translate("Mode Name"), 220);
+        _modeListView.Columns.Add(i18N.Translate("Category"), 90);
+        _modeListView.Columns.Add(i18N.Translate("Rules"), 65, HorizontalAlignment.Right);
 
         _modeListView.ItemChecked += ModeListView_ItemChecked;
         _modeListView.SelectedIndexChanged += ModeListView_SelectedIndexChanged;
+        _modeListView.ColumnClick += ModeListView_ColumnClick;
 
         leftPanel.Controls.Add(_modeListView);
         leftPanel.Controls.Add(quickActionPanel);
@@ -195,8 +198,8 @@ public class MultiModeForm : Form
             Dock = DockStyle.Fill
         };
 
-        _tabHandle = new TabPage(i18N.Translate("Accelerated Processes (Handle)"));
-        _tabBypass = new TabPage(i18N.Translate("Bypass Rules (Bypass)"));
+        _tabHandle = new TabPage(i18N.Translate("Accelerated Processes"));
+        _tabBypass = new TabPage(i18N.Translate("Bypass Rules"));
 
         _txtHandle = new TextBox
         {
@@ -329,10 +332,10 @@ public class MultiModeForm : Form
         {
             if (_splitContainer.Width > 560)
             {
-                _splitContainer.Panel1MinSize = 280;
-                _splitContainer.Panel2MinSize = 280;
+                _splitContainer.Panel1MinSize = 340;
+                _splitContainer.Panel2MinSize = 260;
 
-                var desiredDistance = (int)(ClientSize.Width * 0.46);
+                var desiredDistance = (int)(ClientSize.Width * 0.54);
                 if (desiredDistance >= _splitContainer.Panel1MinSize &&
                     desiredDistance <= _splitContainer.Width - _splitContainer.Panel2MinSize)
                 {
@@ -340,7 +343,7 @@ public class MultiModeForm : Form
                 }
                 else
                 {
-                    _splitContainer.SplitterDistance = Math.Max(_splitContainer.Panel1MinSize, 380);
+                    _splitContainer.SplitterDistance = 430;
                 }
                 _splitContainer.FixedPanel = FixedPanel.Panel1;
             }
@@ -349,6 +352,64 @@ public class MultiModeForm : Form
         {
             Log.Warning(ex, "Failed to set SplitContainer.SplitterDistance");
         }
+    }
+
+    private void ModeListView_ColumnClick(object? sender, ColumnClickEventArgs e)
+    {
+        if (_sortColumn == e.Column)
+        {
+            _sortAscending = !_sortAscending;
+        }
+        else
+        {
+            _sortColumn = e.Column;
+            _sortAscending = true;
+        }
+
+        SortModes();
+        UpdateColumnHeaders();
+        RefreshListView();
+    }
+
+    private void UpdateColumnHeaders()
+    {
+        var colNames = new[] { i18N.Translate("Mode Name"), i18N.Translate("Category"), i18N.Translate("Rules") };
+        for (var i = 0; i < _modeListView.Columns.Count && i < colNames.Length; i++)
+        {
+            if (i == _sortColumn)
+                _modeListView.Columns[i].Text = $"{colNames[i]} {(_sortAscending ? "▲" : "▼")}";
+            else
+                _modeListView.Columns[i].Text = colNames[i];
+        }
+    }
+
+    private void SortModes()
+    {
+        _allProcessModes.Sort((a, b) =>
+        {
+            int cmp;
+            switch (_sortColumn)
+            {
+                case 1: // Category
+                    var catA = Path.GetDirectoryName(ModeService.Instance.GetRelativePath(a.FullName)) ?? "-";
+                    var catB = Path.GetDirectoryName(ModeService.Instance.GetRelativePath(b.FullName)) ?? "-";
+                    cmp = string.Compare(catA, catB, StringComparison.OrdinalIgnoreCase);
+                    if (cmp == 0)
+                        cmp = string.Compare(a.i18NRemark, b.i18NRemark, StringComparison.OrdinalIgnoreCase);
+                    break;
+                case 2: // Rules count
+                    cmp = a.Handle.Count.CompareTo(b.Handle.Count);
+                    if (cmp == 0)
+                        cmp = string.Compare(a.i18NRemark, b.i18NRemark, StringComparison.OrdinalIgnoreCase);
+                    break;
+                case 0: // Mode Name
+                default:
+                    cmp = string.Compare(a.i18NRemark, b.i18NRemark, StringComparison.OrdinalIgnoreCase);
+                    break;
+            }
+
+            return _sortAscending ? cmp : -cmp;
+        });
     }
 
     private void LoadModes(IEnumerable<Redirector>? preselected)
@@ -368,8 +429,8 @@ public class MultiModeForm : Form
             _allProcessModes.Add(mode);
         }
 
-        // Sort by category then name
-        _allProcessModes.Sort((a, b) => string.Compare(a.i18NRemark, b.i18NRemark, StringComparison.OrdinalIgnoreCase));
+        SortModes();
+        UpdateColumnHeaders();
 
         RefreshListView();
         UpdateSelectionSummary();
@@ -579,8 +640,7 @@ public class MultiModeForm : Form
             if (_checkedModes.Count > 2)
                 summaryName += $" (+{_checkedModes.Count - 2})";
 
-            var remark = $"[组] {summaryName}";
-            ResultMode = CompositeMode.FromModes(_checkedModes, remark, isTemp: true);
+            ResultMode = CompositeMode.FromModes(_checkedModes, summaryName, isTemp: true);
         }
 
         DialogResult = DialogResult.OK;

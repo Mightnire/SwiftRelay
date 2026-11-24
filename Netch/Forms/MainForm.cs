@@ -90,7 +90,7 @@ public partial class MainForm : Form
         modeToolTip.SetToolTip(ModeComboBox, modeTip);
 
         MultiModePictureBox.Image = CreateMultiModeIcon();
-        modeToolTip.SetToolTip(MultiModePictureBox, i18N.Translate("Select multiple process modes or manage mode groups"));
+        modeToolTip.SetToolTip(MultiModePictureBox, i18N.Translate("Run multiple modes simultaneously / Mode group management"));
 
         // 隐藏 ConnectivityStatusLabel
         ConnectivityStatusVisible(false);

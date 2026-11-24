@@ -88,10 +88,22 @@ public class CompositeModeTests
     }
 
     [TestMethod]
-    public void CompositeMode_TypeText_ReturnsGroupBadge()
+    public void CompositeMode_ToString_IncludesProcessAndGroupBadgeAndTempSuffix()
     {
-        var comp = new CompositeMode();
-        Assert.IsTrue(comp.TypeText.Contains("组") || comp.TypeText.Contains("Group"));
+        var comp = new CompositeMode
+        {
+            IsTemporary = true,
+            Remark = new() { { "en", "Test Group" }, { "zh-CN", "测试组" } }
+        };
+
+        var str = comp.ToString();
+        Assert.IsTrue(str.Contains("[1·") || str.Contains("[1]"));
+        Assert.IsTrue(str.Contains("组") || str.Contains("Group"));
+        Assert.IsTrue(str.Contains("临") || str.Contains("Temp"));
+
+        comp.IsTemporary = false;
+        var permStr = comp.ToString();
+        Assert.IsFalse(permStr.Contains("临") || permStr.Contains("Temp"));
     }
 
     [TestMethod]

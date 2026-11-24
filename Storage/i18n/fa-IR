@@ -163,5 +163,13 @@
     "A mode group with the same name already exists. Overwrite?": "گروهی با این نام از قبل وجود دارد. آیا جایگزین شود؟",
     "Save mode group failed": "ذخیره گروه حالت ناموفق بود",
     "Selected: {0} mode(s)": "انتخاب شده: {0} حالت",
-    "{0} distinct rules": "{0} قانون متمایز"
+    "{0} distinct rules": "{0} قانون متمایز",
+    "Run multiple modes simultaneously / Mode group management": "اجرای همزمان چند حالت / مدیریت گروه‌ها",
+    "Accelerated Processes": "پردازش‌های تحت شتاب",
+    "Bypass Rules": "قوانین دور زدن",
+    "Auto": "خودکار",
+    "On": "روشن",
+    "Off": "خاموش",
+    "Mode Group": "گروه حالت",
+    "Temporary": "موقت"
 }

@@ -163,5 +163,13 @@
     "A mode group with the same name already exists. Overwrite?": "同名のモードグループが既に存在します。上書きしますか？",
     "Save mode group failed": "モードグループの保存に失敗しました",
     "Selected: {0} mode(s)": "選択中: {0} 個のモード",
-    "{0} distinct rules": "合計 {0} 件の一意のルール"
+    "{0} distinct rules": "合計 {0} 件の一意のルール",
+    "Run multiple modes simultaneously / Mode group management": "複数のモードを同時に実行 / グループ管理",
+    "Accelerated Processes": "プロキシ対象プロセス",
+    "Bypass Rules": "バイパスルール",
+    "Auto": "自動",
+    "On": "オン",
+    "Off": "オフ",
+    "Mode Group": "モードグループ",
+    "Temporary": "一時"
 }

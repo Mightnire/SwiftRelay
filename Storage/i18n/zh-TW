@@ -189,5 +189,13 @@
     "A mode group with the same name already exists. Overwrite?": "已存在同名的模式組，是否覆蓋？",
     "Save mode group failed": "保存模式組失敗",
     "Selected: {0} mode(s)": "已選擇: {0} 個模式",
-    "{0} distinct rules": "共 {0} 條獨立規則"
+    "{0} distinct rules": "共 {0} 條獨立規則",
+    "Run multiple modes simultaneously / Mode group management": "同時運行多個模式 / 組合管理",
+    "Accelerated Processes": "加速進程",
+    "Bypass Rules": "分流規則",
+    "Auto": "自動",
+    "On": "開啟",
+    "Off": "關閉",
+    "Mode Group": "模式組",
+    "Temporary": "臨時"
 }
