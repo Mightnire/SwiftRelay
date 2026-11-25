@@ -25,8 +25,14 @@ public partial class MainForm : Form
     #region Start
 
     private readonly Dictionary<string, object> _mainFormText = new();
+    private readonly NativeMenuHelper _nativeMenu = new();
+    private readonly List<NativeMenuHelper.ServerAddEntry> _serverAddEntries = new();
 
     private bool _textRecorded;
+    private bool _coreIdleEnabled = true;
+    private bool _newVersionVisible;
+    private bool _newVersionEnabled = true;
+    private string _newVersionText = string.Empty;
 
     public MainForm()
     {
@@ -41,8 +47,6 @@ public partial class MainForm : Form
         if (Flags.NoSupport)
             _mainFormText.Add(Name, new[] { "{0} ({1})", "SwiftRelay", "No Support" });
 
-        _mainFormText.Add(UninstallServiceToolStripMenuItem.Name, new[] { "Uninstall {0}", "NF Service" });
-
         #endregion
 
         // 监听电源事件
@@ -53,19 +57,62 @@ public partial class MainForm : Form
     {
         foreach (var serversUtil in ServerHelper.ServerUtilDictionary.Values.OrderBy(i => i.Priority).Where(i => !string.IsNullOrEmpty(i.FullName)))
         {
-            var fullName = serversUtil.FullName;
-            var control = new ToolStripMenuItem
-            {
-                Name = $"Add{fullName}ServerToolStripMenuItem",
-                Size = new Size(259, 22),
-                Text = i18N.TranslateFormat("Add [{0}] Server...", fullName),
-                Tag = serversUtil
-            };
-
-            _mainFormText.Add(control.Name, new[] { "Add [{0}] Server...", fullName });
-            control.Click += AddServerToolStripMenuItem_Click;
-            ServerToolStripMenuItem.DropDownItems.Add(control);
+            var util = serversUtil;
+            _serverAddEntries.Add(new NativeMenuHelper.ServerAddEntry(util.FullName, () => CreateServer(util)));
         }
+    }
+
+    protected override void OnHandleCreated(EventArgs e)
+    {
+        base.OnHandleCreated(e);
+        RebuildNativeMenu();
+    }
+
+    protected override void OnHandleDestroyed(EventArgs e)
+    {
+        _nativeMenu.Dispose();
+        base.OnHandleDestroyed(e);
+    }
+
+    protected override void WndProc(ref Message m)
+    {
+        if (_nativeMenu.TryExecuteCommand(this, ref m))
+            return;
+
+        base.WndProc(ref m);
+    }
+
+    private void RebuildNativeMenu()
+    {
+        if (!IsHandleCreated)
+            return;
+
+        _nativeMenu.AttachOrRebuild(this, new NativeMenuHelper.MenuSpec
+        {
+            CoreIdleEnabled = _coreIdleEnabled,
+            OnImportServersFromClipboard = () => ImportServersFromClipboardToolStripMenuItem_Click(this, EventArgs.Empty),
+            ServerAddItems = _serverAddEntries,
+            OnCreateProcessMode = () => CreateProcessModeToolStripButton_Click(this, EventArgs.Empty),
+            OnCreateRouteTableMode = () => createRouteTableModeToolStripMenuItem_Click(this, EventArgs.Empty),
+            OnMultiMode = () => MultiModeToolStripMenuItem_Click(this, EventArgs.Empty),
+            OnReloadModes = () => ReloadModesToolStripMenuItem_Click(this, EventArgs.Empty),
+            OnOpenDirectory = () => OpenDirectoryToolStripMenuItem_Click(this, EventArgs.Empty),
+            OnShowHideConsole = () => ShowHideConsoleToolStripMenuItem_Click(this, EventArgs.Empty),
+            OnCleanDnsCache = () => CleanDNSCacheToolStripMenuItem_Click(this, EventArgs.Empty),
+            OnVerifyBinFiles = () => VerifyBinFilesToolStripMenuItem_Click(this, EventArgs.Empty),
+            OnUninstallService = () => UninstallServiceToolStripMenuItem_Click(this, EventArgs.Empty),
+            OnRemoveFirewallRules = () => RemoveNetchFirewallRulesToolStripMenuItem_Click(this, EventArgs.Empty),
+            OnCheckForUpdates = () => CheckForUpdatesToolStripMenuItem_Click(this, EventArgs.Empty),
+            OnFaq = () => fAQToolStripMenuItem_Click(this, EventArgs.Empty),
+            OnExit = () => ForceExitToolStripMenuItem_Click(this, EventArgs.Empty),
+            VersionText = UpdateChecker.Version,
+            OnVersionClick = () => VersionLabel_Click(this, EventArgs.Empty),
+            NewVersionVisible = _newVersionVisible,
+            NewVersionEnabled = _newVersionEnabled,
+            NewVersionText = _newVersionText,
+            OnNewVersionClick = () => NewVersionLabel_Click(this, EventArgs.Empty),
+            OnAboutClick = () => AboutToolStripButton_Click(this, EventArgs.Empty)
+        });
     }
 
     private void MainForm_Load(object sender, EventArgs e)
@@ -95,7 +142,6 @@ public partial class MainForm : Form
 
         // 加载快速配置
         LoadProfiles();
-        ModernMenuRenderer.Apply(MenuStrip, NotifyMenu, LogicalToDeviceUnits);
         UpdateComboBoxItemHeights();
         SyncContentBounds();
 
@@ -126,10 +172,10 @@ public partial class MainForm : Form
 
     private void SyncContentBounds()
     {
-        flowLayoutPanel1.Top = MenuStrip.Bottom + LogicalToDeviceUnits(4);
+        flowLayoutPanel1.Top = LogicalToDeviceUnits(6);
         flowLayoutPanel1.Margin = new Padding(
             LogicalToDeviceUnits(12),
-            LogicalToDeviceUnits(4),
+            LogicalToDeviceUnits(6),
             LogicalToDeviceUnits(12),
             StatusStrip.Height + LogicalToDeviceUnits(4));
     }
@@ -171,7 +217,6 @@ public partial class MainForm : Form
             }
 
             Utils.Utils.ComponentIterator(this, RecordText);
-            Utils.Utils.ComponentIterator(NotifyMenu, RecordText);
             _textRecorded = true;
         }
 
@@ -212,13 +257,14 @@ public partial class MainForm : Form
         }
 
         Utils.Utils.ComponentIterator(this, TranslateText);
-        Utils.Utils.ComponentIterator(NotifyMenu, TranslateText);
 
         #endregion
 
         UsedBandwidthLabel.Text = $@"{i18N.Translate("Used", ": ")}0 KB";
         State = State;
-        VersionLabel.Text = UpdateChecker.Version;
+        if (_newVersionVisible && _newVersionEnabled)
+            _newVersionText = i18N.Translate("New version available");
+        RebuildNativeMenu();
     }
 
     #endregion
@@ -246,13 +292,8 @@ public partial class MainForm : Form
         await Configuration.SaveAsync();
     }
 
-    private async void AddServerToolStripMenuItem_Click([NotNull] object? sender, EventArgs? e)
+    private async void CreateServer(IServerUtil util)
     {
-        if (sender == null)
-            throw new ArgumentNullException(nameof(sender));
-
-        var util = (IServerUtil)((ToolStripMenuItem)sender).Tag;
-
         Hide();
         util.Create();
 
@@ -417,13 +458,18 @@ public partial class MainForm : Form
             return;
 
         NotifyTip(i18N.Translate("Start downloading new version"));
-        NewVersionLabel.Enabled = false;
-        NewVersionLabel.Text = "...";
+        _newVersionEnabled = false;
+        _newVersionText = "...";
+        _nativeMenu.UpdateNewVersionItemText(this, _newVersionText, false);
 
         try
         {
             var progress = new Progress<int>();
-            progress.ProgressChanged += (_, percentage) => { NewVersionLabel.Text = $"{percentage}%"; };
+            progress.ProgressChanged += (_, percentage) =>
+            {
+                _newVersionText = $"{percentage}%";
+                _nativeMenu.UpdateNewVersionItemText(this, _newVersionText, false);
+            };
 
             string downloadDirectory = Path.Combine(Global.NetchDir, "data");
 
@@ -482,8 +528,10 @@ public partial class MainForm : Form
         }
         finally
         {
-            NewVersionLabel.Visible = false;
-            NewVersionLabel.Enabled = true;
+            _newVersionVisible = false;
+            _newVersionEnabled = true;
+            _newVersionText = string.Empty;
+            RebuildNativeMenu();
         }
     }
 
@@ -1062,8 +1110,8 @@ public partial class MainForm : Form
                     MultiModePictureBox.Enabled = enabled;
 
                 // 启动需要禁用的控件
-                ServerToolStripMenuItem.Enabled = ModeToolStripMenuItem.Enabled =
-                    UninstallServiceToolStripMenuItem.Enabled = enabled;
+                _coreIdleEnabled = enabled;
+                _nativeMenu.SetCoreIdleEnabled(this, enabled);
             }
 
             _state = value;
@@ -1361,7 +1409,7 @@ public partial class MainForm : Form
         {
             MessageBoxX.Show(i18N.Translate("Please press Stop button first"));
 
-            ShowMainFormToolStripButton.PerformClick();
+            Utils.Utils.ActivateVisibleWindows();
             return;
         }
 
@@ -1423,9 +1471,10 @@ public partial class MainForm : Form
         void OnUpdateCheckerOnNewVersionFound(object? o, EventArgs? eventArgs)
         {
             NotifyTip($"{i18N.Translate(@"New version available", ": ")}{UpdateChecker.LatestVersionNumber}");
-            NewVersionLabel.Text = i18N.Translate("New version available");
-            NewVersionLabel.Enabled = true;
-            NewVersionLabel.Visible = true;
+            _newVersionText = i18N.Translate("New version available");
+            _newVersionEnabled = true;
+            _newVersionVisible = true;
+            RebuildNativeMenu();
         }
     }
 
@@ -1471,22 +1520,15 @@ public partial class MainForm : Form
 
     #region NotifyIcon
 
-    private void ShowMainFormToolStripButton_Click(object sender, EventArgs e)
+    private void NotifyIcon_MouseUp(object? sender, MouseEventArgs e)
     {
-        Utils.Utils.ActivateVisibleWindows();
-    }
-
-    /// <summary>
-    ///     通知图标右键菜单退出
-    /// </summary>
-    private void ExitToolStripButton_Click(object sender, EventArgs e)
-    {
-        Exit();
+        if (e.Button == MouseButtons.Right)
+            NativeMenuHelper.ShowTrayContextMenu(this, Utils.Utils.ActivateVisibleWindows, () => Exit());
     }
 
     private void NotifyIcon_MouseDoubleClick(object? sender, MouseEventArgs? e)
     {
-        ShowMainFormToolStripButton.PerformClick();
+        Utils.Utils.ActivateVisibleWindows();
     }
 
     public void NotifyTip(string text, int timeout = 0, bool info = true)

@@ -29,28 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.MenuStrip = new System.Windows.Forms.MenuStrip();
-            this.ServerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ImportServersFromClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.CreateProcessModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.CreateRouteTableRuleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.MultiModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ReloadModesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.OptionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.OpenDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ShowHideConsoleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.CleanDNSCacheToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.VerifyBinFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.UninstallServiceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.RemoveNetchFirewallRulesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.HelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.CheckForUpdateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.FAQToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ForceExitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.AboutToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.NewVersionLabel = new System.Windows.Forms.ToolStripLabel();
-            this.VersionLabel = new System.Windows.Forms.ToolStripLabel();
             this.ConfigurationGroupBox = new System.Windows.Forms.GroupBox();
             this.configLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.ProfileLabel = new System.Windows.Forms.Label();
@@ -79,15 +57,11 @@
             this.NatTypeStatusLightLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.ControlButton = new System.Windows.Forms.Button();
             this.NotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
-            this.NotifyMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.ShowMainFormToolStripButton = new System.Windows.Forms.ToolStripMenuItem();
-            this.ExitToolStripButton = new System.Windows.Forms.ToolStripMenuItem();
             this.SettingsButton = new System.Windows.Forms.Button();
             this.ProfileGroupBox = new System.Windows.Forms.GroupBox();
             this.ProfileTable = new System.Windows.Forms.TableLayoutPanel();
             this.flowLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.ButtomControlContainerControl = new System.Windows.Forms.TableLayoutPanel();
-            this.MenuStrip.SuspendLayout();
             this.ConfigurationGroupBox.SuspendLayout();
             this.configLayoutPanel.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -100,208 +74,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.DeleteModePictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.MultiModePictureBox)).BeginInit();
             this.StatusStrip.SuspendLayout();
-            this.NotifyMenu.SuspendLayout();
             this.ProfileGroupBox.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.ButtomControlContainerControl.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // MenuStrip
-            // 
-            this.MenuStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.MenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ServerToolStripMenuItem,
-            this.ModeToolStripMenuItem,
-            this.OptionsToolStripMenuItem,
-            this.HelpToolStripMenuItem,
-            this.ForceExitToolStripMenuItem,
-            this.AboutToolStripButton,
-            this.NewVersionLabel,
-            this.VersionLabel});
-            this.MenuStrip.Location = new System.Drawing.Point(0, 0);
-            this.MenuStrip.Name = "MenuStrip";
-            this.MenuStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.MenuStrip.Size = new System.Drawing.Size(740, 26);
-            this.MenuStrip.TabIndex = 0;
-            // 
-            // ServerToolStripMenuItem
-            // 
-            this.ServerToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ImportServersFromClipboardToolStripMenuItem});
-            this.ServerToolStripMenuItem.Margin = new System.Windows.Forms.Padding(3, 0, 0, 1);
-            this.ServerToolStripMenuItem.Name = "ServerToolStripMenuItem";
-            this.ServerToolStripMenuItem.Size = new System.Drawing.Size(57, 21);
-            this.ServerToolStripMenuItem.Text = "Server";
-            // 
-            // ImportServersFromClipboardToolStripMenuItem
-            // 
-            this.ImportServersFromClipboardToolStripMenuItem.Name = "ImportServersFromClipboardToolStripMenuItem";
-            this.ImportServersFromClipboardToolStripMenuItem.Size = new System.Drawing.Size(259, 22);
-            this.ImportServersFromClipboardToolStripMenuItem.Text = "Import Servers From Clipboard";
-            this.ImportServersFromClipboardToolStripMenuItem.Click += new System.EventHandler(this.ImportServersFromClipboardToolStripMenuItem_Click);
-            // 
-            // ModeToolStripMenuItem
-            // 
-            this.ModeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.CreateProcessModeToolStripMenuItem,
-            this.CreateRouteTableRuleToolStripMenuItem,
-            this.MultiModeToolStripMenuItem,
-            this.ReloadModesToolStripMenuItem});
-            this.ModeToolStripMenuItem.Margin = new System.Windows.Forms.Padding(0, 0, 0, 1);
-            this.ModeToolStripMenuItem.Name = "ModeToolStripMenuItem";
-            this.ModeToolStripMenuItem.Size = new System.Drawing.Size(55, 21);
-            this.ModeToolStripMenuItem.Text = "Mode";
-            // 
-            // CreateProcessModeToolStripMenuItem
-            // 
-            this.CreateProcessModeToolStripMenuItem.Name = "CreateProcessModeToolStripMenuItem";
-            this.CreateProcessModeToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
-            this.CreateProcessModeToolStripMenuItem.Text = "Create Process Mode...";
-            this.CreateProcessModeToolStripMenuItem.Click += new System.EventHandler(this.CreateProcessModeToolStripButton_Click);
-            // 
-            // CreateRouteTableRuleToolStripMenuItem
-            // 
-            this.CreateRouteTableRuleToolStripMenuItem.Name = "CreateRouteTableRuleToolStripMenuItem";
-            this.CreateRouteTableRuleToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
-            this.CreateRouteTableRuleToolStripMenuItem.Text = "Create Route Table Rule...";
-            this.CreateRouteTableRuleToolStripMenuItem.Click += new System.EventHandler(this.createRouteTableModeToolStripMenuItem_Click);
-            // 
-            // MultiModeToolStripMenuItem
-            // 
-            this.MultiModeToolStripMenuItem.Name = "MultiModeToolStripMenuItem";
-            this.MultiModeToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
-            this.MultiModeToolStripMenuItem.Text = "Multi-Mode Selector / Group Manager...";
-            this.MultiModeToolStripMenuItem.Click += new System.EventHandler(this.MultiModeToolStripMenuItem_Click);
-            // 
-            // ReloadModesToolStripMenuItem
-            // 
-            this.ReloadModesToolStripMenuItem.Name = "ReloadModesToolStripMenuItem";
-            this.ReloadModesToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
-            this.ReloadModesToolStripMenuItem.Text = "Reload Modes";
-            this.ReloadModesToolStripMenuItem.Click += new System.EventHandler(this.ReloadModesToolStripMenuItem_Click);
-            // 
-            // OptionsToolStripMenuItem
-            // 
-            this.OptionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.OpenDirectoryToolStripMenuItem,
-            this.ShowHideConsoleToolStripMenuItem,
-            this.CleanDNSCacheToolStripMenuItem,
-            this.VerifyBinFilesToolStripMenuItem,
-            this.UninstallServiceToolStripMenuItem,
-            this.RemoveNetchFirewallRulesToolStripMenuItem});
-            this.OptionsToolStripMenuItem.Margin = new System.Windows.Forms.Padding(0, 0, 0, 1);
-            this.OptionsToolStripMenuItem.Name = "OptionsToolStripMenuItem";
-            this.OptionsToolStripMenuItem.Size = new System.Drawing.Size(66, 21);
-            this.OptionsToolStripMenuItem.Text = "Options";
-            // 
-            // OpenDirectoryToolStripMenuItem
-            // 
-            this.OpenDirectoryToolStripMenuItem.Name = "OpenDirectoryToolStripMenuItem";
-            this.OpenDirectoryToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
-            this.OpenDirectoryToolStripMenuItem.Text = "Open Directory";
-            this.OpenDirectoryToolStripMenuItem.Click += new System.EventHandler(this.OpenDirectoryToolStripMenuItem_Click);
-            // 
-            // ShowHideConsoleToolStripMenuItem
-            // 
-            this.ShowHideConsoleToolStripMenuItem.Name = "ShowHideConsoleToolStripMenuItem";
-            this.ShowHideConsoleToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
-            this.ShowHideConsoleToolStripMenuItem.Text = "Show/Hide Console";
-            this.ShowHideConsoleToolStripMenuItem.Click += new System.EventHandler(this.ShowHideConsoleToolStripMenuItem_Click);
-            // 
-            // CleanDNSCacheToolStripMenuItem
-            // 
-            this.CleanDNSCacheToolStripMenuItem.Name = "CleanDNSCacheToolStripMenuItem";
-            this.CleanDNSCacheToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
-            this.CleanDNSCacheToolStripMenuItem.Text = "Clean DNS Cache";
-            this.CleanDNSCacheToolStripMenuItem.Click += new System.EventHandler(this.CleanDNSCacheToolStripMenuItem_Click);
-            // 
-            // VerifyBinFilesToolStripMenuItem
-            // 
-            this.VerifyBinFilesToolStripMenuItem.Name = "VerifyBinFilesToolStripMenuItem";
-            this.VerifyBinFilesToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
-            this.VerifyBinFilesToolStripMenuItem.Text = "Verify Core Files Integrity";
-            this.VerifyBinFilesToolStripMenuItem.Click += new System.EventHandler(this.VerifyBinFilesToolStripMenuItem_Click);
-            // 
-            // UninstallServiceToolStripMenuItem
-            // 
-            this.UninstallServiceToolStripMenuItem.Name = "UninstallServiceToolStripMenuItem";
-            this.UninstallServiceToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
-            this.UninstallServiceToolStripMenuItem.Text = "Uninstall NF Service";
-            this.UninstallServiceToolStripMenuItem.Click += new System.EventHandler(this.UninstallServiceToolStripMenuItem_Click);
-            // 
-            // RemoveNetchFirewallRulesToolStripMenuItem
-            // 
-            this.RemoveNetchFirewallRulesToolStripMenuItem.Name = "RemoveNetchFirewallRulesToolStripMenuItem";
-            this.RemoveNetchFirewallRulesToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
-            this.RemoveNetchFirewallRulesToolStripMenuItem.Text = "Remove SwiftRelay Firewall Rules";
-            this.RemoveNetchFirewallRulesToolStripMenuItem.Click += new System.EventHandler(this.RemoveNetchFirewallRulesToolStripMenuItem_Click);
-            // 
-            // HelpToolStripMenuItem
-            // 
-            this.HelpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.CheckForUpdateToolStripMenuItem,
-            this.FAQToolStripMenuItem});
-            this.HelpToolStripMenuItem.Margin = new System.Windows.Forms.Padding(0, 0, 0, 1);
-            this.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem";
-            this.HelpToolStripMenuItem.Size = new System.Drawing.Size(47, 21);
-            this.HelpToolStripMenuItem.Text = "Help";
-            // 
-            // CheckForUpdateToolStripMenuItem
-            // 
-            this.CheckForUpdateToolStripMenuItem.Name = "CheckForUpdateToolStripMenuItem";
-            this.CheckForUpdateToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
-            this.CheckForUpdateToolStripMenuItem.Text = "Check for update";
-            this.CheckForUpdateToolStripMenuItem.Click += new System.EventHandler(this.CheckForUpdatesToolStripMenuItem_Click);
-            // 
-            // FAQToolStripMenuItem
-            // 
-            this.FAQToolStripMenuItem.Name = "FAQToolStripMenuItem";
-            this.FAQToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
-            this.FAQToolStripMenuItem.Text = "FAQ";
-            this.FAQToolStripMenuItem.Click += new System.EventHandler(this.fAQToolStripMenuItem_Click);
-            // 
-            // ForceExitToolStripMenuItem
-            // 
-            this.ForceExitToolStripMenuItem.Name = "ForceExitToolStripMenuItem";
-            this.ForceExitToolStripMenuItem.Size = new System.Drawing.Size(40, 22);
-            this.ForceExitToolStripMenuItem.Text = "Exit";
-            this.ForceExitToolStripMenuItem.Click += new System.EventHandler(this.ForceExitToolStripMenuItem_Click);
-            // 
-            // AboutToolStripButton
-            // 
-            this.AboutToolStripButton.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.AboutToolStripButton.AutoToolTip = false;
-            this.AboutToolStripButton.Margin = new System.Windows.Forms.Padding(0, 0, 3, 1);
-            this.AboutToolStripButton.Name = "AboutToolStripButton";
-            this.AboutToolStripButton.Size = new System.Drawing.Size(47, 21);
-            this.AboutToolStripButton.Text = "About";
-            this.AboutToolStripButton.Click += new System.EventHandler(this.AboutToolStripButton_Click);
-            // 
-            // NewVersionLabel
-            // 
-            this.NewVersionLabel.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.NewVersionLabel.BackColor = System.Drawing.Color.Transparent;
-            this.NewVersionLabel.ForeColor = System.Drawing.Color.Red;
-            this.NewVersionLabel.IsLink = true;
-            this.NewVersionLabel.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
-            this.NewVersionLabel.LinkColor = System.Drawing.Color.Red;
-            this.NewVersionLabel.Name = "NewVersionLabel";
-            this.NewVersionLabel.Size = new System.Drawing.Size(135, 19);
-            this.NewVersionLabel.Text = "New version available";
-            this.NewVersionLabel.Visible = false;
-            this.NewVersionLabel.Click += new System.EventHandler(this.NewVersionLabel_Click);
-            // 
-            // VersionLabel
-            // 
-            this.VersionLabel.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.VersionLabel.BackColor = System.Drawing.Color.Transparent;
-            this.VersionLabel.ForeColor = System.Drawing.Color.Red;
-            this.VersionLabel.IsLink = true;
-            this.VersionLabel.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
-            this.VersionLabel.Name = "VersionLabel";
-            this.VersionLabel.Size = new System.Drawing.Size(26, 19);
-            this.VersionLabel.Text = "xxx";
-            this.VersionLabel.Click += new System.EventHandler(this.VersionLabel_Click);
             // 
             // ConfigurationGroupBox
             // 
@@ -637,35 +413,10 @@
             // 
             // NotifyIcon
             // 
-            this.NotifyIcon.ContextMenuStrip = this.NotifyMenu;
             this.NotifyIcon.Text = "SwiftRelay";
             this.NotifyIcon.Visible = true;
             this.NotifyIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.NotifyIcon_MouseDoubleClick);
-            // 
-            // NotifyMenu
-            // 
-            this.NotifyMenu.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.NotifyMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ShowMainFormToolStripButton,
-            this.ExitToolStripButton});
-            this.NotifyMenu.Name = "NotifyMenu";
-            this.NotifyMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.NotifyMenu.ShowItemToolTips = false;
-            this.NotifyMenu.Size = new System.Drawing.Size(108, 48);
-            // 
-            // ShowMainFormToolStripButton
-            // 
-            this.ShowMainFormToolStripButton.Name = "ShowMainFormToolStripButton";
-            this.ShowMainFormToolStripButton.Size = new System.Drawing.Size(107, 22);
-            this.ShowMainFormToolStripButton.Text = "Show";
-            this.ShowMainFormToolStripButton.Click += new System.EventHandler(this.ShowMainFormToolStripButton_Click);
-            // 
-            // ExitToolStripButton
-            // 
-            this.ExitToolStripButton.Name = "ExitToolStripButton";
-            this.ExitToolStripButton.Size = new System.Drawing.Size(107, 22);
-            this.ExitToolStripButton.Text = "Exit";
-            this.ExitToolStripButton.Click += new System.EventHandler(this.ExitToolStripButton_Click);
+            this.NotifyIcon.MouseUp += new System.Windows.Forms.MouseEventHandler(this.NotifyIcon_MouseUp);
             // 
             // SettingsButton
             // 
@@ -721,7 +472,7 @@
             this.flowLayoutPanel1.Controls.Add(this.ConfigurationGroupBox, 0, 0);
             this.flowLayoutPanel1.Controls.Add(this.ProfileGroupBox, 0, 1);
             this.flowLayoutPanel1.Controls.Add(this.ButtomControlContainerControl, 0, 2);
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(12, 29);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(12, 6);
             this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(12, 6, 12, 28);
             this.flowLayoutPanel1.MinimumSize = new System.Drawing.Size(776, 0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
@@ -753,8 +504,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(800, 310);
-            this.Controls.Add(this.MenuStrip);
+            this.ClientSize = new System.Drawing.Size(800, 284);
             this.Controls.Add(this.StatusStrip);
             this.Controls.Add(this.flowLayoutPanel1);
             this.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
@@ -767,8 +517,6 @@
             this.Text = "SwiftRelay";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
-            this.MenuStrip.ResumeLayout(false);
-            this.MenuStrip.PerformLayout();
             this.ConfigurationGroupBox.ResumeLayout(false);
             this.ConfigurationGroupBox.PerformLayout();
             this.configLayoutPanel.ResumeLayout(false);
@@ -786,7 +534,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.MultiModePictureBox)).EndInit();
             this.StatusStrip.ResumeLayout(false);
             this.StatusStrip.PerformLayout();
-            this.NotifyMenu.ResumeLayout(false);
             this.ProfileGroupBox.ResumeLayout(false);
             this.ProfileGroupBox.PerformLayout();
             this.flowLayoutPanel1.ResumeLayout(false);
@@ -798,68 +545,41 @@
 
         }
 
-        private System.Windows.Forms.ToolStripMenuItem CreateRouteTableRuleToolStripMenuItem;
-
-        private System.Windows.Forms.ToolStripMenuItem RemoveNetchFirewallRulesToolStripMenuItem;
-
-        private System.Windows.Forms.ToolStripButton AboutToolStripButton;
-        private System.Windows.Forms.ToolStripMenuItem CleanDNSCacheToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem VerifyBinFilesToolStripMenuItem;
         private System.Windows.Forms.TableLayoutPanel configLayoutPanel;
         private System.Windows.Forms.GroupBox ConfigurationGroupBox;
         private System.Windows.Forms.Button ControlButton;
         private System.Windows.Forms.PictureBox CopyLinkPictureBox;
-        private System.Windows.Forms.ToolStripMenuItem CreateProcessModeToolStripMenuItem;
         private System.Windows.Forms.PictureBox DeleteModePictureBox;
         private System.Windows.Forms.PictureBox MultiModePictureBox;
-        private System.Windows.Forms.ToolStripMenuItem MultiModeToolStripMenuItem;
         private System.Windows.Forms.PictureBox DeleteServerPictureBox;
         private System.Windows.Forms.ToolStripStatusLabel DownloadSpeedLabel;
         private System.Windows.Forms.PictureBox EditModePictureBox;
         private System.Windows.Forms.PictureBox EditServerPictureBox;
-        private System.Windows.Forms.ToolStripMenuItem ExitToolStripButton;
-        private System.Windows.Forms.ToolStripMenuItem ForceExitToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem ImportServersFromClipboardToolStripMenuItem;
-        private System.Windows.Forms.MenuStrip MenuStrip;
         public System.Windows.Forms.ComboBox ModeComboBox;
         private System.Windows.Forms.Label ModeLabel;
-        private System.Windows.Forms.ToolStripMenuItem ModeToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem HelpToolStripMenuItem;
         private System.Windows.Forms.ToolStripStatusLabel NatTypeStatusLabel;
         private System.Windows.Forms.NotifyIcon NotifyIcon;
-        private System.Windows.Forms.ContextMenuStrip NotifyMenu;
-        private System.Windows.Forms.ToolStripMenuItem OpenDirectoryToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem OptionsToolStripMenuItem;
         private System.Windows.Forms.GroupBox ProfileGroupBox;
         private System.Windows.Forms.Label ProfileLabel;
         private System.Windows.Forms.TextBox ProfileNameText;
         private System.Windows.Forms.TableLayoutPanel ProfileTable;
-        private System.Windows.Forms.ToolStripMenuItem CheckForUpdateToolStripMenuItem;
         private System.Windows.Forms.ComboBox ServerComboBox;
         private System.Windows.Forms.Label ServerLabel;
-        private System.Windows.Forms.ToolStripMenuItem ServerToolStripMenuItem;
         private System.Windows.Forms.Button SettingsButton;
-        private System.Windows.Forms.ToolStripMenuItem ShowMainFormToolStripButton;
         private System.Windows.Forms.PictureBox SpeedPictureBox;
         private System.Windows.Forms.ToolStripStatusLabel StatusLabel;
         private System.Windows.Forms.StatusStrip StatusStrip;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
-        private System.Windows.Forms.ToolStripMenuItem UninstallServiceToolStripMenuItem;
         private System.Windows.Forms.ToolStripStatusLabel UploadSpeedLabel;
         private System.Windows.Forms.ToolStripStatusLabel UsedBandwidthLabel;
-        private System.Windows.Forms.ToolStripLabel NewVersionLabel;
-        private System.Windows.Forms.ToolStripLabel VersionLabel;
         private System.Windows.Forms.ToolStripStatusLabel NatTypeStatusLightLabel;
         private System.Windows.Forms.ToolStripStatusLabel blankToolStripStatusLabel;
-        private System.Windows.Forms.ToolStripMenuItem FAQToolStripMenuItem;
 
         #endregion
 
         private System.Windows.Forms.TableLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.TableLayoutPanel ButtomControlContainerControl;
-        private System.Windows.Forms.ToolStripMenuItem ShowHideConsoleToolStripMenuItem;
         private System.Windows.Forms.ToolStripStatusLabel HttpStatusLabel;
-        private System.Windows.Forms.ToolStripMenuItem ReloadModesToolStripMenuItem;
     }
 }
