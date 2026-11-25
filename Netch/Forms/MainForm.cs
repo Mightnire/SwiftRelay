@@ -165,7 +165,9 @@ public partial class MainForm : Form
 
     private void UpdateComboBoxItemHeights()
     {
-        var height = Math.Max(LogicalToDeviceUnits(20), Font.Height + LogicalToDeviceUnits(6));
+        // Align OwnerDrawFixed ComboBox total height with ProfileNameText height at the current DPI.
+        var chrome = Math.Max(LogicalToDeviceUnits(4), ServerComboBox.Height - ServerComboBox.ItemHeight);
+        var height = Math.Max(Font.Height, ProfileNameText.Height - chrome);
         ServerComboBox.ItemHeight = height;
         ModeComboBox.ItemHeight = height;
     }
