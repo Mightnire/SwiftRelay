@@ -78,7 +78,11 @@ public partial class ProcessForm : BindingForm
             FilenameTextBox.Text = ModeService.Instance.GetRelativePath(_mode.FullName);
 
             if (!_mode.FullName.EndsWith(".json"))
+            {
                 ControlButton.Enabled = false;
+                ReadOnlyHintLabel.Text = "Built-in modes (.txt) are read-only; only custom (.json) modes can be saved.";
+                ReadOnlyHintLabel.Visible = true;
+            }
         }
 
         i18N.TranslateForm(this);

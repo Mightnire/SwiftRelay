@@ -940,7 +940,8 @@ public partial class MainForm : Form
                     AutoSize = true,
                     AutoSizeMode = AutoSizeMode.GrowAndShrink,
                     Dock = DockStyle.Fill,
-                    MinimumSize = new Size(0, LogicalToDeviceUnits(28)),
+                    Margin = new Padding(LogicalToDeviceUnits(3)),
+                    MinimumSize = new Size(0, LogicalToDeviceUnits(38)),
                     Text = profile?.ProfileName ?? i18N.Translate("None"),
                     Tag = profile
                 };

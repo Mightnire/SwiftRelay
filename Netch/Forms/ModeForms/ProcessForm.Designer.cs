@@ -74,6 +74,7 @@ namespace Netch.Forms.ModeForms
             this.BypassScanButton = new System.Windows.Forms.Button();
             this.BypassRuleRichTextBox = new System.Windows.Forms.TextBox();
             this.ValidationButton = new System.Windows.Forms.Button();
+            this.ReadOnlyHintLabel = new System.Windows.Forms.Label();
             this.ControlButton = new System.Windows.Forms.Button();
             this.CancelButtonControl = new System.Windows.Forms.Button();
 
@@ -616,6 +617,7 @@ namespace Netch.Forms.ModeForms
             bottomLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.AutoSize));
             bottomLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.AutoSize));
             bottomLayout.Controls.Add(this.ValidationButton, 0, 0);
+            bottomLayout.Controls.Add(this.ReadOnlyHintLabel, 1, 0);
             bottomLayout.Controls.Add(this.ControlButton, 2, 0);
             bottomLayout.Controls.Add(this.CancelButtonControl, 3, 0);
             bottomLayout.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -637,6 +639,16 @@ namespace Netch.Forms.ModeForms
             this.ValidationButton.Text = "Validation";
             this.ValidationButton.UseVisualStyleBackColor = true;
             this.ValidationButton.Click += new System.EventHandler(this.ValidationButton_Click);
+            // 
+            // ReadOnlyHintLabel
+            // 
+            this.ReadOnlyHintLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.ReadOnlyHintLabel.AutoSize = true;
+            this.ReadOnlyHintLabel.ForeColor = System.Drawing.Color.FromArgb(197, 34, 31);
+            this.ReadOnlyHintLabel.Margin = new System.Windows.Forms.Padding(12, 0, 8, 0);
+            this.ReadOnlyHintLabel.Name = "ReadOnlyHintLabel";
+            this.ReadOnlyHintLabel.TabIndex = 9;
+            this.ReadOnlyHintLabel.Visible = false;
             // 
             // ControlButton
             // 
@@ -754,6 +766,7 @@ namespace Netch.Forms.ModeForms
         private System.Windows.Forms.TextBox BypassRuleRichTextBox;
 
         private System.Windows.Forms.Button ValidationButton;
+        private System.Windows.Forms.Label ReadOnlyHintLabel;
         private System.Windows.Forms.Button ControlButton;
         private System.Windows.Forms.Button CancelButtonControl;
     }

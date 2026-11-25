@@ -206,5 +206,8 @@
     "The following files in the bin directory have been modified, replaced, or are missing:\n\n{0}\n\nRunning modified binary files may pose security risks or cause system instability.\nDo you want to continue running anyway?": "检测到 bin 目录下的以下文件已被修改、替换或缺失：\n\n{0}\n\n运行被修改的二进制文件可能存在安全隐患或导致系统不稳定。\n是否仍要继续运行？",
     "Missing file: {0}": "[缺失] {0}",
     "Modified file: {0}": "[修改/损坏] {0}",
-    "Security Warning": "安全警告"
+    "Security Warning": "安全警告",
+    "Edit Mode": "编辑模式",
+    "Built-in modes (.txt) are read-only; only custom (.json) modes can be saved.": "内置模式 (.txt) 为只读模式，不支持修改，仅支持保存自定义 (.json) 模式。",
+    "Mode groups cannot be edited in Process Mode editor.": "模式组不支持在进程模式编辑器中直接修改。"
 }

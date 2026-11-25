@@ -12,7 +12,7 @@ public class MultiModeForm : Form
     private readonly List<Redirector> _allProcessModes = new();
     private readonly HashSet<Redirector> _checkedModes = new();
     private bool _updatingCheckState;
-    private int _sortColumn;
+    private int _sortColumn = 1;
     private bool _sortAscending = true;
 
     // Controls
@@ -22,6 +22,7 @@ public class MultiModeForm : Form
     private Button _btnSelectAll = null!;
     private Button _btnInvert = null!;
     private Button _btnClear = null!;
+    private Button _btnEditMode = null!;
     private Label _lblCount = null!;
     private Label _lblRulesSummary = null!;
     private Button _btnSaveAsGroup = null!;
@@ -53,8 +54,8 @@ public class MultiModeForm : Form
         AutoScaleMode = AutoScaleMode.Dpi;
         Text = i18N.Translate("Multi-Mode Selector");
         Font = new Font("Microsoft YaHei UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
-        Size = new Size(820, 560);
-        MinimumSize = new Size(720, 480);
+        Size = new Size(920, 580);
+        MinimumSize = new Size(780, 480);
         StartPosition = FormStartPosition.CenterParent;
         Icon = Properties.Resources.icon;
 
@@ -140,13 +141,27 @@ public class MultiModeForm : Form
             MinimumSize = new Size(65, 24),
             Padding = new Padding(6, 0, 6, 0),
             FlatStyle = FlatStyle.System,
-            Margin = Padding.Empty
+            Margin = new Padding(0, 0, 12, 0)
         };
         _btnClear.Click += BtnClear_Click;
+
+        _btnEditMode = new Button
+        {
+            Text = i18N.Translate("Edit Mode"),
+            Enabled = false,
+            AutoSize = true,
+            AutoSizeMode = AutoSizeMode.GrowAndShrink,
+            MinimumSize = new Size(80, 24),
+            Padding = new Padding(8, 0, 8, 0),
+            FlatStyle = FlatStyle.System,
+            Margin = Padding.Empty
+        };
+        _btnEditMode.Click += BtnEditMode_Click;
 
         quickActionPanel.Controls.Add(_btnSelectAll);
         quickActionPanel.Controls.Add(_btnInvert);
         quickActionPanel.Controls.Add(_btnClear);
+        quickActionPanel.Controls.Add(_btnEditMode);
 
         _modeListView = new ListView
         {
@@ -159,7 +174,8 @@ public class MultiModeForm : Form
             BorderStyle = BorderStyle.FixedSingle,
             HeaderStyle = ColumnHeaderStyle.Clickable
         };
-        _modeListView.Columns.Add(i18N.Translate("Mode Name"), 220);
+        _modeListView.Columns.Add(i18N.Translate("Select"), 52);
+        _modeListView.Columns.Add(i18N.Translate("Mode Name"), 210);
         _modeListView.Columns.Add(i18N.Translate("Category"), 90);
         _modeListView.Columns.Add(i18N.Translate("Rules"), 65, HorizontalAlignment.Right);
 
@@ -353,19 +369,12 @@ public class MultiModeForm : Form
             if (_splitContainer.Width > minTrigger)
             {
                 _splitContainer.Panel1MinSize = LogicalToDeviceUnits(340);
-                _splitContainer.Panel2MinSize = LogicalToDeviceUnits(260);
+                _splitContainer.Panel2MinSize = LogicalToDeviceUnits(350);
 
-                var desiredDistance = (int)(ClientSize.Width * 0.54);
-                if (desiredDistance >= _splitContainer.Panel1MinSize &&
-                    desiredDistance <= _splitContainer.Width - _splitContainer.Panel2MinSize)
-                {
-                    _splitContainer.SplitterDistance = desiredDistance;
-                }
-                else
-                {
-                    _splitContainer.SplitterDistance = LogicalToDeviceUnits(430);
-                }
-                _splitContainer.FixedPanel = FixedPanel.Panel1;
+                var rightWidth = LogicalToDeviceUnits(380);
+                var desiredDistance = Math.Max(_splitContainer.Panel1MinSize, _splitContainer.Width - rightWidth);
+                _splitContainer.SplitterDistance = Math.Min(desiredDistance, _splitContainer.Width - _splitContainer.Panel2MinSize);
+                _splitContainer.FixedPanel = FixedPanel.Panel2;
             }
         }
         catch (Exception ex)
@@ -393,7 +402,7 @@ public class MultiModeForm : Form
 
     private void UpdateColumnHeaders()
     {
-        var colNames = new[] { i18N.Translate("Mode Name"), i18N.Translate("Category"), i18N.Translate("Rules") };
+        var colNames = new[] { i18N.Translate("Select"), i18N.Translate("Mode Name"), i18N.Translate("Category"), i18N.Translate("Rules") };
         for (var i = 0; i < _modeListView.Columns.Count && i < colNames.Length; i++)
         {
             if (i == _sortColumn)
@@ -410,19 +419,24 @@ public class MultiModeForm : Form
             int cmp;
             switch (_sortColumn)
             {
-                case 1: // Category
+                case 0: // Checked state
+                    cmp = _checkedModes.Contains(b).CompareTo(_checkedModes.Contains(a));
+                    if (cmp == 0)
+                        cmp = string.Compare(a.i18NRemark, b.i18NRemark, StringComparison.OrdinalIgnoreCase);
+                    break;
+                case 2: // Category
                     var catA = Path.GetDirectoryName(ModeService.Instance.GetRelativePath(a.FullName)) ?? "-";
                     var catB = Path.GetDirectoryName(ModeService.Instance.GetRelativePath(b.FullName)) ?? "-";
                     cmp = string.Compare(catA, catB, StringComparison.OrdinalIgnoreCase);
                     if (cmp == 0)
                         cmp = string.Compare(a.i18NRemark, b.i18NRemark, StringComparison.OrdinalIgnoreCase);
                     break;
-                case 2: // Rules count
+                case 3: // Rules count
                     cmp = a.Handle.Count.CompareTo(b.Handle.Count);
                     if (cmp == 0)
                         cmp = string.Compare(a.i18NRemark, b.i18NRemark, StringComparison.OrdinalIgnoreCase);
                     break;
-                case 0: // Mode Name
+                case 1: // Mode Name
                 default:
                     cmp = string.Compare(a.i18NRemark, b.i18NRemark, StringComparison.OrdinalIgnoreCase);
                     break;
@@ -481,12 +495,13 @@ public class MultiModeForm : Form
             if (string.IsNullOrEmpty(category))
                 category = "-";
 
-            var item = new ListViewItem(mode.i18NRemark)
+            var item = new ListViewItem("")
             {
                 Tag = mode,
                 Checked = _checkedModes.Contains(mode)
             };
 
+            item.SubItems.Add(mode.i18NRemark);
             item.SubItems.Add(category);
             item.SubItems.Add($"{mode.Handle.Count}");
 
@@ -522,8 +537,44 @@ public class MultiModeForm : Form
     {
         if (_modeListView.SelectedItems.Count > 0 && _modeListView.SelectedItems[0].Tag is Redirector mode)
         {
+            _btnEditMode.Enabled = true;
             ShowModePreview(mode);
         }
+        else
+        {
+            _btnEditMode.Enabled = false;
+        }
+    }
+
+    private void BtnEditMode_Click(object? sender, EventArgs e)
+    {
+        if (_modeListView.SelectedItems.Count == 0 || _modeListView.SelectedItems[0].Tag is not Redirector mode)
+            return;
+
+        if (mode is CompositeMode)
+        {
+            MessageBoxX.Show(i18N.Translate("Mode groups cannot be edited in Process Mode editor."), owner: this);
+            return;
+        }
+
+        using var editor = new ProcessForm(mode);
+        editor.ShowDialog(this);
+
+        SortModes();
+        RefreshListView();
+
+        foreach (ListViewItem item in _modeListView.Items)
+        {
+            if (ReferenceEquals(item.Tag, mode))
+            {
+                item.Selected = true;
+                item.EnsureVisible();
+                break;
+            }
+        }
+
+        ShowModePreview(mode);
+        UpdateSelectionSummary();
     }
 
     private void ShowModePreview(Redirector mode)

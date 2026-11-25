@@ -315,14 +315,22 @@ public class CompositeModeTests
                 using (var f = new Netch.Servers.Socks5Form(new Netch.Servers.Socks5Server { Hostname = "192.168.1.1", Port = 1080 }))
                     RenderForm(f, Path.Combine(outDir, "socks5_form_private.png"));
 
-                using (var f = new Netch.Forms.ModeForms.ProcessForm())
+                var readOnlyMode = new Netch.Models.Modes.ProcessMode.Redirector
+                {
+                    FullName = Path.Combine(Netch.Services.ModeService.Instance.ModeDirectoryFullName, "Other", "TestBuiltIn.txt"),
+                    Remark = new() { { "zh-CN", "测试内置模式" }, { "en", "Test Built-in Mode" } },
+                    Handle = new() { "^example\\.exe$" }
+                };
+                using (var f = new Netch.Forms.ModeForms.ProcessForm(readOnlyMode))
                     RenderForm(f, Path.Combine(outDir, "process_form.png"));
 
                 using (var f = new Netch.Forms.ModeForms.RouteForm())
                     RenderForm(f, Path.Combine(outDir, "route_form.png"));
 
-                using (var f = new Netch.Forms.ModeForms.MultiModeForm())
+                Netch.Global.Modes.Add(readOnlyMode);
+                using (var f = new Netch.Forms.ModeForms.MultiModeForm(new[] { readOnlyMode }))
                     RenderForm(f, Path.Combine(outDir, "multi_mode_form_fixed.png"));
+                Netch.Global.Modes.Remove(readOnlyMode);
 
                 using (var f = new Netch.Forms.ModeForms.InputDialog("保存为模式组", "请输入此模式组的名称：", "Steam + Discord"))
                     RenderForm(f, Path.Combine(outDir, "input_dialog.png"));

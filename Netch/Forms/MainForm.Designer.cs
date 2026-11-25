@@ -346,7 +346,7 @@
             // 
             this.ProfileLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.ProfileLabel.AutoSize = true;
-            this.ProfileLabel.Location = new System.Drawing.Point(3, 68);
+            this.ProfileLabel.Margin = new System.Windows.Forms.Padding(0, 5, 8, 5);
             this.ProfileLabel.Name = "ProfileLabel";
             this.ProfileLabel.Size = new System.Drawing.Size(45, 17);
             this.ProfileLabel.TabIndex = 10;
@@ -356,7 +356,7 @@
             // 
             this.ModeLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.ModeLabel.AutoSize = true;
-            this.ModeLabel.Location = new System.Drawing.Point(3, 36);
+            this.ModeLabel.Margin = new System.Windows.Forms.Padding(0, 5, 8, 5);
             this.ModeLabel.Name = "ModeLabel";
             this.ModeLabel.Size = new System.Drawing.Size(43, 17);
             this.ModeLabel.TabIndex = 3;
@@ -366,7 +366,7 @@
             // 
             this.ServerLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.ServerLabel.AutoSize = true;
-            this.ServerLabel.Location = new System.Drawing.Point(3, 6);
+            this.ServerLabel.Margin = new System.Windows.Forms.Padding(0, 5, 8, 5);
             this.ServerLabel.Name = "ServerLabel";
             this.ServerLabel.Size = new System.Drawing.Size(45, 17);
             this.ServerLabel.TabIndex = 0;
@@ -376,6 +376,7 @@
             // 
             this.ProfileNameText.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ProfileNameText.Location = new System.Drawing.Point(54, 63);
+            this.ProfileNameText.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.ProfileNameText.Name = "ProfileNameText";
             this.ProfileNameText.Size = new System.Drawing.Size(546, 23);
             this.ProfileNameText.TabIndex = 11;
@@ -388,6 +389,7 @@
             this.ModeComboBox.FormattingEnabled = true;
             this.ModeComboBox.IntegralHeight = false;
             this.ModeComboBox.Location = new System.Drawing.Point(54, 33);
+            this.ModeComboBox.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.ModeComboBox.Name = "ModeComboBox";
             this.ModeComboBox.Size = new System.Drawing.Size(546, 24);
             this.ModeComboBox.TabIndex = 2;
@@ -402,6 +404,7 @@
             this.ServerComboBox.FormattingEnabled = true;
             this.ServerComboBox.IntegralHeight = false;
             this.ServerComboBox.Location = new System.Drawing.Point(54, 3);
+            this.ServerComboBox.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.ServerComboBox.MaxDropDownItems = 16;
             this.ServerComboBox.Name = "ServerComboBox";
             this.ServerComboBox.Size = new System.Drawing.Size(546, 24);
@@ -423,7 +426,7 @@
             this.tableLayoutPanel2.Controls.Add(this.CopyLinkPictureBox, 3, 0);
             this.tableLayoutPanel2.Controls.Add(this.DeleteServerPictureBox, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.SpeedPictureBox, 2, 0);
-            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(6, 0, 0, 0);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(6, 5, 0, 5);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.AutoSize));
@@ -494,7 +497,7 @@
             this.tableLayoutPanel3.Controls.Add(this.EditModePictureBox, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.DeleteModePictureBox, 1, 0);
             this.tableLayoutPanel3.Controls.Add(this.MultiModePictureBox, 2, 0);
-            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(6, 0, 0, 0);
+            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(6, 5, 0, 5);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.AutoSize));
@@ -748,7 +751,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(740, 294);
+            this.ClientSize = new System.Drawing.Size(800, 310);
             this.Controls.Add(this.MenuStrip);
             this.Controls.Add(this.StatusStrip);
             this.Controls.Add(this.flowLayoutPanel1);
@@ -756,6 +759,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.MaximizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(800, 0);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SwiftRelay";

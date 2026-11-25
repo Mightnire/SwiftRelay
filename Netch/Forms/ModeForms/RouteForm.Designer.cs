@@ -46,6 +46,7 @@ namespace Netch.Forms.ModeForms
             this.HandleRuleRichTextBox = new System.Windows.Forms.TextBox();
             this.BypassGroupBox = new System.Windows.Forms.GroupBox();
             this.BypassRuleRichTextBox = new System.Windows.Forms.TextBox();
+            this.ReadOnlyHintLabel = new System.Windows.Forms.Label();
             this.ControlButton = new System.Windows.Forms.Button();
             this.CancelButtonControl = new System.Windows.Forms.Button();
 
@@ -208,6 +209,7 @@ namespace Netch.Forms.ModeForms
             bottomLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             bottomLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.AutoSize));
             bottomLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.AutoSize));
+            bottomLayout.Controls.Add(this.ReadOnlyHintLabel, 0, 0);
             bottomLayout.Controls.Add(this.ControlButton, 1, 0);
             bottomLayout.Controls.Add(this.CancelButtonControl, 2, 0);
             bottomLayout.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -216,6 +218,16 @@ namespace Netch.Forms.ModeForms
             bottomLayout.RowCount = 1;
             bottomLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.AutoSize));
             bottomLayout.TabIndex = 2;
+            // 
+            // ReadOnlyHintLabel
+            // 
+            this.ReadOnlyHintLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.ReadOnlyHintLabel.AutoSize = true;
+            this.ReadOnlyHintLabel.ForeColor = System.Drawing.Color.FromArgb(197, 34, 31);
+            this.ReadOnlyHintLabel.Margin = new System.Windows.Forms.Padding(0, 0, 8, 0);
+            this.ReadOnlyHintLabel.Name = "ReadOnlyHintLabel";
+            this.ReadOnlyHintLabel.TabIndex = 5;
+            this.ReadOnlyHintLabel.Visible = false;
             // 
             // ControlButton
             // 
@@ -287,6 +299,7 @@ namespace Netch.Forms.ModeForms
         private System.Windows.Forms.GroupBox BypassGroupBox;
         private System.Windows.Forms.TextBox BypassRuleRichTextBox;
 
+        private System.Windows.Forms.Label ReadOnlyHintLabel;
         private System.Windows.Forms.Button ControlButton;
         private System.Windows.Forms.Button CancelButtonControl;
     }
