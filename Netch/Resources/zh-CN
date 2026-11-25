@@ -208,6 +208,9 @@
     "Modified file: {0}": "[修改/损坏] {0}",
     "Security Warning": "安全警告",
     "Edit Mode": "编辑模式",
+    "Add [{0}] Server...": "添加 [{0}] 服务器...",
+    "Create Process Mode...": "创建进程模式...",
+    "Create Route Table Rule...": "创建路由表规则...",
     "Built-in modes (.txt) are read-only; only custom (.json) modes can be saved.": "内置 (.txt) 模式为只读，仅支持保存自定义 (.json) 模式。",
     "Mode groups cannot be edited in Process Mode editor.": "模式组不支持在进程模式编辑器中直接修改。"
 }

@@ -157,14 +157,14 @@
             // 
             this.CreateProcessModeToolStripMenuItem.Name = "CreateProcessModeToolStripMenuItem";
             this.CreateProcessModeToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
-            this.CreateProcessModeToolStripMenuItem.Text = "Create Process Mode";
+            this.CreateProcessModeToolStripMenuItem.Text = "Create Process Mode...";
             this.CreateProcessModeToolStripMenuItem.Click += new System.EventHandler(this.CreateProcessModeToolStripButton_Click);
             // 
             // CreateRouteTableRuleToolStripMenuItem
             // 
             this.CreateRouteTableRuleToolStripMenuItem.Name = "CreateRouteTableRuleToolStripMenuItem";
             this.CreateRouteTableRuleToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
-            this.CreateRouteTableRuleToolStripMenuItem.Text = "Create Route Table Rule";
+            this.CreateRouteTableRuleToolStripMenuItem.Text = "Create Route Table Rule...";
             this.CreateRouteTableRuleToolStripMenuItem.Click += new System.EventHandler(this.createRouteTableModeToolStripMenuItem_Click);
             // 
             // MultiModeToolStripMenuItem

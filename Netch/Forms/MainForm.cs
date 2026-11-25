@@ -58,11 +58,11 @@ public partial class MainForm : Form
             {
                 Name = $"Add{fullName}ServerToolStripMenuItem",
                 Size = new Size(259, 22),
-                Text = i18N.TranslateFormat("Add [{0}] Server", fullName),
+                Text = i18N.TranslateFormat("Add [{0}] Server...", fullName),
                 Tag = serversUtil
             };
 
-            _mainFormText.Add(control.Name, new[] { "Add [{0}] Server", fullName });
+            _mainFormText.Add(control.Name, new[] { "Add [{0}] Server...", fullName });
             control.Click += AddServerToolStripMenuItem_Click;
             ServerToolStripMenuItem.DropDownItems.Add(control);
         }
@@ -95,6 +95,7 @@ public partial class MainForm : Form
 
         // 加载快速配置
         LoadProfiles();
+        ModernMenuRenderer.Apply(MenuStrip, NotifyMenu, LogicalToDeviceUnits);
         UpdateComboBoxItemHeights();
         SyncContentBounds();
 
