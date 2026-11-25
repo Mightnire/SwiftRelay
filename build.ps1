@@ -155,7 +155,7 @@ dotnet publish `
 	'.\Netch\Netch.csproj'
 if ( -Not $? ) { exit $lastExitCode }
 
-$TargetExe = if (Test-Path "$IntermediateOutput\SwiftRelay.exe") { "$IntermediateOutput\SwiftRelay.exe" } else { "$IntermediateOutput\Netch.exe" }
+$TargetExe = "$IntermediateOutput\SwiftRelay.exe"
 $DestExe = Join-Path $OutputPath (Split-Path $TargetExe -Leaf)
 try {
     cp -Force $TargetExe $OutputPath -ErrorAction Stop
