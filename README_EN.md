@@ -75,16 +75,18 @@ SwiftRelay provides two different release packages:
 
 If you download the **Framework-Dependent** edition, make sure the following runtime libraries are installed on your Windows machine:
 
-1. **[.NET Desktop Runtime 6.0 (x64)](https://aka.ms/dotnet/6.0/windowsdesktop-runtime-win-x64.exe)** (Required)
-   - Direct Installer Download: [windowsdesktop-runtime-6.0.*-win-x64.exe](https://aka.ms/dotnet/6.0/windowsdesktop-runtime-win-x64.exe)
-   - Microsoft Official Page: [Microsoft .NET 6.0 Download Center](https://dotnet.microsoft.com/download/dotnet/6.0)
-   > [!IMPORTANT]
-   > Make sure to install the **.NET Desktop Runtime (x64)**. The standard .NET Runtime or ASP.NET Core Runtime does not include Windows Forms / Desktop UI components.
+#### 1. [.NET Desktop Runtime 6.0 (x64)](https://aka.ms/dotnet/6.0/windowsdesktop-runtime-win-x64.exe) (Required)
+- Direct Installer Download: [windowsdesktop-runtime-6.0.*-win-x64.exe](https://aka.ms/dotnet/6.0/windowsdesktop-runtime-win-x64.exe)
+- Microsoft Official Page: [Microsoft .NET 6.0 Download Center](https://dotnet.microsoft.com/download/dotnet/6.0)
 
-2. **[Microsoft Visual C++ 2015-2022 Redistributable (x64)](https://aka.ms/vs/17/release/vc_redist.x64.exe)** (Required)
-   - Direct Installer Download: [vc_redist.x64.exe](https://aka.ms/vs/17/release/vc_redist.x64.exe)
-   > [!NOTE]
-   > SwiftRelay's native core redirection drivers (NetFilter), WinTUN, and routing helpers are written in native C++ and require the 64-bit VC++ redistributable. Most gaming PCs already have this installed.
+> [!IMPORTANT]
+> Make sure to install the **.NET Desktop Runtime (x64)**. The standard .NET Runtime or ASP.NET Core Runtime does not include Windows Forms / Desktop UI components.
+
+#### 2. [Microsoft Visual C++ 2015-2022 Redistributable (x64)](https://aka.ms/vs/17/release/vc_redist.x64.exe) (Required)
+- Direct Installer Download: [vc_redist.x64.exe](https://aka.ms/vs/17/release/vc_redist.x64.exe)
+
+> [!NOTE]
+> SwiftRelay's native core redirection drivers (NetFilter), WinTUN, and routing helpers are written in native C++ and require the 64-bit VC++ redistributable. Most gaming PCs already have this installed.
 
 ## Building from Source
 

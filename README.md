@@ -81,16 +81,18 @@ SwiftRelay 发布页面提供两种版本供您选择：
 
 如果使用**依赖运行库版**，请在启动前下载并安装以下运行库：
 
-1. **[.NET Desktop Runtime 6.0 (x64) 桌面运行时](https://aka.ms/dotnet/6.0/windowsdesktop-runtime-win-x64.exe)**（必须）
-   - 官方直链下载：[windowsdesktop-runtime-6.0.*-win-x64.exe](https://aka.ms/dotnet/6.0/windowsdesktop-runtime-win-x64.exe)
-   - 微软官方总览页：[Microsoft .NET 6.0 下载中心](https://dotnet.microsoft.com/download/dotnet/6.0)
-   > [!IMPORTANT]
-   > 请务必选择 **.NET Desktop Runtime（桌面运行时）x64** 版本。普通的 .NET Runtime 或 ASP.NET Core Runtime 不包含 Windows 桌面图形界面组件。
+#### 1. [.NET Desktop Runtime 6.0 (x64) 桌面运行时](https://aka.ms/dotnet/6.0/windowsdesktop-runtime-win-x64.exe)（必须）
+- 官方直链下载：[windowsdesktop-runtime-6.0.*-win-x64.exe](https://aka.ms/dotnet/6.0/windowsdesktop-runtime-win-x64.exe)
+- 微软官方总览页：[Microsoft .NET 6.0 下载中心](https://dotnet.microsoft.com/download/dotnet/6.0)
 
-2. **[Microsoft Visual C++ 2015-2022 Redistributable (x64)](https://aka.ms/vs/17/release/vc_redist.x64.exe)**（必须）
-   - 官方直链下载：[vc_redist.x64.exe](https://aka.ms/vs/17/release/vc_redist.x64.exe)
-   > [!NOTE]
-   > SwiftRelay 的流量重定向驱动（NetFilter）、WinTUN 以及底层路由辅助模块由原生 C++ 编写，需要 64 位 VC++ 运行库支持。大多数游戏电脑通常已预装此运行库，如遇到闪退或提示缺少 DLL，请安装此包。
+> [!IMPORTANT]
+> 请务必选择 **.NET Desktop Runtime（桌面运行时）x64** 版本。普通的 .NET Runtime 或 ASP.NET Core Runtime 不包含 Windows 桌面图形界面组件。
+
+#### 2. [Microsoft Visual C++ 2015-2022 Redistributable (x64)](https://aka.ms/vs/17/release/vc_redist.x64.exe)（必须）
+- 官方直链下载：[vc_redist.x64.exe](https://aka.ms/vs/17/release/vc_redist.x64.exe)
+
+> [!NOTE]
+> SwiftRelay 的流量重定向驱动（NetFilter）、WinTUN 以及底层路由辅助模块由原生 C++ 编写，需要 64 位 VC++ 运行库支持。大多数游戏电脑通常已预装此运行库，如遇到闪退或提示缺少 DLL，请安装此包。
 
 ## 源码编译指南
 
