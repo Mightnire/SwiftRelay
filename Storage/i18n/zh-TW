@@ -50,7 +50,7 @@
     "Saved": "儲存成功",
     "Remote Address": "遠端位址",
     "Options": "選項",
-    "NF Service": "NF 服務",
+    "NetFilter Service": "NetFilter 服務",
     "TUN/TAP driver": "TUN/TAP 驅動程式",
     "Uninstall {0}": "解除安裝 {0}",
     "Uninstalling {0}": "正在解除安裝 {0} 中",

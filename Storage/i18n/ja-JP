@@ -50,7 +50,7 @@
     "Saved": "保存完了",
     "Remote Address": "リモートアドレス",
     "Options": "オプション",
-    "NF Service": "NF サービス",
+    "NetFilter Service": "NetFilter サービス",
     "TUN/TAP driver": "TUN/TAP ドライバー",
     "Uninstall {0}": "{0} をアンインストール",
     "Uninstalling {0}": "{0} をアンインストールしています",

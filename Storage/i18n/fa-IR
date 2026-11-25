@@ -50,7 +50,7 @@
     "Saved": "ذخیره شد",
     "Remote Address": "آدرس راه دور",
     "Options": "گزینه‌ها",
-    "NF Service": "سرویس NF",
+    "NetFilter Service": "سرویس NetFilter",
     "TUN/TAP driver": "درایور TUN/TAP",
     "Uninstall {0}": "حذف {0}",
     "Uninstalling {0}": "در حال حذف {0}",

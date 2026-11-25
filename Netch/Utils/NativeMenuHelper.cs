@@ -103,7 +103,7 @@ public sealed class NativeMenuHelper : IDisposable
         AppendItem(hOptions, i18N.Translate("Show/Hide Console"), spec.OnShowHideConsole);
         AppendItem(hOptions, i18N.Translate("Clean DNS Cache"), spec.OnCleanDnsCache);
         AppendItem(hOptions, i18N.Translate("Verify Core Files Integrity"), spec.OnVerifyBinFiles);
-        UninstallServiceItemId = AppendItem(hOptions, i18N.TranslateFormat("Uninstall {0}", "NF Service"), spec.OnUninstallService, enabled: spec.CoreIdleEnabled);
+        UninstallServiceItemId = AppendItem(hOptions, i18N.TranslateFormat("Uninstall {0}", "NetFilter Service"), spec.OnUninstallService, enabled: spec.CoreIdleEnabled);
         AppendItem(hOptions, i18N.Translate("Remove SwiftRelay Firewall Rules"), spec.OnRemoveFirewallRules);
         AppendSubMenu(hMain, i18N.Translate("Options"), hOptions);
 

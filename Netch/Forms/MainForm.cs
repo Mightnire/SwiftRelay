@@ -404,13 +404,13 @@ public partial class MainForm : Form
     private async void UninstallServiceToolStripMenuItem_Click(object sender, EventArgs e)
     {
         Enabled = false;
-        StatusText(i18N.TranslateFormat("Uninstalling {0}", "NF Service"));
+        StatusText(i18N.TranslateFormat("Uninstalling {0}", "NetFilter Service"));
         try
         {
             var task = Task.Run(NFController.UninstallDriver);
 
             if (await task)
-                NotifyTip(i18N.TranslateFormat("{0} has been uninstalled", "NF Service"));
+                NotifyTip(i18N.TranslateFormat("{0} has been uninstalled", "NetFilter Service"));
         }
         finally
         {

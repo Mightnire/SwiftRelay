@@ -199,7 +199,7 @@ public class NFController : IModeController
         Global.MainForm.StatusText(i18N.Translate("Installing netfilter2 driver"));
 
         if (!File.Exists(Constants.NFDriver))
-            throw new MessageException(i18N.Translate("builtin driver files missing, can't install NF driver"));
+            throw new MessageException(i18N.Translate("builtin driver files missing, can't install NetFilter driver"));
 
         try
         {
