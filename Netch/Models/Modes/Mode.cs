@@ -29,8 +29,18 @@ public abstract class Mode
     [JsonIgnore]
     public string i18NRemark
     {
-        // TODO i18N.Culture to support fallback
-        get => Remark.GetValueOrDefault(i18N.LangCode) ?? Remark.GetValueOrDefault("en") ?? "";
+        get
+        {
+            if (Remark.TryGetValue(i18N.LangCode, out var val) && !string.IsNullOrWhiteSpace(val))
+                return val;
+            if (Remark.TryGetValue("en-US", out val) && !string.IsNullOrWhiteSpace(val))
+                return val;
+            if (Remark.TryGetValue("en", out val) && !string.IsNullOrWhiteSpace(val))
+                return val;
+
+            var fallback = Remark.Values.FirstOrDefault(v => !string.IsNullOrWhiteSpace(v));
+            return !string.IsNullOrWhiteSpace(fallback) ? fallback : Path.GetFileNameWithoutExtension(FullName);
+        }
         set => Remark[i18N.LangCode] = value;
     }
 }

@@ -712,6 +712,8 @@
             // 
             // flowLayoutPanel1
             // 
+            this.flowLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.flowLayoutPanel1.AutoSize = true;
             this.flowLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.flowLayoutPanel1.ColumnCount = 1;
@@ -721,7 +723,7 @@
             this.flowLayoutPanel1.Controls.Add(this.ButtomControlContainerControl, 0, 2);
             this.flowLayoutPanel1.Location = new System.Drawing.Point(12, 29);
             this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(12, 6, 12, 28);
-            this.flowLayoutPanel1.MinimumSize = new System.Drawing.Size(716, 0);
+            this.flowLayoutPanel1.MinimumSize = new System.Drawing.Size(776, 0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.RowCount = 3;
             this.flowLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.AutoSize));

@@ -397,4 +397,34 @@ public class CompositeModeTests
             }
         }
     }
+
+    [TestMethod]
+    public void Mode_i18NRemark_FallsBackWhenCurrentLanguageMissing()
+    {
+        var originalLang = Netch.Utils.i18N.LangCode;
+        try
+        {
+            Netch.Utils.i18N.Load("en-US");
+            var mode = new Netch.Models.Modes.ProcessMode.Redirector
+            {
+                FullName = @"C:\Modes\Other\NVIDIA Corporation.json",
+                Remark = new Dictionary<string, string>
+                {
+                    ["zh-CN"] = "NVIDIA Corporation"
+                }
+            };
+            Assert.AreEqual("NVIDIA Corporation", mode.i18NRemark);
+
+            var emptyRemarkMode = new Netch.Models.Modes.ProcessMode.Redirector
+            {
+                FullName = @"C:\Modes\Other\FallbackName.json",
+                Remark = new Dictionary<string, string>()
+            };
+            Assert.AreEqual("FallbackName", emptyRemarkMode.i18NRemark);
+        }
+        finally
+        {
+            Netch.Utils.i18N.Load(originalLang);
+        }
+    }
 }

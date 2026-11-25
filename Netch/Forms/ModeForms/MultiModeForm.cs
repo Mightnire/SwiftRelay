@@ -54,8 +54,8 @@ public class MultiModeForm : Form
         AutoScaleMode = AutoScaleMode.Dpi;
         Text = i18N.Translate("Multi-Mode Selector");
         Font = new Font("Microsoft YaHei UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
-        Size = new Size(920, 580);
-        MinimumSize = new Size(780, 480);
+        Size = new Size(1020, 600);
+        MinimumSize = new Size(880, 500);
         StartPosition = FormStartPosition.CenterParent;
         Icon = Properties.Resources.icon;
 
@@ -174,14 +174,15 @@ public class MultiModeForm : Form
             BorderStyle = BorderStyle.FixedSingle,
             HeaderStyle = ColumnHeaderStyle.Clickable
         };
-        _modeListView.Columns.Add(i18N.Translate("Select"), 52);
-        _modeListView.Columns.Add(i18N.Translate("Mode Name"), 210);
-        _modeListView.Columns.Add(i18N.Translate("Category"), 90);
-        _modeListView.Columns.Add(i18N.Translate("Rules"), 65, HorizontalAlignment.Right);
+        _modeListView.Columns.Add(i18N.Translate("Select"), 68);
+        _modeListView.Columns.Add(i18N.Translate("Mode Name"), 280);
+        _modeListView.Columns.Add(i18N.Translate("Category"), 95);
+        _modeListView.Columns.Add(i18N.Translate("Rules"), 75, HorizontalAlignment.Right);
 
         _modeListView.ItemChecked += ModeListView_ItemChecked;
         _modeListView.SelectedIndexChanged += ModeListView_SelectedIndexChanged;
         _modeListView.ColumnClick += ModeListView_ColumnClick;
+        _modeListView.Resize += (_, _) => AdjustListViewColumns();
 
         leftPanel.Controls.Add(_modeListView);
         leftPanel.Controls.Add(quickActionPanel);
@@ -365,10 +366,10 @@ public class MultiModeForm : Form
         base.OnLoad(e);
         try
         {
-            var minTrigger = LogicalToDeviceUnits(560);
+            var minTrigger = LogicalToDeviceUnits(640);
             if (_splitContainer.Width > minTrigger)
             {
-                _splitContainer.Panel1MinSize = LogicalToDeviceUnits(340);
+                _splitContainer.Panel1MinSize = LogicalToDeviceUnits(440);
                 _splitContainer.Panel2MinSize = LogicalToDeviceUnits(350);
 
                 var rightWidth = LogicalToDeviceUnits(380);
@@ -376,11 +377,29 @@ public class MultiModeForm : Form
                 _splitContainer.SplitterDistance = Math.Min(desiredDistance, _splitContainer.Width - _splitContainer.Panel2MinSize);
                 _splitContainer.FixedPanel = FixedPanel.Panel2;
             }
+
+            AdjustListViewColumns();
         }
         catch (Exception ex)
         {
             Log.Warning(ex, "Failed to set SplitContainer.SplitterDistance");
         }
+    }
+
+    private void AdjustListViewColumns()
+    {
+        if (_modeListView.Columns.Count < 4 || _modeListView.ClientSize.Width <= 0)
+            return;
+
+        var selectW = LogicalToDeviceUnits(68);
+        var categoryW = LogicalToDeviceUnits(95);
+        var rulesW = LogicalToDeviceUnits(75);
+        var nameW = Math.Max(LogicalToDeviceUnits(180), _modeListView.ClientSize.Width - selectW - categoryW - rulesW - LogicalToDeviceUnits(2));
+
+        _modeListView.Columns[0].Width = selectW;
+        _modeListView.Columns[1].Width = nameW;
+        _modeListView.Columns[2].Width = categoryW;
+        _modeListView.Columns[3].Width = rulesW;
     }
 
     private void ModeListView_ColumnClick(object? sender, ColumnClickEventArgs e)
