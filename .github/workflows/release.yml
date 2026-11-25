@@ -5,6 +5,9 @@ on:
       - '*.*.*'
       - 'v*.*.*'
 
+permissions:
+  contents: write
+
 jobs:
   build:
     name: Build
@@ -124,4 +127,4 @@ jobs:
 
             ### SHA256
             - `SwiftRelay.7z`：`${{ env.SWIFTRELAY_SHA256 }}`
-            - `SwiftRelay-Framework-Dependent.7z`：`${{ env.SWIFTRELAY_FDD_SHA256 }}` |
+            - `SwiftRelay-Framework-Dependent.7z`：`${{ env.SWIFTRELAY_FDD_SHA256 }}`
