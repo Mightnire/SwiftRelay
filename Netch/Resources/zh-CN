@@ -219,5 +219,13 @@
     "Save Mode Group": "保存模式组",
     "The mode group name has changed from \"{0}\" to \"{1}\".\n\nWould you like to rename the original mode group or save as a new one?": "模式组名称已从“{0}”更改为“{1}”。\n\n请选择要重命名原模式组，还是另存为新的模式组？",
     "Rename (Replace Original)": "重命名（替换原模式组）",
-    "Save As (Keep Original)": "另存为（保留原模式组）"
+    "Save As (Keep Original)": "另存为（保留原模式组）",
+    "Server not found.": "找不到对应服务器。",
+    "Mode not found.": "找不到对应模式。",
+    "Download Update File Failed: missing release asset URL": "下载更新文件失败：未找到 Release 下载地址",
+    "AioDNS start failed.": "AioDNS 启动失败。",
+    "Redirector start failed.": "Redirector 启动失败。",
+    "tun2socks start failed.": "tun2socks 启动失败。",
+    "Please install pcap2socks's dependency": "请安装 pcap2socks 依赖组件（Npcap）",
+    "Unknown Mode Type": "未知的模式类型"
 }

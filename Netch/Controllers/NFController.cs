@@ -73,7 +73,7 @@ public class NFController : IModeController
         DialRule();
 
         if (!await InitAsync())
-            throw new MessageException("Redirector start failed.");
+            throw new MessageException(i18N.Translate("Redirector start failed."));
     }
 
     public Task StopAsync()

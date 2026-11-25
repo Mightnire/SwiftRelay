@@ -118,7 +118,7 @@ public class ModeService
                 return new PcapController();
             default:
                 Log.Error("Unknown Mode Type \"{Type}\"", (int)type);
-                throw new MessageException("Unknown Mode Type");
+                throw new MessageException(i18N.Translate("Unknown Mode Type"));
         }
     }
 }

@@ -479,7 +479,7 @@ public partial class MainForm : Form
 
             var (updateFileName, sha256) = UpdateChecker.GetLatestUpdateFileNameAndHashForCurrentEdition();
             var updateFileUrl = UpdateChecker.GetAssetDownloadUrl(updateFileName)
-                ?? throw new MessageException("Download Update File Failed: missing release asset URL");
+                ?? throw new MessageException(i18N.Translate("Download Update File Failed: missing release asset URL"));
 
             var updateFileFullName = Path.Combine(downloadDirectory, updateFileName);
             var updater = new Updater(updateFileFullName, Global.NetchDir);
@@ -1079,10 +1079,10 @@ public partial class MainForm : Form
             var mode = ModeComboBox.Items.Cast<Mode>().FirstOrDefault(m => m.Remark.Any(s => s.Value.Equals(profile.ModeRemark)));
 
             if (server == null)
-                throw new MessageException("Server not found.");
+                throw new MessageException(i18N.Translate("Server not found."));
 
             if (mode == null)
-                throw new MessageException("Mode not found.");
+                throw new MessageException(i18N.Translate("Mode not found."));
 
             // set active server and mode
             ServerComboBox.SelectedItem = server;

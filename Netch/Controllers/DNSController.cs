@@ -1,5 +1,6 @@
 ﻿using Netch.Interfaces;
 using Netch.Models;
+using Netch.Utils;
 using static Netch.Interops.AioDNS;
 
 namespace Netch.Controllers;
@@ -20,7 +21,7 @@ public class DNSController : IController
         Dial(NameList.TYPE_ODNS, $"{aioDnsConfig.OtherDNS}");
 
         if (!await InitAsync())
-            throw new MessageException("AioDNS start failed.");
+            throw new MessageException(i18N.Translate("AioDNS start failed."));
     }
 
     public Task StopAsync()

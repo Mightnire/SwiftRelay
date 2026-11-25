@@ -104,7 +104,7 @@ namespace Netch.Controllers
             #endregion
 
             if (!Init())
-                throw new MessageException("tun2socks start failed.");
+                throw new MessageException(i18N.Translate("tun2socks start failed."));
 
             var tunIndex = (int)RouteHelper.ConvertLuidToIndex(tun_luid());
             _tun = NetRoute.TemplateBuilder(_tunConfig.Gateway, tunIndex);
