@@ -266,6 +266,80 @@ public class CompositeModeTests
     }
 
     [TestMethod]
+    public void RemainingForms_Layout_VerifyRender()
+    {
+        var outDir = @"C:\Users\mightnire\.gemini\antigravity\brain\e2001d2d-4e92-4c6b-843b-1ee7e90a765d";
+        var tcs = new TaskCompletionSource();
+        var thread = new Thread(() =>
+        {
+            try
+            {
+                Netch.Utils.i18N.Load("zh-CN");
+
+                static void RenderForm(Form form, string filePath, Action? afterShow = null)
+                {
+                    form.StartPosition = FormStartPosition.Manual;
+                    form.Location = new System.Drawing.Point(-2000, -2000);
+                    form.Show();
+                    afterShow?.Invoke();
+                    Application.DoEvents();
+                    using var bmp = new System.Drawing.Bitmap(form.Width, form.Height);
+                    form.DrawToBitmap(bmp, new System.Drawing.Rectangle(0, 0, form.Width, form.Height));
+                    bmp.Save(filePath);
+                    form.Close();
+                }
+
+                using (var f = new Netch.Forms.AboutForm())
+                    RenderForm(f, Path.Combine(outDir, "about_form.png"));
+
+                using (var f = new Netch.Forms.GlobalBypassIPForm())
+                    RenderForm(f, Path.Combine(outDir, "bypass_ip_form.png"));
+
+                using (var dummyParent = new Form { Location = new System.Drawing.Point(-2000, -2000), Size = new System.Drawing.Size(200, 200) })
+                using (var f = new Netch.Forms.LogForm(dummyParent))
+                {
+                    f.richTextBox1.Text = "[INFO] SwiftRelay Pcap2Socks started...";
+                    RenderForm(f, Path.Combine(outDir, "log_form.png"));
+                }
+
+                using (var f = new Netch.Servers.Socks5Form(new Netch.Servers.Socks5Server { Hostname = "1.2.3.4", Port = 1080 }))
+                    RenderForm(f, Path.Combine(outDir, "socks5_form_public.png"));
+
+                using (var f = new Netch.Servers.Socks5Form(new Netch.Servers.Socks5Server { Hostname = "192.168.1.1", Port = 1080 }))
+                    RenderForm(f, Path.Combine(outDir, "socks5_form_private.png"));
+
+                using (var f = new Netch.Forms.ModeForms.ProcessForm())
+                    RenderForm(f, Path.Combine(outDir, "process_form.png"));
+
+                using (var f = new Netch.Forms.ModeForms.RouteForm())
+                    RenderForm(f, Path.Combine(outDir, "route_form.png"));
+
+                using (var f = new Netch.Forms.ModeForms.MultiModeForm())
+                    RenderForm(f, Path.Combine(outDir, "multi_mode_form_fixed.png"));
+
+                using (var f = new Netch.Forms.ModeForms.InputDialog("保存为模式组", "请输入此模式组的名称：", "Steam + Discord"))
+                    RenderForm(f, Path.Combine(outDir, "input_dialog.png"));
+
+                tcs.SetResult();
+            }
+            catch (Exception ex)
+            {
+                tcs.SetException(ex);
+            }
+        });
+        thread.SetApartmentState(ApartmentState.STA);
+        thread.Start();
+        if (!tcs.Task.Wait(30000))
+        {
+            Assert.Fail("Timed out waiting for remaining forms render");
+        }
+        if (tcs.Task.IsFaulted)
+        {
+            throw tcs.Task.Exception?.InnerException ?? tcs.Task.Exception!;
+        }
+    }
+
+    [TestMethod]
     public void TestScanDirectory_Deduplication()
     {
         var tempDir = Path.Combine(Path.GetTempPath(), "NetchScanTest_" + Guid.NewGuid().ToString("N"));

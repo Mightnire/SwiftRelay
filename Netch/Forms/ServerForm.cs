@@ -10,31 +10,20 @@ namespace Netch.Forms;
 [Fody.ConfigureAwait(true)]
 public abstract class ServerForm : Form
 {
-    private const int MarginX = 14;
-    private const int MarginY = 12;
-    private const int GroupBoxWidth = 442;
-    private const int LabelStartX = 18;
-    private const int InputStartX = 105;
     private const int StandardInputWidth = 320;
-    private const int AddressWidth = 235;
-    private const int ColonGap = 4;
-    private const int ColonWidth = 12;
-    private const int PortWidth = 65;
-    private const int StartY = 28;
-    private const int RowSpacing = 36;
-    private const int InputHeight = 23;
-    private const int GroupBoxBottomPadding = 18;
+    private const int PortWidth = 68;
     private const int ButtonWidth = 84;
     private const int ButtonHeight = 28;
-    private const int ButtonSpacingY = 12;
-    private const int ButtonGap = 8;
 
     private readonly Dictionary<Control, Func<string, bool>> _checkActions = new();
     private readonly Dictionary<Control, Action<object>> _saveActions = new();
-    private readonly List<(Label Label, Control Input, Func<bool> IsVisible)> _dynamicRows = new();
+    private readonly List<(Control Label, Control Input, Func<bool> IsVisible)> _dynamicRows = new();
 
     private readonly IContainer components = null;
+    private bool _factored;
 
+    private TableLayoutPanel _rootLayout;
+    private TableLayoutPanel _fieldsLayout;
     private GroupBox ConfigurationGroupBox;
     private Label RemarkLabel;
     protected TextBox RemarkTextBox;
@@ -75,8 +64,18 @@ public abstract class ServerForm : Form
         base.Show();
     }
 
+    protected override void OnLoad(EventArgs e)
+    {
+        AfterFactor();
+        base.OnLoad(e);
+    }
+
     private void AfterFactor()
     {
+        if (_factored)
+            return;
+        _factored = true;
+
         Text = TypeName ?? string.Empty;
 
         RemarkTextBox.Text = Server.Remark;
@@ -93,57 +92,17 @@ public abstract class ServerForm : Form
     public void RelayoutForm()
     {
         SuspendLayout();
-        ConfigurationGroupBox.SuspendLayout();
+        _fieldsLayout.SuspendLayout();
 
-        int currentY = StartY;
-
-        // Row 0: Remark
-        RemarkLabel.Location = new Point(LabelStartX, currentY + 4);
-        RemarkTextBox.Location = new Point(InputStartX, currentY);
-        RemarkTextBox.Size = new Size(StandardInputWidth, InputHeight);
-        currentY += RowSpacing;
-
-        // Row 1: Address & Port
-        AddressLabel.Location = new Point(LabelStartX, currentY + 4);
-        AddressTextBox.Location = new Point(InputStartX, currentY);
-        AddressTextBox.Size = new Size(AddressWidth, InputHeight);
-
-        PortLabel.Location = new Point(InputStartX + AddressWidth + ColonGap, currentY + 2);
-        PortLabel.Size = new Size(ColonWidth, 20);
-
-        PortTextBox.Location = new Point(InputStartX + AddressWidth + ColonGap + ColonWidth + ColonGap, currentY);
-        PortTextBox.Size = new Size(PortWidth, InputHeight);
-        currentY += RowSpacing;
-
-        // Dynamic rows (Username, Password, Version, RemoteHostname, etc.)
         foreach (var (label, input, isVisible) in _dynamicRows)
         {
-            if (isVisible != null && !isVisible())
-            {
-                label.Visible = false;
-                input.Visible = false;
-                continue;
-            }
-
-            label.Visible = true;
-            input.Visible = true;
-            label.Location = new Point(LabelStartX, currentY + 4);
-            input.Location = new Point(InputStartX, currentY);
-            input.Size = new Size(StandardInputWidth, InputHeight);
-            currentY += RowSpacing;
+            var visible = isVisible == null || isVisible();
+            if (label != null)
+                label.Visible = visible;
+            input.Visible = visible;
         }
 
-        int groupBoxHeight = currentY - RowSpacing + InputHeight + GroupBoxBottomPadding;
-        ConfigurationGroupBox.Location = new Point(MarginX, MarginY);
-        ConfigurationGroupBox.Size = new Size(GroupBoxWidth, groupBoxHeight);
-
-        int buttonY = ConfigurationGroupBox.Bottom + ButtonSpacingY;
-        CancelButtonControl.Location = new Point(ConfigurationGroupBox.Right - ButtonWidth, buttonY);
-        ControlButton.Location = new Point(CancelButtonControl.Left - ButtonGap - ButtonWidth, buttonY);
-
-        ClientSize = new Size(ConfigurationGroupBox.Right + MarginX, CancelButtonControl.Bottom + MarginY);
-
-        ConfigurationGroupBox.ResumeLayout(true);
+        _fieldsLayout.ResumeLayout(true);
         ResumeLayout(true);
     }
 
@@ -158,10 +117,13 @@ public abstract class ServerForm : Form
         var textBox = new TextBox
         {
             Name = $"{name}TextBox",
-            Size = new Size(width, InputHeight),
+            Anchor = width == StandardInputWidth ? (AnchorStyles.Left | AnchorStyles.Right) : AnchorStyles.Left,
+            Margin = new Padding(0, 4, 4, 4),
             TextAlign = HorizontalAlignment.Left,
             Text = value
         };
+        if (width != StandardInputWidth)
+            textBox.Width = width;
 
         _checkActions.Add(textBox, check);
         _saveActions.Add(textBox, o => save.Invoke((string)o));
@@ -169,12 +131,16 @@ public abstract class ServerForm : Form
         var label = new Label
         {
             AutoSize = true,
+            Anchor = AnchorStyles.Left,
+            Margin = new Padding(4, 6, 12, 6),
             Name = $"{name}Label",
             Text = remark
         };
 
-        ConfigurationGroupBox.Controls.Add(label);
-        ConfigurationGroupBox.Controls.Add(textBox);
+        var row = _fieldsLayout.RowCount++;
+        _fieldsLayout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+        _fieldsLayout.Controls.Add(label, 0, row);
+        _fieldsLayout.Controls.Add(textBox, 1, row);
 
         _dynamicRows.Add((label, textBox, isVisible));
         return (label, textBox);
@@ -185,11 +151,14 @@ public abstract class ServerForm : Form
         var comboBox = new ComboBox
         {
             Name = $"{name}ComboBox",
-            Size = new Size(width, InputHeight),
+            Anchor = width == StandardInputWidth ? (AnchorStyles.Left | AnchorStyles.Right) : AnchorStyles.Left,
+            Margin = new Padding(0, 4, 4, 4),
             DropDownStyle = ComboBoxStyle.DropDownList,
             FlatStyle = FlatStyle.System,
             FormattingEnabled = true
         };
+        if (width != StandardInputWidth)
+            comboBox.Width = width;
 
         comboBox.Items.AddRange(values.ToArray());
         comboBox.SelectedIndex = values.IndexOf(value);
@@ -198,12 +167,16 @@ public abstract class ServerForm : Form
         var label = new Label
         {
             AutoSize = true,
+            Anchor = AnchorStyles.Left,
+            Margin = new Padding(4, 6, 12, 6),
             Name = $"{name}Label",
             Text = remark
         };
 
-        ConfigurationGroupBox.Controls.Add(label);
-        ConfigurationGroupBox.Controls.Add(comboBox);
+        var row = _fieldsLayout.RowCount++;
+        _fieldsLayout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+        _fieldsLayout.Controls.Add(label, 0, row);
+        _fieldsLayout.Controls.Add(comboBox, 1, row);
 
         _dynamicRows.Add((label, comboBox, isVisible));
     }
@@ -213,14 +186,21 @@ public abstract class ServerForm : Form
         var checkBox = new CheckBox
         {
             AutoSize = true,
+            Anchor = AnchorStyles.Left,
+            Margin = new Padding(4, 6, 4, 6),
             Name = $"{name}CheckBox",
             Checked = value,
             Text = remark
         };
 
         _saveActions.Add(checkBox, o => save.Invoke((bool)o));
-        ConfigurationGroupBox.Controls.Add(checkBox);
-        _dynamicRows.Add((new Label { Visible = false }, checkBox, isVisible));
+
+        var row = _fieldsLayout.RowCount++;
+        _fieldsLayout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+        _fieldsLayout.Controls.Add(checkBox, 0, row);
+        _fieldsLayout.SetColumnSpan(checkBox, 2);
+
+        _dynamicRows.Add((null, checkBox, isVisible));
     }
 
     private void ControlButton_Click(object sender, EventArgs e)
@@ -294,6 +274,11 @@ public abstract class ServerForm : Form
 
     private void InitializeComponent()
     {
+        _rootLayout = new TableLayoutPanel();
+        _fieldsLayout = new TableLayoutPanel();
+        var addressPortLayout = new TableLayoutPanel();
+        var buttonLayout = new TableLayoutPanel();
+
         ConfigurationGroupBox = new GroupBox();
         AddressLabel = new Label();
         PortTextBox = new TextBox();
@@ -304,70 +289,126 @@ public abstract class ServerForm : Form
         ControlButton = new Button();
         CancelButtonControl = new Button();
 
+        _rootLayout.SuspendLayout();
+        _fieldsLayout.SuspendLayout();
+        addressPortLayout.SuspendLayout();
+        buttonLayout.SuspendLayout();
         ConfigurationGroupBox.SuspendLayout();
         SuspendLayout();
 
         // 
+        // _rootLayout
+        // 
+        _rootLayout.AutoSize = true;
+        _rootLayout.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+        _rootLayout.ColumnCount = 1;
+        _rootLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+        _rootLayout.Controls.Add(ConfigurationGroupBox, 0, 0);
+        _rootLayout.Controls.Add(buttonLayout, 0, 1);
+        _rootLayout.Dock = DockStyle.Fill;
+        _rootLayout.Name = "_rootLayout";
+        _rootLayout.Padding = new Padding(12);
+        _rootLayout.RowCount = 2;
+        _rootLayout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+        _rootLayout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+
+        // 
         // ConfigurationGroupBox
         // 
-        ConfigurationGroupBox.Controls.Add(AddressLabel);
-        ConfigurationGroupBox.Controls.Add(PortTextBox);
-        ConfigurationGroupBox.Controls.Add(AddressTextBox);
-        ConfigurationGroupBox.Controls.Add(RemarkTextBox);
-        ConfigurationGroupBox.Controls.Add(RemarkLabel);
-        ConfigurationGroupBox.Controls.Add(PortLabel);
-        ConfigurationGroupBox.Location = new Point(MarginX, MarginY);
+        ConfigurationGroupBox.AutoSize = true;
+        ConfigurationGroupBox.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+        ConfigurationGroupBox.Controls.Add(_fieldsLayout);
+        ConfigurationGroupBox.Dock = DockStyle.Fill;
+        ConfigurationGroupBox.Margin = Padding.Empty;
+        ConfigurationGroupBox.MinimumSize = new Size(442, 0);
         ConfigurationGroupBox.Name = "ConfigurationGroupBox";
-        ConfigurationGroupBox.Size = new Size(GroupBoxWidth, 213);
+        ConfigurationGroupBox.Padding = new Padding(10, 8, 10, 10);
         ConfigurationGroupBox.TabIndex = 0;
         ConfigurationGroupBox.TabStop = false;
         ConfigurationGroupBox.Text = "Configuration";
 
         // 
+        // _fieldsLayout
+        // 
+        _fieldsLayout.AutoSize = true;
+        _fieldsLayout.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+        _fieldsLayout.ColumnCount = 2;
+        _fieldsLayout.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
+        _fieldsLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+        _fieldsLayout.Controls.Add(RemarkLabel, 0, 0);
+        _fieldsLayout.Controls.Add(RemarkTextBox, 1, 0);
+        _fieldsLayout.Controls.Add(AddressLabel, 0, 1);
+        _fieldsLayout.Controls.Add(addressPortLayout, 1, 1);
+        _fieldsLayout.Dock = DockStyle.Fill;
+        _fieldsLayout.Margin = Padding.Empty;
+        _fieldsLayout.Name = "_fieldsLayout";
+        _fieldsLayout.RowCount = 2;
+        _fieldsLayout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+        _fieldsLayout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+
+        // 
         // RemarkLabel
         // 
+        RemarkLabel.Anchor = AnchorStyles.Left;
         RemarkLabel.AutoSize = true;
-        RemarkLabel.Location = new Point(LabelStartX, StartY + 4);
+        RemarkLabel.Margin = new Padding(4, 6, 12, 6);
         RemarkLabel.Name = "RemarkLabel";
-        RemarkLabel.Size = new Size(53, 17);
         RemarkLabel.TabIndex = 0;
         RemarkLabel.Text = "Remark";
 
         // 
         // RemarkTextBox
         // 
-        RemarkTextBox.Location = new Point(InputStartX, StartY);
+        RemarkTextBox.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+        RemarkTextBox.Margin = new Padding(0, 4, 4, 4);
         RemarkTextBox.Name = "RemarkTextBox";
-        RemarkTextBox.Size = new Size(StandardInputWidth, InputHeight);
         RemarkTextBox.TabIndex = 1;
         RemarkTextBox.TextAlign = HorizontalAlignment.Left;
 
         // 
         // AddressLabel
         // 
+        AddressLabel.Anchor = AnchorStyles.Left;
         AddressLabel.AutoSize = true;
-        AddressLabel.Location = new Point(LabelStartX, StartY + RowSpacing + 4);
+        AddressLabel.Margin = new Padding(4, 6, 12, 6);
         AddressLabel.Name = "AddressLabel";
-        AddressLabel.Size = new Size(56, 17);
         AddressLabel.TabIndex = 2;
         AddressLabel.Text = "Address";
 
         // 
+        // addressPortLayout
+        // 
+        addressPortLayout.AutoSize = true;
+        addressPortLayout.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+        addressPortLayout.ColumnCount = 3;
+        addressPortLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+        addressPortLayout.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
+        addressPortLayout.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
+        addressPortLayout.Controls.Add(AddressTextBox, 0, 0);
+        addressPortLayout.Controls.Add(PortLabel, 1, 0);
+        addressPortLayout.Controls.Add(PortTextBox, 2, 0);
+        addressPortLayout.Dock = DockStyle.Fill;
+        addressPortLayout.Margin = new Padding(0, 4, 4, 4);
+        addressPortLayout.Name = "addressPortLayout";
+        addressPortLayout.RowCount = 1;
+        addressPortLayout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+
+        // 
         // AddressTextBox
         // 
-        AddressTextBox.Location = new Point(InputStartX, StartY + RowSpacing);
+        AddressTextBox.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+        AddressTextBox.Margin = Padding.Empty;
         AddressTextBox.Name = "AddressTextBox";
-        AddressTextBox.Size = new Size(AddressWidth, InputHeight);
         AddressTextBox.TabIndex = 3;
         AddressTextBox.TextAlign = HorizontalAlignment.Left;
 
         // 
         // PortLabel
         // 
-        PortLabel.AutoSize = false;
-        PortLabel.Location = new Point(InputStartX + AddressWidth + ColonGap, StartY + RowSpacing + 2);
+        PortLabel.Anchor = AnchorStyles.None;
+        PortLabel.AutoSize = true;
+        PortLabel.Margin = new Padding(4, 0, 4, 0);
         PortLabel.Name = "PortLabel";
-        PortLabel.Size = new Size(ColonWidth, 20);
         PortLabel.TabIndex = 4;
         PortLabel.Text = ":";
         PortLabel.TextAlign = ContentAlignment.MiddleCenter;
@@ -375,17 +416,39 @@ public abstract class ServerForm : Form
         // 
         // PortTextBox
         // 
-        PortTextBox.Location = new Point(InputStartX + AddressWidth + ColonGap + ColonWidth + ColonGap, StartY + RowSpacing);
+        PortTextBox.Anchor = AnchorStyles.Left;
+        PortTextBox.Margin = Padding.Empty;
         PortTextBox.Name = "PortTextBox";
-        PortTextBox.Size = new Size(PortWidth, InputHeight);
+        PortTextBox.Size = new Size(PortWidth, 23);
         PortTextBox.TabIndex = 5;
         PortTextBox.TextAlign = HorizontalAlignment.Center;
 
         // 
+        // buttonLayout
+        // 
+        buttonLayout.AutoSize = true;
+        buttonLayout.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+        buttonLayout.ColumnCount = 3;
+        buttonLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+        buttonLayout.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
+        buttonLayout.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
+        buttonLayout.Controls.Add(ControlButton, 1, 0);
+        buttonLayout.Controls.Add(CancelButtonControl, 2, 0);
+        buttonLayout.Dock = DockStyle.Fill;
+        buttonLayout.Margin = new Padding(0, 10, 0, 0);
+        buttonLayout.Name = "buttonLayout";
+        buttonLayout.RowCount = 1;
+        buttonLayout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+
+        // 
         // ControlButton (Save)
         // 
+        ControlButton.AutoSize = true;
+        ControlButton.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+        ControlButton.Margin = new Padding(0, 0, 8, 0);
+        ControlButton.MinimumSize = new Size(ButtonWidth, ButtonHeight);
         ControlButton.Name = "ControlButton";
-        ControlButton.Size = new Size(ButtonWidth, ButtonHeight);
+        ControlButton.Padding = new Padding(8, 0, 8, 0);
         ControlButton.TabIndex = 1;
         ControlButton.Text = "Save";
         ControlButton.UseVisualStyleBackColor = true;
@@ -394,8 +457,12 @@ public abstract class ServerForm : Form
         // 
         // CancelButtonControl (Cancel)
         // 
+        CancelButtonControl.AutoSize = true;
+        CancelButtonControl.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+        CancelButtonControl.Margin = Padding.Empty;
+        CancelButtonControl.MinimumSize = new Size(ButtonWidth, ButtonHeight);
         CancelButtonControl.Name = "CancelButtonControl";
-        CancelButtonControl.Size = new Size(ButtonWidth, ButtonHeight);
+        CancelButtonControl.Padding = new Padding(8, 0, 8, 0);
         CancelButtonControl.TabIndex = 2;
         CancelButtonControl.Text = "Cancel";
         CancelButtonControl.UseVisualStyleBackColor = true;
@@ -407,11 +474,10 @@ public abstract class ServerForm : Form
         AcceptButton = ControlButton;
         AutoScaleDimensions = new SizeF(96F, 96F);
         AutoScaleMode = AutoScaleMode.Dpi;
+        AutoSize = true;
+        AutoSizeMode = AutoSizeMode.GrowAndShrink;
         CancelButton = CancelButtonControl;
-        ClientSize = new Size(470, 279);
-        Controls.Add(ConfigurationGroupBox);
-        Controls.Add(ControlButton);
-        Controls.Add(CancelButtonControl);
+        Controls.Add(_rootLayout);
         Font = new Font("Microsoft YaHei UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
         FormBorderStyle = FormBorderStyle.FixedDialog;
         Icon = Icon.FromHandle(Resources.SwiftRelay.GetHicon());
@@ -421,8 +487,17 @@ public abstract class ServerForm : Form
         Name = "ServerForm";
         StartPosition = FormStartPosition.CenterParent;
 
+        _rootLayout.ResumeLayout(false);
+        _rootLayout.PerformLayout();
+        _fieldsLayout.ResumeLayout(false);
+        _fieldsLayout.PerformLayout();
+        addressPortLayout.ResumeLayout(false);
+        addressPortLayout.PerformLayout();
+        buttonLayout.ResumeLayout(false);
+        buttonLayout.PerformLayout();
         ConfigurationGroupBox.ResumeLayout(false);
         ConfigurationGroupBox.PerformLayout();
         ResumeLayout(false);
+        PerformLayout();
     }
 }

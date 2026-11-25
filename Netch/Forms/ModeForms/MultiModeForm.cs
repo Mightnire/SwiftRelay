@@ -49,6 +49,8 @@ public class MultiModeForm : Form
 
     private void InitializeComponents()
     {
+        AutoScaleDimensions = new SizeF(96F, 96F);
+        AutoScaleMode = AutoScaleMode.Dpi;
         Text = i18N.Translate("Multi-Mode Selector");
         Font = new Font("Microsoft YaHei UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
         Size = new Size(820, 560);
@@ -57,12 +59,18 @@ public class MultiModeForm : Form
         Icon = Properties.Resources.icon;
 
         // Main layout: Bottom panel and SplitContainer
-        var bottomPanel = new Panel
+        var bottomPanel = new TableLayoutPanel
         {
             Dock = DockStyle.Bottom,
-            Height = 48,
+            AutoSize = true,
+            AutoSizeMode = AutoSizeMode.GrowAndShrink,
+            ColumnCount = 2,
+            RowCount = 1,
             Padding = new Padding(12, 8, 12, 8)
         };
+        bottomPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+        bottomPanel.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
+        bottomPanel.RowStyles.Add(new RowStyle(SizeType.AutoSize));
 
         _splitContainer = new SplitContainer
         {
@@ -93,17 +101,20 @@ public class MultiModeForm : Form
         var quickActionPanel = new FlowLayoutPanel
         {
             Dock = DockStyle.Top,
-            Height = 36,
+            AutoSize = true,
+            AutoSizeMode = AutoSizeMode.GrowAndShrink,
             FlowDirection = FlowDirection.LeftToRight,
-            WrapContents = false,
+            WrapContents = true,
             Padding = new Padding(0, 6, 0, 6)
         };
 
         _btnSelectAll = new Button
         {
             Text = i18N.Translate("Select All"),
-            Width = 65,
-            Height = 24,
+            AutoSize = true,
+            AutoSizeMode = AutoSizeMode.GrowAndShrink,
+            MinimumSize = new Size(65, 24),
+            Padding = new Padding(6, 0, 6, 0),
             FlatStyle = FlatStyle.System,
             Margin = new Padding(0, 0, 4, 0)
         };
@@ -112,8 +123,10 @@ public class MultiModeForm : Form
         _btnInvert = new Button
         {
             Text = i18N.Translate("Invert"),
-            Width = 65,
-            Height = 24,
+            AutoSize = true,
+            AutoSizeMode = AutoSizeMode.GrowAndShrink,
+            MinimumSize = new Size(65, 24),
+            Padding = new Padding(6, 0, 6, 0),
             FlatStyle = FlatStyle.System,
             Margin = new Padding(0, 0, 4, 0)
         };
@@ -122,10 +135,12 @@ public class MultiModeForm : Form
         _btnClear = new Button
         {
             Text = i18N.Translate("Clear"),
-            Width = 65,
-            Height = 24,
+            AutoSize = true,
+            AutoSizeMode = AutoSizeMode.GrowAndShrink,
+            MinimumSize = new Size(65, 24),
+            Padding = new Padding(6, 0, 6, 0),
             FlatStyle = FlatStyle.System,
-            Margin = new Padding(0, 0, 0, 0)
+            Margin = Padding.Empty
         };
         _btnClear.Click += BtnClear_Click;
 
@@ -171,7 +186,8 @@ public class MultiModeForm : Form
         _lblPreviewTitle = new Label
         {
             Dock = DockStyle.Top,
-            Height = 28,
+            AutoSize = true,
+            Padding = new Padding(0, 0, 0, 2),
             Font = new Font("Microsoft YaHei UI", 11F, FontStyle.Bold),
             ForeColor = Color.FromArgb(30, 30, 30),
             Text = ""
@@ -180,7 +196,8 @@ public class MultiModeForm : Form
         _lblPreviewPath = new Label
         {
             Dock = DockStyle.Top,
-            Height = 20,
+            AutoSize = true,
+            Padding = new Padding(0, 0, 0, 4),
             Font = new Font("Microsoft YaHei UI", 8.25F),
             ForeColor = Color.Gray,
             Text = ""
@@ -189,9 +206,11 @@ public class MultiModeForm : Form
         _protocolFlowPanel = new FlowLayoutPanel
         {
             Dock = DockStyle.Top,
-            Height = 26,
+            AutoSize = true,
+            AutoSizeMode = AutoSizeMode.GrowAndShrink,
             FlowDirection = FlowDirection.LeftToRight,
-            Padding = new Padding(0, 2, 0, 2)
+            WrapContents = true,
+            Padding = new Padding(0, 2, 0, 4)
         };
 
         _tabControlRules = new TabControl
@@ -247,19 +266,23 @@ public class MultiModeForm : Form
         rightPanel.Controls.Add(previewGroupBox);
 
         // ----------------- Bottom Control Bar -----------------
-        var rightButtonPanel = new Panel
+        var rightButtonPanel = new FlowLayoutPanel
         {
-            Dock = DockStyle.Right,
-            Width = 345,
-            Height = 32
+            AutoSize = true,
+            AutoSizeMode = AutoSizeMode.GrowAndShrink,
+            FlowDirection = FlowDirection.LeftToRight,
+            WrapContents = false,
+            Margin = Padding.Empty
         };
 
         _btnSaveAsGroup = new Button
         {
             Text = i18N.Translate("Save as Mode Group..."),
-            Height = 30,
-            Width = 150,
-            Location = new Point(0, 1),
+            AutoSize = true,
+            AutoSizeMode = AutoSizeMode.GrowAndShrink,
+            MinimumSize = new Size(140, 30),
+            Padding = new Padding(10, 0, 10, 0),
+            Margin = new Padding(0, 0, 8, 0),
             FlatStyle = FlatStyle.System
         };
         _btnSaveAsGroup.Click += BtnSaveAsGroup_Click;
@@ -267,9 +290,11 @@ public class MultiModeForm : Form
         _btnApply = new Button
         {
             Text = i18N.Translate("Apply"),
-            Height = 30,
-            Width = 85,
-            Location = new Point(158, 1),
+            AutoSize = true,
+            AutoSizeMode = AutoSizeMode.GrowAndShrink,
+            MinimumSize = new Size(85, 30),
+            Padding = new Padding(10, 0, 10, 0),
+            Margin = new Padding(0, 0, 8, 0),
             FlatStyle = FlatStyle.System
         };
         _btnApply.Click += BtnApply_Click;
@@ -277,9 +302,11 @@ public class MultiModeForm : Form
         _btnCancel = new Button
         {
             Text = i18N.Translate("Cancel"),
-            Height = 30,
-            Width = 80,
-            Location = new Point(251, 1),
+            AutoSize = true,
+            AutoSizeMode = AutoSizeMode.GrowAndShrink,
+            MinimumSize = new Size(80, 30),
+            Padding = new Padding(10, 0, 10, 0),
+            Margin = Padding.Empty,
             FlatStyle = FlatStyle.System
         };
         _btnCancel.Click += (_, _) => { DialogResult = DialogResult.Cancel; Close(); };
@@ -288,21 +315,14 @@ public class MultiModeForm : Form
         rightButtonPanel.Controls.Add(_btnApply);
         rightButtonPanel.Controls.Add(_btnCancel);
 
-        var leftInfoPanel = new FlowLayoutPanel
-        {
-            Dock = DockStyle.Fill,
-            FlowDirection = FlowDirection.LeftToRight,
-            WrapContents = false,
-            Padding = new Padding(0, 4, 0, 0)
-        };
-
         _lblCount = new Label
         {
+            Anchor = AnchorStyles.Left,
             AutoSize = true,
             Font = new Font("Microsoft YaHei UI", 9F, FontStyle.Bold),
             ForeColor = Color.FromArgb(40, 40, 40),
             Text = i18N.Translate("Selected: 0 modes"),
-            Margin = new Padding(0, 3, 0, 0)
+            Margin = Padding.Empty
         };
 
         _lblRulesSummary = new Label
@@ -310,14 +330,12 @@ public class MultiModeForm : Form
             AutoSize = true,
             ForeColor = Color.Gray,
             Text = "",
-            Margin = new Padding(0, 3, 0, 0),
+            Margin = Padding.Empty,
             Visible = false
         };
 
-        leftInfoPanel.Controls.Add(_lblCount);
-
-        bottomPanel.Controls.Add(leftInfoPanel);
-        bottomPanel.Controls.Add(rightButtonPanel);
+        bottomPanel.Controls.Add(_lblCount, 0, 0);
+        bottomPanel.Controls.Add(rightButtonPanel, 1, 0);
 
         Controls.Add(_splitContainer);
         Controls.Add(bottomPanel);
@@ -712,53 +730,92 @@ public class InputDialog : Form
 
     public InputDialog(string title, string prompt, string defaultValue = "")
     {
+        AutoScaleDimensions = new SizeF(96F, 96F);
+        AutoScaleMode = AutoScaleMode.Dpi;
+        AutoSize = true;
+        AutoSizeMode = AutoSizeMode.GrowAndShrink;
         Text = title;
         Font = new Font("Microsoft YaHei UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
-        Size = new Size(400, 160);
         FormBorderStyle = FormBorderStyle.FixedDialog;
         MaximizeBox = false;
         MinimizeBox = false;
         StartPosition = FormStartPosition.CenterParent;
         ShowInTaskbar = false;
 
+        var rootLayout = new TableLayoutPanel
+        {
+            Dock = DockStyle.Fill,
+            AutoSize = true,
+            AutoSizeMode = AutoSizeMode.GrowAndShrink,
+            ColumnCount = 1,
+            RowCount = 3,
+            Padding = new Padding(16),
+            MinimumSize = new Size(400, 0)
+        };
+        rootLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+        rootLayout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+        rootLayout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+        rootLayout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+
         var lblPrompt = new Label
         {
             Text = prompt,
-            Location = new Point(16, 16),
-            Size = new Size(350, 20),
+            AutoSize = true,
+            MaximumSize = new Size(368, 0),
+            Margin = new Padding(0, 0, 0, 8),
             TextAlign = ContentAlignment.MiddleLeft
         };
 
         _textBox = new TextBox
         {
             Text = defaultValue,
-            Location = new Point(16, 42),
-            Size = new Size(350, 24)
+            Dock = DockStyle.Fill,
+            Margin = new Padding(0, 0, 0, 14)
         };
         _textBox.SelectAll();
 
-        var btnOk = new Button
+        var buttonPanel = new FlowLayoutPanel
         {
-            Text = i18N.Translate("OK"),
-            Location = new Point(200, 80),
-            Size = new Size(80, 28),
-            DialogResult = DialogResult.OK,
-            FlatStyle = FlatStyle.System
+            Dock = DockStyle.Fill,
+            AutoSize = true,
+            AutoSizeMode = AutoSizeMode.GrowAndShrink,
+            FlowDirection = FlowDirection.RightToLeft,
+            WrapContents = false,
+            Margin = Padding.Empty
         };
 
         var btnCancel = new Button
         {
             Text = i18N.Translate("Cancel"),
-            Location = new Point(286, 80),
-            Size = new Size(80, 28),
+            AutoSize = true,
+            AutoSizeMode = AutoSizeMode.GrowAndShrink,
+            MinimumSize = new Size(80, 28),
+            Padding = new Padding(8, 0, 8, 0),
+            Margin = Padding.Empty,
             DialogResult = DialogResult.Cancel,
             FlatStyle = FlatStyle.System
         };
 
-        Controls.Add(lblPrompt);
-        Controls.Add(_textBox);
-        Controls.Add(btnOk);
-        Controls.Add(btnCancel);
+        var btnOk = new Button
+        {
+            Text = i18N.Translate("OK"),
+            AutoSize = true,
+            AutoSizeMode = AutoSizeMode.GrowAndShrink,
+            MinimumSize = new Size(80, 28),
+            Padding = new Padding(8, 0, 8, 0),
+            Margin = new Padding(0, 0, 8, 0),
+            DialogResult = DialogResult.OK,
+            FlatStyle = FlatStyle.System
+        };
+
+        buttonPanel.Controls.Add(btnCancel);
+        buttonPanel.Controls.Add(btnOk);
+
+        rootLayout.Controls.Add(lblPrompt, 0, 0);
+        rootLayout.Controls.Add(_textBox, 0, 1);
+        rootLayout.Controls.Add(buttonPanel, 0, 2);
+
+        Controls.Add(rootLayout);
 
         AcceptButton = btnOk;
         CancelButton = btnCancel;

@@ -31,6 +31,19 @@ namespace Netch.Forms.ModeForms
         /// </summary>
         private void InitializeComponent()
         {
+            var rootLayout = new System.Windows.Forms.TableLayoutPanel();
+            var configTable = new System.Windows.Forms.TableLayoutPanel();
+            var middleLayout = new System.Windows.Forms.TableLayoutPanel();
+            var protocolTable = new System.Windows.Forms.TableLayoutPanel();
+            var dnsTable = new System.Windows.Forms.TableLayoutPanel();
+            var scopeFlow = new System.Windows.Forms.FlowLayoutPanel();
+            var rulesLayout = new System.Windows.Forms.TableLayoutPanel();
+            var handleGroupTable = new System.Windows.Forms.TableLayoutPanel();
+            var handleBtnFlow = new System.Windows.Forms.FlowLayoutPanel();
+            var bypassGroupTable = new System.Windows.Forms.TableLayoutPanel();
+            var bypassBtnFlow = new System.Windows.Forms.FlowLayoutPanel();
+            var bottomLayout = new System.Windows.Forms.TableLayoutPanel();
+
             this.ConfigurationGroupBox = new System.Windows.Forms.GroupBox();
             this.RemarkLabel = new System.Windows.Forms.Label();
             this.RemarkTextBox = new System.Windows.Forms.TextBox();
@@ -63,6 +76,19 @@ namespace Netch.Forms.ModeForms
             this.ValidationButton = new System.Windows.Forms.Button();
             this.ControlButton = new System.Windows.Forms.Button();
             this.CancelButtonControl = new System.Windows.Forms.Button();
+
+            rootLayout.SuspendLayout();
+            configTable.SuspendLayout();
+            middleLayout.SuspendLayout();
+            protocolTable.SuspendLayout();
+            dnsTable.SuspendLayout();
+            scopeFlow.SuspendLayout();
+            rulesLayout.SuspendLayout();
+            handleGroupTable.SuspendLayout();
+            handleBtnFlow.SuspendLayout();
+            bypassGroupTable.SuspendLayout();
+            bypassBtnFlow.SuspendLayout();
+            bottomLayout.SuspendLayout();
             this.ConfigurationGroupBox.SuspendLayout();
             this.ProtocolGroupBox.SuspendLayout();
             this.DNSGroupBox.SuspendLayout();
@@ -71,74 +97,155 @@ namespace Netch.Forms.ModeForms
             this.BypassGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
+            // rootLayout
+            // 
+            rootLayout.ColumnCount = 1;
+            rootLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            rootLayout.Controls.Add(this.ConfigurationGroupBox, 0, 0);
+            rootLayout.Controls.Add(middleLayout, 0, 1);
+            rootLayout.Controls.Add(rulesLayout, 0, 2);
+            rootLayout.Controls.Add(bottomLayout, 0, 3);
+            rootLayout.Dock = System.Windows.Forms.DockStyle.Fill;
+            rootLayout.Location = new System.Drawing.Point(0, 0);
+            rootLayout.Name = "rootLayout";
+            rootLayout.Padding = new System.Windows.Forms.Padding(12);
+            rootLayout.RowCount = 4;
+            rootLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.AutoSize));
+            rootLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.AutoSize));
+            rootLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            rootLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.AutoSize));
+            rootLayout.Size = new System.Drawing.Size(860, 660);
+            rootLayout.TabIndex = 0;
+            // 
             // ConfigurationGroupBox
             // 
-            this.ConfigurationGroupBox.Controls.Add(this.RemarkLabel);
-            this.ConfigurationGroupBox.Controls.Add(this.RemarkTextBox);
-            this.ConfigurationGroupBox.Controls.Add(this.FilenameLabel);
-            this.ConfigurationGroupBox.Controls.Add(this.FilenameTextBox);
-            this.ConfigurationGroupBox.Location = new System.Drawing.Point(12, 10);
+            this.ConfigurationGroupBox.AutoSize = true;
+            this.ConfigurationGroupBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.ConfigurationGroupBox.Controls.Add(configTable);
+            this.ConfigurationGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ConfigurationGroupBox.Margin = new System.Windows.Forms.Padding(0, 0, 0, 8);
             this.ConfigurationGroupBox.Name = "ConfigurationGroupBox";
-            this.ConfigurationGroupBox.Size = new System.Drawing.Size(816, 85);
+            this.ConfigurationGroupBox.Padding = new System.Windows.Forms.Padding(10, 6, 10, 8);
             this.ConfigurationGroupBox.TabIndex = 0;
             this.ConfigurationGroupBox.TabStop = false;
             this.ConfigurationGroupBox.Text = "Configuration";
             // 
+            // configTable
+            // 
+            configTable.AutoSize = true;
+            configTable.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            configTable.ColumnCount = 2;
+            configTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.AutoSize));
+            configTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            configTable.Controls.Add(this.RemarkLabel, 0, 0);
+            configTable.Controls.Add(this.RemarkTextBox, 1, 0);
+            configTable.Controls.Add(this.FilenameLabel, 0, 1);
+            configTable.Controls.Add(this.FilenameTextBox, 1, 1);
+            configTable.Dock = System.Windows.Forms.DockStyle.Fill;
+            configTable.Margin = new System.Windows.Forms.Padding(0);
+            configTable.Name = "configTable";
+            configTable.RowCount = 2;
+            configTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.AutoSize));
+            configTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.AutoSize));
+            configTable.TabIndex = 0;
+            // 
             // RemarkLabel
             // 
+            this.RemarkLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.RemarkLabel.AutoSize = true;
-            this.RemarkLabel.Location = new System.Drawing.Point(16, 25);
+            this.RemarkLabel.Margin = new System.Windows.Forms.Padding(4, 5, 12, 5);
             this.RemarkLabel.Name = "RemarkLabel";
-            this.RemarkLabel.Size = new System.Drawing.Size(53, 17);
             this.RemarkLabel.TabIndex = 0;
             this.RemarkLabel.Text = "Remark";
             // 
             // RemarkTextBox
             // 
-            this.RemarkTextBox.Location = new System.Drawing.Point(75, 22);
+            this.RemarkTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.RemarkTextBox.Margin = new System.Windows.Forms.Padding(0, 3, 4, 3);
             this.RemarkTextBox.Name = "RemarkTextBox";
-            this.RemarkTextBox.Size = new System.Drawing.Size(725, 23);
             this.RemarkTextBox.TabIndex = 1;
             this.RemarkTextBox.TextChanged += new System.EventHandler(this.RemarkTextBox_TextChanged);
             // 
             // FilenameLabel
             // 
+            this.FilenameLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.FilenameLabel.AutoSize = true;
-            this.FilenameLabel.Location = new System.Drawing.Point(16, 54);
+            this.FilenameLabel.Margin = new System.Windows.Forms.Padding(4, 5, 12, 5);
             this.FilenameLabel.Name = "FilenameLabel";
-            this.FilenameLabel.Size = new System.Drawing.Size(59, 17);
             this.FilenameLabel.TabIndex = 2;
             this.FilenameLabel.Text = "Filename";
             // 
             // FilenameTextBox
             // 
-            this.FilenameTextBox.Location = new System.Drawing.Point(75, 51);
+            this.FilenameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.FilenameTextBox.Margin = new System.Windows.Forms.Padding(0, 3, 4, 3);
             this.FilenameTextBox.Name = "FilenameTextBox";
             this.FilenameTextBox.ReadOnly = true;
-            this.FilenameTextBox.Size = new System.Drawing.Size(725, 23);
             this.FilenameTextBox.TabIndex = 3;
+            // 
+            // middleLayout
+            // 
+            middleLayout.AutoSize = true;
+            middleLayout.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            middleLayout.ColumnCount = 3;
+            middleLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 32F));
+            middleLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
+            middleLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 28F));
+            middleLayout.Controls.Add(this.ProtocolGroupBox, 0, 0);
+            middleLayout.Controls.Add(this.DNSGroupBox, 1, 0);
+            middleLayout.Controls.Add(this.ScopeGroupBox, 2, 0);
+            middleLayout.Dock = System.Windows.Forms.DockStyle.Fill;
+            middleLayout.Margin = new System.Windows.Forms.Padding(0, 0, 0, 8);
+            middleLayout.Name = "middleLayout";
+            middleLayout.RowCount = 1;
+            middleLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.AutoSize));
+            middleLayout.TabIndex = 1;
             // 
             // ProtocolGroupBox
             // 
-            this.ProtocolGroupBox.Controls.Add(this.HandleTCPCheckBox);
-            this.ProtocolGroupBox.Controls.Add(this.HandleUDPCheckBox);
-            this.ProtocolGroupBox.Controls.Add(this.HandleICMPCheckBox);
-            this.ProtocolGroupBox.Controls.Add(this.ICMPDelayLabel);
-            this.ProtocolGroupBox.Controls.Add(this.ICMPDelayTextBox);
-            this.ProtocolGroupBox.Location = new System.Drawing.Point(12, 100);
+            this.ProtocolGroupBox.AutoSize = true;
+            this.ProtocolGroupBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.ProtocolGroupBox.Controls.Add(protocolTable);
+            this.ProtocolGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ProtocolGroupBox.Margin = new System.Windows.Forms.Padding(0, 0, 8, 0);
             this.ProtocolGroupBox.Name = "ProtocolGroupBox";
-            this.ProtocolGroupBox.Size = new System.Drawing.Size(240, 145);
+            this.ProtocolGroupBox.Padding = new System.Windows.Forms.Padding(10, 6, 10, 8);
             this.ProtocolGroupBox.TabIndex = 1;
             this.ProtocolGroupBox.TabStop = false;
             this.ProtocolGroupBox.Text = "Protocol Filtering";
             // 
+            // protocolTable
+            // 
+            protocolTable.AutoSize = true;
+            protocolTable.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            protocolTable.ColumnCount = 2;
+            protocolTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.AutoSize));
+            protocolTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            protocolTable.Controls.Add(this.HandleTCPCheckBox, 0, 0);
+            protocolTable.Controls.Add(this.HandleUDPCheckBox, 0, 1);
+            protocolTable.Controls.Add(this.HandleICMPCheckBox, 0, 2);
+            protocolTable.Controls.Add(this.ICMPDelayLabel, 0, 3);
+            protocolTable.Controls.Add(this.ICMPDelayTextBox, 1, 3);
+            protocolTable.SetColumnSpan(this.HandleTCPCheckBox, 2);
+            protocolTable.SetColumnSpan(this.HandleUDPCheckBox, 2);
+            protocolTable.SetColumnSpan(this.HandleICMPCheckBox, 2);
+            protocolTable.Dock = System.Windows.Forms.DockStyle.Fill;
+            protocolTable.Margin = new System.Windows.Forms.Padding(0);
+            protocolTable.Name = "protocolTable";
+            protocolTable.RowCount = 4;
+            protocolTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.AutoSize));
+            protocolTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.AutoSize));
+            protocolTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.AutoSize));
+            protocolTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.AutoSize));
+            protocolTable.TabIndex = 0;
+            // 
             // HandleTCPCheckBox
             // 
+            this.HandleTCPCheckBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.HandleTCPCheckBox.AutoCheck = false;
             this.HandleTCPCheckBox.AutoSize = true;
-            this.HandleTCPCheckBox.Location = new System.Drawing.Point(16, 24);
+            this.HandleTCPCheckBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.HandleTCPCheckBox.Name = "HandleTCPCheckBox";
-            this.HandleTCPCheckBox.Size = new System.Drawing.Size(95, 21);
             this.HandleTCPCheckBox.TabIndex = 0;
             this.HandleTCPCheckBox.Text = "Handle TCP";
             this.HandleTCPCheckBox.ThreeState = true;
@@ -146,11 +253,11 @@ namespace Netch.Forms.ModeForms
             // 
             // HandleUDPCheckBox
             // 
+            this.HandleUDPCheckBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.HandleUDPCheckBox.AutoCheck = false;
             this.HandleUDPCheckBox.AutoSize = true;
-            this.HandleUDPCheckBox.Location = new System.Drawing.Point(16, 52);
+            this.HandleUDPCheckBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.HandleUDPCheckBox.Name = "HandleUDPCheckBox";
-            this.HandleUDPCheckBox.Size = new System.Drawing.Size(98, 21);
             this.HandleUDPCheckBox.TabIndex = 1;
             this.HandleUDPCheckBox.Text = "Handle UDP";
             this.HandleUDPCheckBox.ThreeState = true;
@@ -158,11 +265,11 @@ namespace Netch.Forms.ModeForms
             // 
             // HandleICMPCheckBox
             // 
+            this.HandleICMPCheckBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.HandleICMPCheckBox.AutoCheck = false;
             this.HandleICMPCheckBox.AutoSize = true;
-            this.HandleICMPCheckBox.Location = new System.Drawing.Point(16, 80);
+            this.HandleICMPCheckBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.HandleICMPCheckBox.Name = "HandleICMPCheckBox";
-            this.HandleICMPCheckBox.Size = new System.Drawing.Size(102, 21);
             this.HandleICMPCheckBox.TabIndex = 2;
             this.HandleICMPCheckBox.Text = "Handle ICMP";
             this.HandleICMPCheckBox.ThreeState = true;
@@ -170,42 +277,67 @@ namespace Netch.Forms.ModeForms
             // 
             // ICMPDelayLabel
             // 
+            this.ICMPDelayLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.ICMPDelayLabel.AutoSize = true;
-            this.ICMPDelayLabel.Location = new System.Drawing.Point(34, 110);
+            this.ICMPDelayLabel.Margin = new System.Windows.Forms.Padding(20, 5, 8, 5);
             this.ICMPDelayLabel.Name = "ICMPDelayLabel";
-            this.ICMPDelayLabel.Size = new System.Drawing.Size(97, 17);
             this.ICMPDelayLabel.TabIndex = 3;
             this.ICMPDelayLabel.Text = "ICMP delay(ms)";
             // 
             // ICMPDelayTextBox
             // 
-            this.ICMPDelayTextBox.Location = new System.Drawing.Point(145, 107);
+            this.ICMPDelayTextBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.ICMPDelayTextBox.Margin = new System.Windows.Forms.Padding(0, 3, 4, 3);
             this.ICMPDelayTextBox.Name = "ICMPDelayTextBox";
-            this.ICMPDelayTextBox.Size = new System.Drawing.Size(55, 23);
+            this.ICMPDelayTextBox.Size = new System.Drawing.Size(60, 23);
             this.ICMPDelayTextBox.TabIndex = 4;
             this.ICMPDelayTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // DNSGroupBox
             // 
-            this.DNSGroupBox.Controls.Add(this.HandleDNSCheckBox);
-            this.DNSGroupBox.Controls.Add(this.DNSLabel);
-            this.DNSGroupBox.Controls.Add(this.DNSTextBox);
-            this.DNSGroupBox.Controls.Add(this.ProxyDNSCheckBox);
-            this.DNSGroupBox.Controls.Add(this.HandleProcDNSCheckBox);
-            this.DNSGroupBox.Location = new System.Drawing.Point(264, 100);
+            this.DNSGroupBox.AutoSize = true;
+            this.DNSGroupBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.DNSGroupBox.Controls.Add(dnsTable);
+            this.DNSGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.DNSGroupBox.Margin = new System.Windows.Forms.Padding(0, 0, 8, 0);
             this.DNSGroupBox.Name = "DNSGroupBox";
-            this.DNSGroupBox.Size = new System.Drawing.Size(310, 145);
+            this.DNSGroupBox.Padding = new System.Windows.Forms.Padding(10, 6, 10, 8);
             this.DNSGroupBox.TabIndex = 2;
             this.DNSGroupBox.TabStop = false;
             this.DNSGroupBox.Text = "DNS Settings";
             // 
+            // dnsTable
+            // 
+            dnsTable.AutoSize = true;
+            dnsTable.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            dnsTable.ColumnCount = 2;
+            dnsTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.AutoSize));
+            dnsTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            dnsTable.Controls.Add(this.HandleDNSCheckBox, 0, 0);
+            dnsTable.Controls.Add(this.DNSLabel, 0, 1);
+            dnsTable.Controls.Add(this.DNSTextBox, 1, 1);
+            dnsTable.Controls.Add(this.ProxyDNSCheckBox, 0, 2);
+            dnsTable.Controls.Add(this.HandleProcDNSCheckBox, 0, 3);
+            dnsTable.SetColumnSpan(this.HandleDNSCheckBox, 2);
+            dnsTable.SetColumnSpan(this.ProxyDNSCheckBox, 2);
+            dnsTable.SetColumnSpan(this.HandleProcDNSCheckBox, 2);
+            dnsTable.Dock = System.Windows.Forms.DockStyle.Fill;
+            dnsTable.Margin = new System.Windows.Forms.Padding(0);
+            dnsTable.Name = "dnsTable";
+            dnsTable.RowCount = 4;
+            dnsTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.AutoSize));
+            dnsTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.AutoSize));
+            dnsTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.AutoSize));
+            dnsTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.AutoSize));
+            dnsTable.TabIndex = 0;
+            // 
             // HandleDNSCheckBox
             // 
+            this.HandleDNSCheckBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.HandleDNSCheckBox.AutoCheck = false;
             this.HandleDNSCheckBox.AutoSize = true;
-            this.HandleDNSCheckBox.Location = new System.Drawing.Point(16, 24);
+            this.HandleDNSCheckBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.HandleDNSCheckBox.Name = "HandleDNSCheckBox";
-            this.HandleDNSCheckBox.Size = new System.Drawing.Size(189, 21);
             this.HandleDNSCheckBox.TabIndex = 0;
             this.HandleDNSCheckBox.Text = "Handle DNS (DNS hijacking)";
             this.HandleDNSCheckBox.ThreeState = true;
@@ -213,28 +345,28 @@ namespace Netch.Forms.ModeForms
             // 
             // DNSLabel
             // 
+            this.DNSLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.DNSLabel.AutoSize = true;
-            this.DNSLabel.Location = new System.Drawing.Point(34, 54);
+            this.DNSLabel.Margin = new System.Windows.Forms.Padding(20, 5, 8, 5);
             this.DNSLabel.Name = "DNSLabel";
-            this.DNSLabel.Size = new System.Drawing.Size(34, 17);
             this.DNSLabel.TabIndex = 1;
             this.DNSLabel.Text = "DNS";
             // 
             // DNSTextBox
             // 
-            this.DNSTextBox.Location = new System.Drawing.Point(80, 51);
+            this.DNSTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.DNSTextBox.Margin = new System.Windows.Forms.Padding(0, 3, 4, 3);
             this.DNSTextBox.Name = "DNSTextBox";
-            this.DNSTextBox.Size = new System.Drawing.Size(210, 23);
             this.DNSTextBox.TabIndex = 2;
             this.DNSTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // ProxyDNSCheckBox
             // 
+            this.ProxyDNSCheckBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.ProxyDNSCheckBox.AutoCheck = false;
             this.ProxyDNSCheckBox.AutoSize = true;
-            this.ProxyDNSCheckBox.Location = new System.Drawing.Point(16, 82);
+            this.ProxyDNSCheckBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ProxyDNSCheckBox.Name = "ProxyDNSCheckBox";
-            this.ProxyDNSCheckBox.Size = new System.Drawing.Size(180, 21);
             this.ProxyDNSCheckBox.TabIndex = 3;
             this.ProxyDNSCheckBox.Text = "Handle DNS through proxy";
             this.ProxyDNSCheckBox.ThreeState = true;
@@ -242,35 +374,49 @@ namespace Netch.Forms.ModeForms
             // 
             // HandleProcDNSCheckBox
             // 
+            this.HandleProcDNSCheckBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.HandleProcDNSCheckBox.AutoCheck = false;
             this.HandleProcDNSCheckBox.AutoSize = true;
-            this.HandleProcDNSCheckBox.Location = new System.Drawing.Point(16, 110);
+            this.HandleProcDNSCheckBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.HandleProcDNSCheckBox.Name = "HandleProcDNSCheckBox";
-            this.HandleProcDNSCheckBox.Size = new System.Drawing.Size(206, 21);
             this.HandleProcDNSCheckBox.TabIndex = 4;
-            this.HandleProcDNSCheckBox.Text = "Handle handled process\'s DNS";
+            this.HandleProcDNSCheckBox.Text = "Handle handled process's DNS";
             this.HandleProcDNSCheckBox.ThreeState = true;
             this.HandleProcDNSCheckBox.UseVisualStyleBackColor = true;
             // 
             // ScopeGroupBox
             // 
-            this.ScopeGroupBox.Controls.Add(this.HandleChildProcCheckBox);
-            this.ScopeGroupBox.Controls.Add(this.HandleLoopbackCheckBox);
-            this.ScopeGroupBox.Controls.Add(this.HandleLANCheckBox);
-            this.ScopeGroupBox.Location = new System.Drawing.Point(586, 100);
+            this.ScopeGroupBox.AutoSize = true;
+            this.ScopeGroupBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.ScopeGroupBox.Controls.Add(scopeFlow);
+            this.ScopeGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ScopeGroupBox.Margin = new System.Windows.Forms.Padding(0);
             this.ScopeGroupBox.Name = "ScopeGroupBox";
-            this.ScopeGroupBox.Size = new System.Drawing.Size(242, 145);
+            this.ScopeGroupBox.Padding = new System.Windows.Forms.Padding(10, 6, 10, 8);
             this.ScopeGroupBox.TabIndex = 3;
             this.ScopeGroupBox.TabStop = false;
             this.ScopeGroupBox.Text = "Scope & Process";
+            // 
+            // scopeFlow
+            // 
+            scopeFlow.AutoSize = true;
+            scopeFlow.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            scopeFlow.Controls.Add(this.HandleChildProcCheckBox);
+            scopeFlow.Controls.Add(this.HandleLoopbackCheckBox);
+            scopeFlow.Controls.Add(this.HandleLANCheckBox);
+            scopeFlow.Dock = System.Windows.Forms.DockStyle.Fill;
+            scopeFlow.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            scopeFlow.Margin = new System.Windows.Forms.Padding(0);
+            scopeFlow.Name = "scopeFlow";
+            scopeFlow.TabIndex = 0;
+            scopeFlow.WrapContents = false;
             // 
             // HandleChildProcCheckBox
             // 
             this.HandleChildProcCheckBox.AutoCheck = false;
             this.HandleChildProcCheckBox.AutoSize = true;
-            this.HandleChildProcCheckBox.Location = new System.Drawing.Point(16, 24);
+            this.HandleChildProcCheckBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.HandleChildProcCheckBox.Name = "HandleChildProcCheckBox";
-            this.HandleChildProcCheckBox.Size = new System.Drawing.Size(147, 21);
             this.HandleChildProcCheckBox.TabIndex = 0;
             this.HandleChildProcCheckBox.Text = "Handle child process";
             this.HandleChildProcCheckBox.ThreeState = true;
@@ -279,9 +425,8 @@ namespace Netch.Forms.ModeForms
             // HandleLoopbackCheckBox
             // 
             this.HandleLoopbackCheckBox.AutoSize = true;
-            this.HandleLoopbackCheckBox.Location = new System.Drawing.Point(16, 52);
+            this.HandleLoopbackCheckBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.HandleLoopbackCheckBox.Name = "HandleLoopbackCheckBox";
-            this.HandleLoopbackCheckBox.Size = new System.Drawing.Size(155, 21);
             this.HandleLoopbackCheckBox.TabIndex = 1;
             this.HandleLoopbackCheckBox.Text = "Handle local loopback";
             this.HandleLoopbackCheckBox.UseVisualStyleBackColor = true;
@@ -289,30 +434,72 @@ namespace Netch.Forms.ModeForms
             // HandleLANCheckBox
             // 
             this.HandleLANCheckBox.AutoSize = true;
-            this.HandleLANCheckBox.Location = new System.Drawing.Point(16, 80);
+            this.HandleLANCheckBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.HandleLANCheckBox.Name = "HandleLANCheckBox";
-            this.HandleLANCheckBox.Size = new System.Drawing.Size(95, 21);
             this.HandleLANCheckBox.TabIndex = 2;
             this.HandleLANCheckBox.Text = "Handle LAN";
             this.HandleLANCheckBox.UseVisualStyleBackColor = true;
             // 
+            // rulesLayout
+            // 
+            rulesLayout.ColumnCount = 2;
+            rulesLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            rulesLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            rulesLayout.Controls.Add(this.HandleGroupBox, 0, 0);
+            rulesLayout.Controls.Add(this.BypassGroupBox, 1, 0);
+            rulesLayout.Dock = System.Windows.Forms.DockStyle.Fill;
+            rulesLayout.Margin = new System.Windows.Forms.Padding(0);
+            rulesLayout.Name = "rulesLayout";
+            rulesLayout.RowCount = 1;
+            rulesLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            rulesLayout.TabIndex = 2;
+            // 
             // HandleGroupBox
             // 
-            this.HandleGroupBox.Controls.Add(this.HandleSelectButton);
-            this.HandleGroupBox.Controls.Add(this.HandleScanButton);
-            this.HandleGroupBox.Controls.Add(this.HandleRuleRichTextBox);
-            this.HandleGroupBox.Location = new System.Drawing.Point(12, 255);
+            this.HandleGroupBox.Controls.Add(handleGroupTable);
+            this.HandleGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.HandleGroupBox.Margin = new System.Windows.Forms.Padding(0, 0, 6, 0);
             this.HandleGroupBox.Name = "HandleGroupBox";
-            this.HandleGroupBox.Size = new System.Drawing.Size(402, 330);
+            this.HandleGroupBox.Padding = new System.Windows.Forms.Padding(10, 6, 10, 10);
             this.HandleGroupBox.TabIndex = 4;
             this.HandleGroupBox.TabStop = false;
             this.HandleGroupBox.Text = "Handle rules";
             // 
+            // handleGroupTable
+            // 
+            handleGroupTable.ColumnCount = 1;
+            handleGroupTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            handleGroupTable.Controls.Add(handleBtnFlow, 0, 0);
+            handleGroupTable.Controls.Add(this.HandleRuleRichTextBox, 0, 1);
+            handleGroupTable.Dock = System.Windows.Forms.DockStyle.Fill;
+            handleGroupTable.Margin = new System.Windows.Forms.Padding(0);
+            handleGroupTable.Name = "handleGroupTable";
+            handleGroupTable.RowCount = 2;
+            handleGroupTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.AutoSize));
+            handleGroupTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            handleGroupTable.TabIndex = 0;
+            // 
+            // handleBtnFlow
+            // 
+            handleBtnFlow.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            handleBtnFlow.AutoSize = true;
+            handleBtnFlow.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            handleBtnFlow.Controls.Add(this.HandleSelectButton);
+            handleBtnFlow.Controls.Add(this.HandleScanButton);
+            handleBtnFlow.FlowDirection = System.Windows.Forms.FlowDirection.LeftToRight;
+            handleBtnFlow.Margin = new System.Windows.Forms.Padding(0, 0, 0, 6);
+            handleBtnFlow.Name = "handleBtnFlow";
+            handleBtnFlow.TabIndex = 0;
+            handleBtnFlow.WrapContents = false;
+            // 
             // HandleSelectButton
             // 
-            this.HandleSelectButton.Location = new System.Drawing.Point(230, 18);
+            this.HandleSelectButton.AutoSize = true;
+            this.HandleSelectButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.HandleSelectButton.Margin = new System.Windows.Forms.Padding(0, 0, 8, 0);
+            this.HandleSelectButton.MinimumSize = new System.Drawing.Size(75, 24);
             this.HandleSelectButton.Name = "HandleSelectButton";
-            this.HandleSelectButton.Size = new System.Drawing.Size(75, 24);
+            this.HandleSelectButton.Padding = new System.Windows.Forms.Padding(8, 0, 8, 0);
             this.HandleSelectButton.TabIndex = 0;
             this.HandleSelectButton.Text = "Select";
             this.HandleSelectButton.UseVisualStyleBackColor = true;
@@ -320,9 +507,12 @@ namespace Netch.Forms.ModeForms
             // 
             // HandleScanButton
             // 
-            this.HandleScanButton.Location = new System.Drawing.Point(313, 18);
+            this.HandleScanButton.AutoSize = true;
+            this.HandleScanButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.HandleScanButton.Margin = new System.Windows.Forms.Padding(0);
+            this.HandleScanButton.MinimumSize = new System.Drawing.Size(75, 24);
             this.HandleScanButton.Name = "HandleScanButton";
-            this.HandleScanButton.Size = new System.Drawing.Size(75, 24);
+            this.HandleScanButton.Padding = new System.Windows.Forms.Padding(8, 0, 8, 0);
             this.HandleScanButton.TabIndex = 1;
             this.HandleScanButton.Text = "Scan";
             this.HandleScanButton.UseVisualStyleBackColor = true;
@@ -331,32 +521,61 @@ namespace Netch.Forms.ModeForms
             // HandleRuleRichTextBox
             // 
             this.HandleRuleRichTextBox.AcceptsReturn = true;
+            this.HandleRuleRichTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.HandleRuleRichTextBox.Font = new System.Drawing.Font("Consolas", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.HandleRuleRichTextBox.Location = new System.Drawing.Point(12, 48);
+            this.HandleRuleRichTextBox.Margin = new System.Windows.Forms.Padding(0);
             this.HandleRuleRichTextBox.Multiline = true;
             this.HandleRuleRichTextBox.Name = "HandleRuleRichTextBox";
             this.HandleRuleRichTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.HandleRuleRichTextBox.Size = new System.Drawing.Size(378, 270);
             this.HandleRuleRichTextBox.TabIndex = 2;
             this.HandleRuleRichTextBox.WordWrap = false;
             // 
             // BypassGroupBox
             // 
-            this.BypassGroupBox.Controls.Add(this.BypassSelectButton);
-            this.BypassGroupBox.Controls.Add(this.BypassScanButton);
-            this.BypassGroupBox.Controls.Add(this.BypassRuleRichTextBox);
-            this.BypassGroupBox.Location = new System.Drawing.Point(426, 255);
+            this.BypassGroupBox.Controls.Add(bypassGroupTable);
+            this.BypassGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.BypassGroupBox.Margin = new System.Windows.Forms.Padding(6, 0, 0, 0);
             this.BypassGroupBox.Name = "BypassGroupBox";
-            this.BypassGroupBox.Size = new System.Drawing.Size(402, 330);
+            this.BypassGroupBox.Padding = new System.Windows.Forms.Padding(10, 6, 10, 10);
             this.BypassGroupBox.TabIndex = 5;
             this.BypassGroupBox.TabStop = false;
             this.BypassGroupBox.Text = "Bypass rules";
             // 
+            // bypassGroupTable
+            // 
+            bypassGroupTable.ColumnCount = 1;
+            bypassGroupTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            bypassGroupTable.Controls.Add(bypassBtnFlow, 0, 0);
+            bypassGroupTable.Controls.Add(this.BypassRuleRichTextBox, 0, 1);
+            bypassGroupTable.Dock = System.Windows.Forms.DockStyle.Fill;
+            bypassGroupTable.Margin = new System.Windows.Forms.Padding(0);
+            bypassGroupTable.Name = "bypassGroupTable";
+            bypassGroupTable.RowCount = 2;
+            bypassGroupTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.AutoSize));
+            bypassGroupTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            bypassGroupTable.TabIndex = 0;
+            // 
+            // bypassBtnFlow
+            // 
+            bypassBtnFlow.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            bypassBtnFlow.AutoSize = true;
+            bypassBtnFlow.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            bypassBtnFlow.Controls.Add(this.BypassSelectButton);
+            bypassBtnFlow.Controls.Add(this.BypassScanButton);
+            bypassBtnFlow.FlowDirection = System.Windows.Forms.FlowDirection.LeftToRight;
+            bypassBtnFlow.Margin = new System.Windows.Forms.Padding(0, 0, 0, 6);
+            bypassBtnFlow.Name = "bypassBtnFlow";
+            bypassBtnFlow.TabIndex = 0;
+            bypassBtnFlow.WrapContents = false;
+            // 
             // BypassSelectButton
             // 
-            this.BypassSelectButton.Location = new System.Drawing.Point(230, 18);
+            this.BypassSelectButton.AutoSize = true;
+            this.BypassSelectButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.BypassSelectButton.Margin = new System.Windows.Forms.Padding(0, 0, 8, 0);
+            this.BypassSelectButton.MinimumSize = new System.Drawing.Size(75, 24);
             this.BypassSelectButton.Name = "BypassSelectButton";
-            this.BypassSelectButton.Size = new System.Drawing.Size(75, 24);
+            this.BypassSelectButton.Padding = new System.Windows.Forms.Padding(8, 0, 8, 0);
             this.BypassSelectButton.TabIndex = 0;
             this.BypassSelectButton.Text = "Select";
             this.BypassSelectButton.UseVisualStyleBackColor = true;
@@ -364,9 +583,12 @@ namespace Netch.Forms.ModeForms
             // 
             // BypassScanButton
             // 
-            this.BypassScanButton.Location = new System.Drawing.Point(313, 18);
+            this.BypassScanButton.AutoSize = true;
+            this.BypassScanButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.BypassScanButton.Margin = new System.Windows.Forms.Padding(0);
+            this.BypassScanButton.MinimumSize = new System.Drawing.Size(75, 24);
             this.BypassScanButton.Name = "BypassScanButton";
-            this.BypassScanButton.Size = new System.Drawing.Size(75, 24);
+            this.BypassScanButton.Padding = new System.Windows.Forms.Padding(8, 0, 8, 0);
             this.BypassScanButton.TabIndex = 1;
             this.BypassScanButton.Text = "Scan";
             this.BypassScanButton.UseVisualStyleBackColor = true;
@@ -375,20 +597,42 @@ namespace Netch.Forms.ModeForms
             // BypassRuleRichTextBox
             // 
             this.BypassRuleRichTextBox.AcceptsReturn = true;
+            this.BypassRuleRichTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.BypassRuleRichTextBox.Font = new System.Drawing.Font("Consolas", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.BypassRuleRichTextBox.Location = new System.Drawing.Point(12, 48);
+            this.BypassRuleRichTextBox.Margin = new System.Windows.Forms.Padding(0);
             this.BypassRuleRichTextBox.Multiline = true;
             this.BypassRuleRichTextBox.Name = "BypassRuleRichTextBox";
             this.BypassRuleRichTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.BypassRuleRichTextBox.Size = new System.Drawing.Size(378, 270);
             this.BypassRuleRichTextBox.TabIndex = 2;
             this.BypassRuleRichTextBox.WordWrap = false;
             // 
+            // bottomLayout
+            // 
+            bottomLayout.AutoSize = true;
+            bottomLayout.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            bottomLayout.ColumnCount = 4;
+            bottomLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.AutoSize));
+            bottomLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            bottomLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.AutoSize));
+            bottomLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.AutoSize));
+            bottomLayout.Controls.Add(this.ValidationButton, 0, 0);
+            bottomLayout.Controls.Add(this.ControlButton, 2, 0);
+            bottomLayout.Controls.Add(this.CancelButtonControl, 3, 0);
+            bottomLayout.Dock = System.Windows.Forms.DockStyle.Fill;
+            bottomLayout.Margin = new System.Windows.Forms.Padding(0, 10, 0, 0);
+            bottomLayout.Name = "bottomLayout";
+            bottomLayout.RowCount = 1;
+            bottomLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.AutoSize));
+            bottomLayout.TabIndex = 3;
+            // 
             // ValidationButton
             // 
-            this.ValidationButton.Location = new System.Drawing.Point(12, 598);
+            this.ValidationButton.AutoSize = true;
+            this.ValidationButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.ValidationButton.Margin = new System.Windows.Forms.Padding(0);
+            this.ValidationButton.MinimumSize = new System.Drawing.Size(120, 28);
             this.ValidationButton.Name = "ValidationButton";
-            this.ValidationButton.Size = new System.Drawing.Size(120, 28);
+            this.ValidationButton.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
             this.ValidationButton.TabIndex = 6;
             this.ValidationButton.Text = "Validation";
             this.ValidationButton.UseVisualStyleBackColor = true;
@@ -396,9 +640,12 @@ namespace Netch.Forms.ModeForms
             // 
             // ControlButton
             // 
-            this.ControlButton.Location = new System.Drawing.Point(636, 598);
+            this.ControlButton.AutoSize = true;
+            this.ControlButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.ControlButton.Margin = new System.Windows.Forms.Padding(0, 0, 10, 0);
+            this.ControlButton.MinimumSize = new System.Drawing.Size(90, 28);
             this.ControlButton.Name = "ControlButton";
-            this.ControlButton.Size = new System.Drawing.Size(90, 28);
+            this.ControlButton.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
             this.ControlButton.TabIndex = 7;
             this.ControlButton.Text = "Save";
             this.ControlButton.UseVisualStyleBackColor = true;
@@ -406,9 +653,12 @@ namespace Netch.Forms.ModeForms
             // 
             // CancelButtonControl
             // 
-            this.CancelButtonControl.Location = new System.Drawing.Point(738, 598);
+            this.CancelButtonControl.AutoSize = true;
+            this.CancelButtonControl.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.CancelButtonControl.Margin = new System.Windows.Forms.Padding(0);
+            this.CancelButtonControl.MinimumSize = new System.Drawing.Size(90, 28);
             this.CancelButtonControl.Name = "CancelButtonControl";
-            this.CancelButtonControl.Size = new System.Drawing.Size(90, 28);
+            this.CancelButtonControl.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
             this.CancelButtonControl.TabIndex = 8;
             this.CancelButtonControl.Text = "Cancel";
             this.CancelButtonControl.UseVisualStyleBackColor = true;
@@ -419,23 +669,39 @@ namespace Netch.Forms.ModeForms
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.CancelButton = this.CancelButtonControl;
-            this.ClientSize = new System.Drawing.Size(840, 638);
-            this.Controls.Add(this.ConfigurationGroupBox);
-            this.Controls.Add(this.ProtocolGroupBox);
-            this.Controls.Add(this.DNSGroupBox);
-            this.Controls.Add(this.ScopeGroupBox);
-            this.Controls.Add(this.HandleGroupBox);
-            this.Controls.Add(this.BypassGroupBox);
-            this.Controls.Add(this.ValidationButton);
-            this.Controls.Add(this.ControlButton);
-            this.Controls.Add(this.CancelButtonControl);
+            this.ClientSize = new System.Drawing.Size(860, 660);
+            this.Controls.Add(rootLayout);
             this.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(800, 600);
             this.Name = "ProcessForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Create Process Mode";
             this.Load += new System.EventHandler(this.ModeForm_Load);
+            rootLayout.ResumeLayout(false);
+            rootLayout.PerformLayout();
+            configTable.ResumeLayout(false);
+            configTable.PerformLayout();
+            middleLayout.ResumeLayout(false);
+            middleLayout.PerformLayout();
+            protocolTable.ResumeLayout(false);
+            protocolTable.PerformLayout();
+            dnsTable.ResumeLayout(false);
+            dnsTable.PerformLayout();
+            scopeFlow.ResumeLayout(false);
+            scopeFlow.PerformLayout();
+            rulesLayout.ResumeLayout(false);
+            handleGroupTable.ResumeLayout(false);
+            handleGroupTable.PerformLayout();
+            handleBtnFlow.ResumeLayout(false);
+            handleBtnFlow.PerformLayout();
+            bypassGroupTable.ResumeLayout(false);
+            bypassGroupTable.PerformLayout();
+            bypassBtnFlow.ResumeLayout(false);
+            bypassBtnFlow.PerformLayout();
+            bottomLayout.ResumeLayout(false);
+            bottomLayout.PerformLayout();
             this.ConfigurationGroupBox.ResumeLayout(false);
             this.ConfigurationGroupBox.PerformLayout();
             this.ProtocolGroupBox.ResumeLayout(false);
