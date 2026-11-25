@@ -327,10 +327,28 @@ public class CompositeModeTests
                 using (var f = new Netch.Forms.ModeForms.RouteForm())
                     RenderForm(f, Path.Combine(outDir, "route_form.png"));
 
-                Netch.Global.Modes.Add(readOnlyMode);
-                using (var f = new Netch.Forms.ModeForms.MultiModeForm(new[] { readOnlyMode }))
+                var extraModes = new List<Netch.Models.Modes.ProcessMode.Redirector> { readOnlyMode };
+                for (var i = 1; i <= 35; i++)
+                {
+                    extraModes.Add(new Netch.Models.Modes.ProcessMode.Redirector
+                    {
+                        FullName = Path.Combine(Netch.Services.ModeService.Instance.ModeDirectoryFullName, "Game", $"SampleGame{i:00}.txt"),
+                        Remark = new() { { "zh-CN", $"Sample Game {i:00}" }, { "en", $"Sample Game {i:00}" } },
+                        Handle = new() { $"game{i:00}\\.exe$" }
+                    });
+                }
+
+                Netch.Global.Modes.AddRange(extraModes);
+                try
+                {
+                    using var f = new Netch.Forms.ModeForms.MultiModeForm(new[] { readOnlyMode });
                     RenderForm(f, Path.Combine(outDir, "multi_mode_form_fixed.png"));
-                Netch.Global.Modes.Remove(readOnlyMode);
+                }
+                finally
+                {
+                    foreach (var m in extraModes)
+                        Netch.Global.Modes.Remove(m);
+                }
 
                 using (var f = new Netch.Forms.ModeForms.InputDialog("保存为模式组", "请输入此模式组的名称：", "Steam + Discord"))
                     RenderForm(f, Path.Combine(outDir, "input_dialog.png"));

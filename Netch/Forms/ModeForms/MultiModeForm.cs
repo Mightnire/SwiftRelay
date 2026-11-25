@@ -12,6 +12,7 @@ public class MultiModeForm : Form
     private readonly List<Redirector> _allProcessModes = new();
     private readonly HashSet<Redirector> _checkedModes = new();
     private bool _updatingCheckState;
+    private bool _adjustingColumns;
     private int _sortColumn = 1;
     private bool _sortAscending = true;
 
@@ -183,6 +184,7 @@ public class MultiModeForm : Form
         _modeListView.SelectedIndexChanged += ModeListView_SelectedIndexChanged;
         _modeListView.ColumnClick += ModeListView_ColumnClick;
         _modeListView.Resize += (_, _) => AdjustListViewColumns();
+        _modeListView.ClientSizeChanged += (_, _) => AdjustListViewColumns();
 
         leftPanel.Controls.Add(_modeListView);
         leftPanel.Controls.Add(quickActionPanel);
@@ -386,20 +388,35 @@ public class MultiModeForm : Form
         }
     }
 
+    protected override void OnShown(EventArgs e)
+    {
+        base.OnShown(e);
+        AdjustListViewColumns();
+    }
+
     private void AdjustListViewColumns()
     {
-        if (_modeListView.Columns.Count < 4 || _modeListView.ClientSize.Width <= 0)
+        if (_adjustingColumns || _modeListView.Columns.Count < 4 || _modeListView.ClientSize.Width <= 0)
             return;
 
-        var selectW = LogicalToDeviceUnits(68);
-        var categoryW = LogicalToDeviceUnits(95);
-        var rulesW = LogicalToDeviceUnits(75);
-        var nameW = Math.Max(LogicalToDeviceUnits(180), _modeListView.ClientSize.Width - selectW - categoryW - rulesW - LogicalToDeviceUnits(2));
+        _adjustingColumns = true;
+        try
+        {
+            var clientWidth = _modeListView.ClientSize.Width;
+            var selectW = LogicalToDeviceUnits(68);
+            var categoryW = LogicalToDeviceUnits(95);
+            var rulesW = LogicalToDeviceUnits(78);
+            var nameW = Math.Max(LogicalToDeviceUnits(160), clientWidth - selectW - categoryW - rulesW - LogicalToDeviceUnits(4));
 
-        _modeListView.Columns[0].Width = selectW;
-        _modeListView.Columns[1].Width = nameW;
-        _modeListView.Columns[2].Width = categoryW;
-        _modeListView.Columns[3].Width = rulesW;
+            _modeListView.Columns[0].Width = selectW;
+            _modeListView.Columns[1].Width = nameW;
+            _modeListView.Columns[2].Width = categoryW;
+            _modeListView.Columns[3].Width = rulesW;
+        }
+        finally
+        {
+            _adjustingColumns = false;
+        }
     }
 
     private void ModeListView_ColumnClick(object? sender, ColumnClickEventArgs e)
@@ -529,6 +546,8 @@ public class MultiModeForm : Form
 
         _modeListView.EndUpdate();
         _updatingCheckState = false;
+        if (IsHandleCreated)
+            BeginInvoke((Action)AdjustListViewColumns);
     }
 
     private void SearchTextBox_TextChanged(object? sender, EventArgs e)
