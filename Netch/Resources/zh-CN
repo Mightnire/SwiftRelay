@@ -210,7 +210,7 @@
     "Edit Mode": "编辑模式",
     "Save As": "另存为",
     "Save As...": "另存为...",
-    "Add [{0}] Server...": "添加 [{0}] 服务器...",
+    "Add {0} Server...": "添加 {0} 服务器...",
     "Create Process Mode...": "创建进程模式...",
     "Create Route Table Rule...": "创建路由表规则...",
     "Built-in (.txt) mode is read-only; use Save As... to create a custom copy.": "内置 (.txt) 模式只读，可点“另存为...”保存自定义副本。",

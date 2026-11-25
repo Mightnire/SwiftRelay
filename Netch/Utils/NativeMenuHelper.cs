@@ -85,7 +85,7 @@ public sealed class NativeMenuHelper : IDisposable
         AppendItem(hServer, i18N.Translate("Import Servers From Clipboard"), spec.OnImportServersFromClipboard);
         foreach (var entry in spec.ServerAddItems)
         {
-            AppendItem(hServer, i18N.TranslateFormat("Add [{0}] Server...", entry.FullName), entry.OnClick);
+            AppendItem(hServer, i18N.TranslateFormat("Add {0} Server...", entry.FullName), entry.OnClick);
         }
         ServerMenuId = AppendSubMenu(hMain, i18N.Translate("Server"), hServer, enabled: spec.CoreIdleEnabled);
 

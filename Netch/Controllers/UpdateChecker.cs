@@ -15,7 +15,7 @@ public static class UpdateChecker
     public const string Name = @"SwiftRelay";
     public const string Copyright = @"Copyright © 2024 - 2026 SwiftRelay Contributors";
 
-    public const string AssemblyVersion = @"1.0.0";
+    public const string AssemblyVersion = @"1.0.1";
     private const string Suffix = @"";
 
     public static readonly string Version = $"{AssemblyVersion}{(string.IsNullOrEmpty(Suffix) ? "" : $"-{Suffix}")}";

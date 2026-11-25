@@ -24,6 +24,7 @@
     "Server": "伺服器",
     "Import Servers From Clipboard": "從剪貼簿匯入伺服器",
     "Add [{0}] Server": "新增 [{0}] 伺服器",
+    "Add {0} Server...": "新增 {0} 伺服器...",
     "SwiftRelay is now minimized to the notification bar, double click this icon to restore.": "SwiftRelay 已最小化至通知欄，按兩下圖示還原視窗。",
     "New version available": "發現新版本",
     "Already latest version": "已經是最新版本",
