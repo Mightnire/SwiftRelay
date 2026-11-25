@@ -53,7 +53,7 @@ A lightweight, pure Socks proxy and game routing client for Windows.
 
 ### 1. Basic Workflow
 1. **Add a server**: Use **Server → Import Servers From Clipboard** or **Add [...] Server...** to enter your Socks server.
-2. **Pick a mode**: Select a Process or TUN mode from **Mode** (or save/switch up to 4 quick profiles at the bottom).
+2. **Pick a mode**: Select a Process or TUN mode from **Mode** (or save/switch quick profiles at the bottom).
 3. **Start**: Click **Start**. Process Mode automatically installs the `netfilter2` kernel driver on first run; you can remove it later via **Options → Uninstall NetFilter Service**.
 4. **Customize built-in rules**: Built-in `.txt` modes are read-only; adjust rules in the editor and click **Save As...** to save an editable custom `.json` copy under `mode\Custom\`.
 
