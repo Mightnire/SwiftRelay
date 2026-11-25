@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
@@ -143,7 +144,29 @@ public static class UpdateChecker
         }
     }
 
+    public static bool IsFrameworkDependentRuntime(string? runtimeDirectory = null)
+    {
+        var dir = runtimeDirectory ?? RuntimeEnvironment.GetRuntimeDirectory();
+        var sharedSegment = $"{Path.DirectorySeparatorChar}shared{Path.DirectorySeparatorChar}Microsoft.NETCore.App";
+        return dir.Contains(sharedSegment, StringComparison.OrdinalIgnoreCase);
+    }
+
+    public static (string fileName, string sha256) GetLatestUpdateFileNameAndHashForCurrentEdition(bool? isFrameworkDependent = null)
+    {
+        var fdd = isFrameworkDependent ?? IsFrameworkDependentRuntime();
+        return GetLatestUpdateFileNameAndHash(fn =>
+            fdd
+                ? fn.Contains("Framework-Dependent", StringComparison.OrdinalIgnoreCase)
+                : !fn.Contains("Framework-Dependent", StringComparison.OrdinalIgnoreCase));
+    }
+
     public static (string fileName, string sha256) GetLatestUpdateFileNameAndHash(string? keyword = null)
+    {
+        return GetLatestUpdateFileNameAndHash(
+            keyword == null ? null : fn => fn.Contains(keyword, StringComparison.OrdinalIgnoreCase));
+    }
+
+    private static (string fileName, string sha256) GetLatestUpdateFileNameAndHash(Func<string, bool>? predicate)
     {
         if (!string.IsNullOrEmpty(LatestRelease?.body))
         {
@@ -152,7 +175,7 @@ public static class UpdateChecker
             {
                 var fn = m.Groups["filename"].Value.Trim();
                 var hash = m.Groups["sha256"].Value.Trim().ToLowerInvariant();
-                if (keyword == null || fn.Contains(keyword, StringComparison.OrdinalIgnoreCase))
+                if (predicate == null || predicate(fn))
                     return (fn, hash);
             }
 
@@ -161,16 +184,16 @@ public static class UpdateChecker
             {
                 var fn = m.Groups["filename"].Value.Trim();
                 var hash = m.Groups["sha256"].Value.Trim().ToLowerInvariant();
-                if (keyword == null || fn.Contains(keyword, StringComparison.OrdinalIgnoreCase))
+                if (predicate == null || predicate(fn))
                     return (fn, hash);
             }
         }
 
         if (LatestRelease?.assets != null && LatestRelease.assets.Length > 0)
         {
-            var asset = keyword == null
+            var asset = predicate == null
                 ? LatestRelease.assets[0]
-                : LatestRelease.assets.FirstOrDefault(a => a.name.Contains(keyword, StringComparison.OrdinalIgnoreCase)) ?? LatestRelease.assets[0];
+                : LatestRelease.assets.FirstOrDefault(a => predicate(a.name)) ?? LatestRelease.assets[0];
 
             return (asset.name, "");
         }

@@ -476,7 +476,7 @@ public partial class MainForm : Form
 
             string downloadDirectory = Path.Combine(Global.NetchDir, "data");
 
-            var (updateFileName, sha256) = UpdateChecker.GetLatestUpdateFileNameAndHash();
+            var (updateFileName, sha256) = UpdateChecker.GetLatestUpdateFileNameAndHashForCurrentEdition();
             var updateFileUrl = UpdateChecker.GetAssetDownloadUrl(updateFileName)
                 ?? throw new MessageException("Download Update File Failed: missing release asset URL");
 

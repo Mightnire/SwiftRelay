@@ -493,6 +493,19 @@ public class CompositeModeTests
             Assert.AreEqual(expectedHash, hash);
             Assert.AreEqual("https://example.com/full.7z", Netch.Controllers.UpdateChecker.GetAssetDownloadUrl(fileName));
             Assert.AreEqual("Summary line", Netch.Controllers.UpdateChecker.GetLatestReleaseContent());
+
+            var (fullFile, fullHash) = Netch.Controllers.UpdateChecker.GetLatestUpdateFileNameAndHashForCurrentEdition(isFrameworkDependent: false);
+            Assert.AreEqual("SwiftRelay.7z", fullFile);
+            Assert.AreEqual(expectedHash, fullHash);
+            Assert.AreEqual("https://example.com/full.7z", Netch.Controllers.UpdateChecker.GetAssetDownloadUrl(fullFile));
+
+            var (fddFile, fddParsedHash) = Netch.Controllers.UpdateChecker.GetLatestUpdateFileNameAndHashForCurrentEdition(isFrameworkDependent: true);
+            Assert.AreEqual("SwiftRelay_Framework-Dependent.7z", fddFile);
+            Assert.AreEqual(fddHash, fddParsedHash);
+            Assert.AreEqual("https://example.com/fdd.7z", Netch.Controllers.UpdateChecker.GetAssetDownloadUrl(fddFile));
+
+            Assert.IsTrue(Netch.Controllers.UpdateChecker.IsFrameworkDependentRuntime(@"C:\Program Files\dotnet\shared\Microsoft.NETCore.App\6.0.36\"));
+            Assert.IsFalse(Netch.Controllers.UpdateChecker.IsFrameworkDependentRuntime(@"C:\Users\demo\AppData\Local\Temp\.net\SwiftRelay\xyz\"));
         }
         finally
         {
