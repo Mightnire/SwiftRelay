@@ -177,7 +177,8 @@ public partial class MainForm : Form
             LogicalToDeviceUnits(12),
             LogicalToDeviceUnits(6),
             LogicalToDeviceUnits(12),
-            StatusStrip.Height + LogicalToDeviceUnits(4));
+            StatusStrip.Height + LogicalToDeviceUnits(6) + SystemInformation.MenuHeight);
+        PerformLayout();
     }
 
     protected override void OnDpiChangedAfterParent(EventArgs e)
