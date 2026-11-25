@@ -598,12 +598,24 @@ public class MultiModeForm : Form
         using var editor = new ProcessForm(mode);
         editor.ShowDialog(this);
 
+        var targetMode = mode;
+        if (editor.SavedMode is Redirector savedRedirector && !ReferenceEquals(savedRedirector, mode))
+        {
+            if (!_allProcessModes.Contains(savedRedirector))
+                _allProcessModes.Add(savedRedirector);
+
+            if (_checkedModes.Remove(mode))
+                _checkedModes.Add(savedRedirector);
+
+            targetMode = savedRedirector;
+        }
+
         SortModes();
         RefreshListView();
 
         foreach (ListViewItem item in _modeListView.Items)
         {
-            if (ReferenceEquals(item.Tag, mode))
+            if (ReferenceEquals(item.Tag, targetMode))
             {
                 item.Selected = true;
                 item.EnsureVisible();
@@ -611,7 +623,7 @@ public class MultiModeForm : Form
             }
         }
 
-        ShowModePreview(mode);
+        ShowModePreview(targetMode);
         UpdateSelectionSummary();
     }
 

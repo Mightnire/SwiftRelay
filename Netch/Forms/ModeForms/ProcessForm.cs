@@ -16,6 +16,8 @@ public partial class ProcessForm : BindingForm
 
     private readonly Redirector _mode;
 
+    public Mode? SavedMode { get; private set; }
+
     /// <summary>
     ///     编辑模式
     /// </summary>
@@ -76,11 +78,12 @@ public partial class ProcessForm : BindingForm
             RemarkTextBox.TextChanged -= RemarkTextBox_TextChanged;
             RemarkTextBox.Text = _mode.i18NRemark;
             FilenameTextBox.Text = ModeService.Instance.GetRelativePath(_mode.FullName);
+            SaveAsButton.Visible = true;
 
             if (!_mode.FullName.EndsWith(".json"))
             {
                 ControlButton.Enabled = false;
-                ReadOnlyHintLabel.Text = "Built-in modes (.txt) are read-only; only custom (.json) modes can be saved.";
+                ReadOnlyHintLabel.Text = ModeEditorUtils.ReadOnlyModeHintKey;
                 ReadOnlyHintLabel.Visible = true;
             }
         }
@@ -150,8 +153,53 @@ public partial class ProcessForm : BindingForm
             _mode.WriteFile();
             MessageBoxX.Show(i18N.Translate("Mode updated successfully"));
         }
-        Global.MainForm.ModeComboBox.SelectedItem = _mode;
+
+        SavedMode = _mode;
+        if (Global.MainForm != null)
+            Global.MainForm.ModeComboBox.SelectedItem = _mode;
+        DialogResult = DialogResult.OK;
         Close();
+    }
+
+    public void SaveAsButton_Click(object? sender, EventArgs e)
+    {
+        if (GetInvalidateValueControls().Any())
+        {
+            MessageBoxX.Show(i18N.Translate("Invalid value"), LogLevel.WARNING, owner: this);
+            return;
+        }
+
+        if (!ModeEditorUtils.TryPromptSaveAsPath(this, RemarkTextBox.Text, out var newRemark, out var fullPath))
+            return;
+
+        var clonedMode = CreateModeFromControls(newRemark, fullPath);
+        ModeEditorUtils.SaveNewMode(clonedMode, this);
+        SavedMode = clonedMode;
+        DialogResult = DialogResult.OK;
+        Close();
+    }
+
+    public Redirector CreateModeFromControls(string remark, string fullName)
+    {
+        var cloned = new Redirector
+        {
+            FullName = fullName,
+            FilterTCP = HandleTCPCheckBox.Value,
+            FilterUDP = HandleUDPCheckBox.Value,
+            FilterDNS = HandleDNSCheckBox.Value,
+            DNSHost = DNSTextBox.Text,
+            HandleOnlyDNS = HandleProcDNSCheckBox.Value,
+            DNSProxy = ProxyDNSCheckBox.Value,
+            FilterICMP = HandleICMPCheckBox.Value,
+            ICMPDelay = int.TryParse(ICMPDelayTextBox.Text, out var icmpDelay) ? icmpDelay : 10,
+            FilterLoopback = HandleLoopbackCheckBox.Checked,
+            FilterIntranet = HandleLANCheckBox.Checked,
+            FilterParent = HandleChildProcCheckBox.Value,
+            Bypass = BypassRuleRichTextBox.Text.GetLines().ToList(),
+            Handle = HandleRuleRichTextBox.Text.GetLines().ToList()
+        };
+        cloned.i18NRemark = remark;
+        return cloned;
     }
 
     private void RemarkTextBox_TextChanged(object? sender, EventArgs? e)

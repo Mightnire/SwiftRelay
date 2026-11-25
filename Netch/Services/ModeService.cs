@@ -89,7 +89,7 @@ public class ModeService
     {
         SortCollection();
         if (refreshUI)
-            Global.MainForm.LoadModes();
+            Global.MainForm?.LoadModes();
     }
 
     public static void Delete(Mode mode)

@@ -47,6 +47,7 @@ namespace Netch.Forms.ModeForms
             this.BypassGroupBox = new System.Windows.Forms.GroupBox();
             this.BypassRuleRichTextBox = new System.Windows.Forms.TextBox();
             this.ReadOnlyHintLabel = new System.Windows.Forms.Label();
+            this.SaveAsButton = new System.Windows.Forms.Button();
             this.ControlButton = new System.Windows.Forms.Button();
             this.CancelButtonControl = new System.Windows.Forms.Button();
 
@@ -205,13 +206,15 @@ namespace Netch.Forms.ModeForms
             // 
             bottomLayout.AutoSize = true;
             bottomLayout.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            bottomLayout.ColumnCount = 3;
+            bottomLayout.ColumnCount = 4;
             bottomLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             bottomLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.AutoSize));
             bottomLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.AutoSize));
+            bottomLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.AutoSize));
             bottomLayout.Controls.Add(this.ReadOnlyHintLabel, 0, 0);
-            bottomLayout.Controls.Add(this.ControlButton, 1, 0);
-            bottomLayout.Controls.Add(this.CancelButtonControl, 2, 0);
+            bottomLayout.Controls.Add(this.SaveAsButton, 1, 0);
+            bottomLayout.Controls.Add(this.ControlButton, 2, 0);
+            bottomLayout.Controls.Add(this.CancelButtonControl, 3, 0);
             bottomLayout.Dock = System.Windows.Forms.DockStyle.Fill;
             bottomLayout.Margin = new System.Windows.Forms.Padding(0, 10, 0, 0);
             bottomLayout.Name = "bottomLayout";
@@ -226,8 +229,22 @@ namespace Netch.Forms.ModeForms
             this.ReadOnlyHintLabel.ForeColor = System.Drawing.Color.FromArgb(197, 34, 31);
             this.ReadOnlyHintLabel.Margin = new System.Windows.Forms.Padding(0, 0, 8, 0);
             this.ReadOnlyHintLabel.Name = "ReadOnlyHintLabel";
-            this.ReadOnlyHintLabel.TabIndex = 5;
+            this.ReadOnlyHintLabel.TabIndex = 6;
             this.ReadOnlyHintLabel.Visible = false;
+            // 
+            // SaveAsButton
+            // 
+            this.SaveAsButton.AutoSize = true;
+            this.SaveAsButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.SaveAsButton.Margin = new System.Windows.Forms.Padding(0, 0, 10, 0);
+            this.SaveAsButton.MinimumSize = new System.Drawing.Size(90, 28);
+            this.SaveAsButton.Name = "SaveAsButton";
+            this.SaveAsButton.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
+            this.SaveAsButton.TabIndex = 3;
+            this.SaveAsButton.Text = "Save As...";
+            this.SaveAsButton.UseVisualStyleBackColor = true;
+            this.SaveAsButton.Visible = false;
+            this.SaveAsButton.Click += new System.EventHandler(this.SaveAsButton_Click);
             // 
             // ControlButton
             // 
@@ -237,7 +254,7 @@ namespace Netch.Forms.ModeForms
             this.ControlButton.MinimumSize = new System.Drawing.Size(90, 28);
             this.ControlButton.Name = "ControlButton";
             this.ControlButton.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
-            this.ControlButton.TabIndex = 3;
+            this.ControlButton.TabIndex = 4;
             this.ControlButton.Text = "Save";
             this.ControlButton.UseVisualStyleBackColor = true;
             this.ControlButton.Click += new System.EventHandler(this.ControlButton_Click);
@@ -250,7 +267,7 @@ namespace Netch.Forms.ModeForms
             this.CancelButtonControl.MinimumSize = new System.Drawing.Size(90, 28);
             this.CancelButtonControl.Name = "CancelButtonControl";
             this.CancelButtonControl.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
-            this.CancelButtonControl.TabIndex = 4;
+            this.CancelButtonControl.TabIndex = 5;
             this.CancelButtonControl.Text = "Cancel";
             this.CancelButtonControl.UseVisualStyleBackColor = true;
             this.CancelButtonControl.Click += new System.EventHandler(this.CancelButton_Click);
@@ -300,6 +317,7 @@ namespace Netch.Forms.ModeForms
         private System.Windows.Forms.TextBox BypassRuleRichTextBox;
 
         private System.Windows.Forms.Label ReadOnlyHintLabel;
+        private System.Windows.Forms.Button SaveAsButton;
         private System.Windows.Forms.Button ControlButton;
         private System.Windows.Forms.Button CancelButtonControl;
     }

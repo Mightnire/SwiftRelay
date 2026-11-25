@@ -13,6 +13,8 @@ public partial class RouteForm : BindingForm
 
     private readonly TunMode _mode;
 
+    public Mode? SavedMode { get; private set; }
+
     public RouteForm(Mode? mode = null)
     {
         switch (mode)
@@ -49,11 +51,12 @@ public partial class RouteForm : BindingForm
             RemarkTextBox.TextChanged -= RemarkTextBox_TextChanged;
             RemarkTextBox.Text = _mode.i18NRemark;
             FilenameTextBox.Text = ModeService.Instance.GetRelativePath(_mode.FullName);
+            SaveAsButton.Visible = true;
 
             if (!_mode.FullName.EndsWith(".json"))
             {
                 ControlButton.Enabled = false;
-                ReadOnlyHintLabel.Text = "Built-in modes (.txt) are read-only; only custom (.json) modes can be saved.";
+                ReadOnlyHintLabel.Text = ModeEditorUtils.ReadOnlyModeHintKey;
                 ReadOnlyHintLabel.Visible = true;
             }
         }
@@ -91,8 +94,36 @@ public partial class RouteForm : BindingForm
             _mode.WriteFile();
             MessageBoxX.Show(i18N.Translate("Mode updated successfully"));
         }
-        Global.MainForm.ModeComboBox.SelectedItem = _mode;
+
+        SavedMode = _mode;
+        if (Global.MainForm != null)
+            Global.MainForm.ModeComboBox.SelectedItem = _mode;
+        DialogResult = DialogResult.OK;
         Close();
+    }
+
+    public void SaveAsButton_Click(object? sender, EventArgs e)
+    {
+        if (!ModeEditorUtils.TryPromptSaveAsPath(this, RemarkTextBox.Text, out var newRemark, out var fullPath))
+            return;
+
+        var clonedMode = CreateModeFromControls(newRemark, fullPath);
+        ModeEditorUtils.SaveNewMode(clonedMode, this);
+        SavedMode = clonedMode;
+        DialogResult = DialogResult.OK;
+        Close();
+    }
+
+    public TunMode CreateModeFromControls(string remark, string fullName)
+    {
+        var cloned = new TunMode
+        {
+            FullName = fullName,
+            Bypass = BypassRuleRichTextBox.Text.GetLines().ToList(),
+            Handle = HandleRuleRichTextBox.Text.GetLines().ToList()
+        };
+        cloned.i18NRemark = remark;
+        return cloned;
     }
 
     private void RemarkTextBox_TextChanged(object? sender, EventArgs? e)

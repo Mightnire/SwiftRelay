@@ -445,4 +445,26 @@ public class CompositeModeTests
             Netch.Utils.i18N.Load(originalLang);
         }
     }
+
+    [TestMethod]
+    public void ProcessForm_SaveAsSnapshot_DoesNotMutateOriginalReadOnlyMode()
+    {
+        var originalMode = new Netch.Models.Modes.ProcessMode.Redirector
+        {
+            FullName = @"C:\Modes\Game\ForzaHorizon 4.txt",
+            Remark = new Dictionary<string, string> { ["zh-CN"] = "ForzaHorizon 4", ["en-US"] = "ForzaHorizon 4" },
+            Handle = new List<string> { "ForzaHorizon4.exe", "XboxApp.exe" },
+            Bypass = new List<string>()
+        };
+
+        using var form = new Netch.Forms.ModeForms.ProcessForm(originalMode);
+        var cloned = form.CreateModeFromControls("ForzaHorizon 4 (Custom)", @"C:\Modes\Custom\ForzaHorizon 4 (Custom).json");
+
+        Assert.AreNotSame(originalMode, cloned);
+        Assert.AreEqual("ForzaHorizon 4", originalMode.i18NRemark);
+        Assert.AreEqual(@"C:\Modes\Game\ForzaHorizon 4.txt", originalMode.FullName);
+        Assert.AreEqual("ForzaHorizon 4 (Custom)", cloned.i18NRemark);
+        Assert.AreEqual(@"C:\Modes\Custom\ForzaHorizon 4 (Custom).json", cloned.FullName);
+        CollectionAssert.AreEqual(originalMode.Handle, cloned.Handle);
+    }
 }
