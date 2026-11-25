@@ -95,7 +95,6 @@ public partial class MainForm : Form
 
         // 加载快速配置
         LoadProfiles();
-        ModernMenuRenderer.Apply(MenuStrip, NotifyMenu, LogicalToDeviceUnits);
         UpdateComboBoxItemHeights();
         SyncContentBounds();
 

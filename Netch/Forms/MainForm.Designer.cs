@@ -108,7 +108,6 @@
             // 
             // MenuStrip
             // 
-            this.MenuStrip.BackColor = System.Drawing.SystemColors.Control;
             this.MenuStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.MenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ServerToolStripMenuItem,
@@ -121,7 +120,7 @@
             this.VersionLabel});
             this.MenuStrip.Location = new System.Drawing.Point(0, 0);
             this.MenuStrip.Name = "MenuStrip";
-            this.MenuStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
+            this.MenuStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.MenuStrip.Size = new System.Drawing.Size(740, 26);
             this.MenuStrip.TabIndex = 0;
             // 
@@ -650,6 +649,7 @@
             this.ShowMainFormToolStripButton,
             this.ExitToolStripButton});
             this.NotifyMenu.Name = "NotifyMenu";
+            this.NotifyMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.NotifyMenu.ShowItemToolTips = false;
             this.NotifyMenu.Size = new System.Drawing.Size(108, 48);
             // 
