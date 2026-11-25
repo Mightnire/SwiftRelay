@@ -3,7 +3,7 @@
 >
 > #### SwiftRelay is a local network forwarding utility supporting standard Socks (Socks5 / Socks4a / Socks4) only. It does not include any built-in servers or acceleration routes, and all server configurations used in the software are manually entered by the user. SwiftRelay cannot and does not inspect, verify, or guarantee the source, security, stability, or compliance of user-entered servers, nor does it make any warranties regarding their legality.
 >
-> #### SwiftRelay is only compatible with a limited number of applications and online games. The terms of service of certain online platforms, software, or games[^1] explicitly prohibit the use of unauthorized traffic routing or network acceleration tools, and forced use may result in account restrictions, suspensions, or bans. Even in compatible programs or games, traffic may still bypass the proxy, experience latency spikes, packet loss, disconnections, or driver compatibility issues.
+> #### SwiftRelay is only compatible with a limited number of applications and online games. The terms of service of certain online platforms, software, or games[^1] explicitly prohibit the use of unauthorized traffic routing or network acceleration tools; forced use may result in account restrictions, suspensions, or permanent bans. Furthermore, compatible programs may still exhibit some defects, including, but not limited to, partial or all traffic of the target program failing to be proxied and resulting in a direct connection, latency fluctuations, packet loss, connection drops, system driver compatibility issues, etc., which may affect how the programs perform.
 >
 > #### The SwiftRelay name and icon were generated with the assistance of Gemini and are used in this project by Mightnire (https://github.com/Mightnire).
 >
@@ -116,4 +116,4 @@ This project is modified from [Netch](https://github.com/netchx/netch), original
 
 SwiftRelay is licensed under the [GPLv3](LICENSE) license.
 
-[^1]: Example reference: [Honkai: Star Rail Terms of Service (clause prohibiting network accelerators)](https://sr.mihoyo.com/terms/user#:~:text=%E7%BD%91%E7%BB%9C%E5%8A%A0%E9%80%9F%E5%99%A8)
+[^1]: Example: [Honkai: Star Rail Terms of Service](https://sr.mihoyo.com/terms/user#:~:text=%E7%BD%91%E7%BB%9C%E5%8A%A0%E9%80%9F%E5%99%A8)
