@@ -3,7 +3,7 @@
 >
 > #### SwiftRelay is a local network forwarding utility supporting standard Socks (Socks5 / Socks4a / Socks4) only. It does not include any built-in servers or acceleration routes, and all server configurations used in the software are manually entered by the user. SwiftRelay cannot and does not inspect, verify, or guarantee the source, security, stability, or compliance of user-entered servers, nor does it make any warranties regarding their legality.
 >
-> #### SwiftRelay is only compatible with a limited number of applications and online games. The terms of service of certain online platforms, software, or games[^1] explicitly prohibit the use of unauthorized traffic routing or network acceleration tools; forced use may result in account restrictions, suspensions, or permanent bans. Furthermore, compatible programs may still exhibit some defects, including, but not limited to, partial or all traffic of the target program failing to be proxied and resulting in a direct connection, latency fluctuations, packet loss, connection drops, system driver compatibility issues, etc., which may affect how the programs perform.
+> #### SwiftRelay is only compatible with a limited number of applications and online games. The terms of service of certain online platforms, software, or games<sup>[[1]](#ref-1)</sup> explicitly prohibit the use of unauthorized traffic routing or network acceleration tools; forced use may result in account restrictions, suspensions, or permanent bans. Furthermore, compatible programs may still exhibit some defects, including, but not limited to, partial or all traffic of the target program failing to be proxied and resulting in a direct connection, latency fluctuations, packet loss, connection drops, system driver compatibility issues, etc., which may affect how the programs perform.
 >
 > #### The SwiftRelay name and icon were generated with the assistance of Gemini and are used in this project by Mightnire (https://github.com/Mightnire).
 >
@@ -29,7 +29,7 @@ A lightweight, pure Socks proxy and game routing client for Windows.
 
 ---
 
-## 🌟 Overview
+## Overview
 
 **SwiftRelay** is a dedicated game and process network routing utility focused exclusively on standard **Socks (Socks5 / Socks4a / Socks4)** proxies:
 
@@ -37,13 +37,13 @@ A lightweight, pure Socks proxy and game routing client for Windows.
 - **Process & Game Traffic Interception**: Seamlessly proxy individual game processes and applications without modifying system-wide proxy settings.
 - **High Performance**: Native network redirection drivers ensuring ultra-low overhead, FullCone NAT support, and stable game latency.
 
-## 🚀 Modes
+## Modes
 
 - **ProcessMode** (`NetFilter`): Intercepts traffic at the socket level for selected processes and executables. Ideal for game acceleration.
 - **TunMode** (`WinTUN`): Creates a virtual network adapter to route IP traffic.
 - **ShareMode** (`pcap2socks`): Shares your proxy to other devices in the local network (such as consoles like Switch / PS5).
 
-## 📦 Supported Protocols
+## Supported Protocols
 
 - `Socks5`
 - `Socks4a`
@@ -62,7 +62,7 @@ Click the multi-select icon next to Mode (or **Mode → Multi-Mode Selector / Gr
 - **Search, sort & preview**: Filter modes by name or process, click the **Select** column to group checked modes, preview handle/bypass rules on the right, and click **Edit Mode** to adjust individual modes directly.
 - **Combine or save**: Check two or more process modes and click **Apply** to use them together temporarily, or **Save as Mode Group...** to keep the combined group for one-click reuse.
 
-## 💻 Runtime Requirements & Downloads
+## Runtime Requirements & Downloads
 
 SwiftRelay provides two different release packages:
 
@@ -86,7 +86,7 @@ If you download the **Framework-Dependent** edition, make sure the following run
    > [!NOTE]
    > SwiftRelay's native core redirection drivers (NetFilter), WinTUN, and routing helpers are written in native C++ and require the 64-bit VC++ redistributable. Most gaming PCs already have this installed.
 
-## 🛠️ Building from Source
+## Building from Source
 
 ### Prerequisites
 
@@ -108,12 +108,14 @@ Run the build script in PowerShell:
 
 The output single-file executable `SwiftRelay.exe` and its supporting native drivers/binaries will be placed in the specified output directory.
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 This project is modified from [Netch](https://github.com/netchx/netch), originally created by [AmazingDM](https://github.com/AmazingDM). The upstream code baseline is at commit [`9d99eb1`](https://github.com/netchx/netch/tree/9d99eb1c5a2acbf2a34f2600f94242601019a300). Special thanks to AmazingDM and the open-source community for their contributions.
 
-## 📄 License
+## License
 
 SwiftRelay is licensed under the [GPLv3](LICENSE) license.
 
-[^1]: Example: [Honkai: Star Rail Terms of Service](https://sr.mihoyo.com/terms/user#:~:text=%E7%BD%91%E7%BB%9C%E5%8A%A0%E9%80%9F%E5%99%A8)
+---
+
+<a id="ref-1"></a>[1] [《米哈游游戏使用许可及服务协议》](https://webstatic.mihoyo.com/upload/static-resource/2022/12/08/1da4a577c63ebcc06c942573a85de0c4_6176837470568754622.pdf#:~:text=%E7%BD%91%E7%BB%9C%E5%8A%A0%E9%80%9F%E5%99%A8) ([Steam](https://store.steampowered.com/eula/1668940_eula_0#:~:text=%E7%BD%91%E7%BB%9C%E5%8A%A0%E9%80%9F%E5%99%A8))

@@ -139,21 +139,36 @@ Write-Host 'Building SwiftRelay'
 
 $IntermediateOutput = if ($SelfContained) { ".\Netch\bin\$Configuration" } else { ".\Netch\bin\$Configuration-FDD" }
 
-dotnet publish `
-	-c $Configuration `
-	-r 'win-x64' `
-	-p:Platform='x64' `
-	-p:SelfContained=$SelfContained `
-	-p:PublishTrimmed=$PublishReadyToRun `
-	-p:PublishSingleFile=$PublishSingleFile `
-	-p:EnableCompressionInSingleFile=$SelfContained `
-	-p:PublishReadyToRun=$PublishReadyToRun `
-	-p:PublishReadyToRunShowWarnings=$PublishReadyToRun `
-	-p:IncludeNativeLibrariesForSelfExtract=$SelfContained `
-	-p:UseSharedCompilation=false `
-	-o "$IntermediateOutput" `
-	'.\Netch\Netch.csproj'
-if ( -Not $? ) { exit $lastExitCode }
+$maxPublishAttempts = 3
+$publishSucceeded = $false
+for ($attempt = 1; $attempt -le $maxPublishAttempts; $attempt++) {
+	dotnet publish `
+		-c $Configuration `
+		-r 'win-x64' `
+		-m:1 `
+		--disable-build-servers `
+		-p:Platform='x64' `
+		-p:SelfContained=$SelfContained `
+		-p:PublishTrimmed=$PublishReadyToRun `
+		-p:PublishSingleFile=$PublishSingleFile `
+		-p:EnableCompressionInSingleFile=$SelfContained `
+		-p:PublishReadyToRun=$PublishReadyToRun `
+		-p:PublishReadyToRunShowWarnings=$PublishReadyToRun `
+		-p:IncludeNativeLibrariesForSelfExtract=$SelfContained `
+		-p:UseSharedCompilation=false `
+		-o "$IntermediateOutput" `
+		'.\Netch\Netch.csproj'
+	if ($?) {
+		$publishSucceeded = $true
+		break
+	}
+
+	if ($attempt -lt $maxPublishAttempts) {
+		Write-Warning "dotnet publish failed on attempt $attempt (often caused by antivirus scanning); retrying in 2s..."
+		Start-Sleep -Seconds 2
+	}
+}
+if (-Not $publishSucceeded) { exit $lastExitCode }
 
 $TargetExe = "$IntermediateOutput\SwiftRelay.exe"
 $DestExe = Join-Path $OutputPath (Split-Path $TargetExe -Leaf)
