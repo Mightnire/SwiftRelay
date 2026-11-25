@@ -85,7 +85,7 @@
             this.SettingsButton = new System.Windows.Forms.Button();
             this.ProfileGroupBox = new System.Windows.Forms.GroupBox();
             this.ProfileTable = new System.Windows.Forms.TableLayoutPanel();
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.flowLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.ButtomControlContainerControl = new System.Windows.Forms.TableLayoutPanel();
             this.MenuStrip.SuspendLayout();
             this.ConfigurationGroupBox.SuspendLayout();
@@ -309,8 +309,8 @@
             this.ConfigurationGroupBox.AutoSize = true;
             this.ConfigurationGroupBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ConfigurationGroupBox.Controls.Add(this.configLayoutPanel);
-            this.ConfigurationGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
-            this.ConfigurationGroupBox.Location = new System.Drawing.Point(3, 3);
+            this.ConfigurationGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ConfigurationGroupBox.Margin = new System.Windows.Forms.Padding(0, 0, 0, 6);
             this.ConfigurationGroupBox.Name = "ConfigurationGroupBox";
             this.ConfigurationGroupBox.Size = new System.Drawing.Size(709, 115);
             this.ConfigurationGroupBox.TabIndex = 1;
@@ -322,9 +322,9 @@
             this.configLayoutPanel.AutoSize = true;
             this.configLayoutPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.configLayoutPanel.ColumnCount = 3;
-            this.configLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.configLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.configLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.configLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.AutoSize));
+            this.configLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.configLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.AutoSize));
             this.configLayoutPanel.Controls.Add(this.ProfileLabel, 0, 2);
             this.configLayoutPanel.Controls.Add(this.ModeLabel, 0, 1);
             this.configLayoutPanel.Controls.Add(this.ServerLabel, 0, 0);
@@ -337,10 +337,9 @@
             this.configLayoutPanel.Location = new System.Drawing.Point(3, 19);
             this.configLayoutPanel.Name = "configLayoutPanel";
             this.configLayoutPanel.RowCount = 3;
-            this.configLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.configLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.configLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.configLayoutPanel.Size = new System.Drawing.Size(703, 93);
+            this.configLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.AutoSize));
+            this.configLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.AutoSize));
+            this.configLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.AutoSize));
             this.configLayoutPanel.TabIndex = 15;
             // 
             // ProfileLabel
@@ -412,30 +411,33 @@
             // 
             // tableLayoutPanel2
             // 
+            this.tableLayoutPanel2.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.tableLayoutPanel2.AutoSize = true;
+            this.tableLayoutPanel2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.tableLayoutPanel2.ColumnCount = 4;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.AutoSize));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.AutoSize));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.AutoSize));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.AutoSize));
             this.tableLayoutPanel2.Controls.Add(this.EditServerPictureBox, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.CopyLinkPictureBox, 3, 0);
             this.tableLayoutPanel2.Controls.Add(this.DeleteServerPictureBox, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.SpeedPictureBox, 2, 0);
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(606, 3);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(6, 0, 0, 0);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(94, 24);
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.AutoSize));
             this.tableLayoutPanel2.TabIndex = 12;
             // 
             // EditServerPictureBox
             // 
+            this.EditServerPictureBox.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.EditServerPictureBox.BackColor = System.Drawing.SystemColors.Control;
             this.EditServerPictureBox.Cursor = System.Windows.Forms.Cursors.Hand;
             this.EditServerPictureBox.Image = global::Netch.Properties.Resources.edit;
-            this.EditServerPictureBox.Location = new System.Drawing.Point(3, 3);
+            this.EditServerPictureBox.Margin = new System.Windows.Forms.Padding(3);
             this.EditServerPictureBox.Name = "EditServerPictureBox";
-            this.EditServerPictureBox.Size = new System.Drawing.Size(16, 16);
+            this.EditServerPictureBox.Size = new System.Drawing.Size(18, 18);
             this.EditServerPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.EditServerPictureBox.TabIndex = 7;
             this.EditServerPictureBox.TabStop = false;
@@ -443,9 +445,10 @@
             // 
             // CopyLinkPictureBox
             // 
+            this.CopyLinkPictureBox.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.CopyLinkPictureBox.Cursor = System.Windows.Forms.Cursors.Hand;
             this.CopyLinkPictureBox.Image = global::Netch.Properties.Resources.CopyLink;
-            this.CopyLinkPictureBox.Location = new System.Drawing.Point(72, 3);
+            this.CopyLinkPictureBox.Margin = new System.Windows.Forms.Padding(3);
             this.CopyLinkPictureBox.Name = "CopyLinkPictureBox";
             this.CopyLinkPictureBox.Size = new System.Drawing.Size(18, 18);
             this.CopyLinkPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -455,11 +458,12 @@
             // 
             // DeleteServerPictureBox
             // 
+            this.DeleteServerPictureBox.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.DeleteServerPictureBox.Cursor = System.Windows.Forms.Cursors.Hand;
             this.DeleteServerPictureBox.Image = global::Netch.Properties.Resources.delete;
-            this.DeleteServerPictureBox.Location = new System.Drawing.Point(26, 3);
+            this.DeleteServerPictureBox.Margin = new System.Windows.Forms.Padding(3);
             this.DeleteServerPictureBox.Name = "DeleteServerPictureBox";
-            this.DeleteServerPictureBox.Size = new System.Drawing.Size(16, 16);
+            this.DeleteServerPictureBox.Size = new System.Drawing.Size(18, 18);
             this.DeleteServerPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.DeleteServerPictureBox.TabIndex = 8;
             this.DeleteServerPictureBox.TabStop = false;
@@ -467,11 +471,12 @@
             // 
             // SpeedPictureBox
             // 
+            this.SpeedPictureBox.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.SpeedPictureBox.Cursor = System.Windows.Forms.Cursors.Hand;
             this.SpeedPictureBox.Image = global::Netch.Properties.Resources.speed;
-            this.SpeedPictureBox.Location = new System.Drawing.Point(49, 3);
+            this.SpeedPictureBox.Margin = new System.Windows.Forms.Padding(3);
             this.SpeedPictureBox.Name = "SpeedPictureBox";
-            this.SpeedPictureBox.Size = new System.Drawing.Size(16, 16);
+            this.SpeedPictureBox.Size = new System.Drawing.Size(18, 18);
             this.SpeedPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.SpeedPictureBox.TabIndex = 9;
             this.SpeedPictureBox.TabStop = false;
@@ -479,28 +484,30 @@
             // 
             // tableLayoutPanel3
             // 
-            this.tableLayoutPanel3.ColumnCount = 4;
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel3.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.tableLayoutPanel3.AutoSize = true;
+            this.tableLayoutPanel3.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.tableLayoutPanel3.ColumnCount = 3;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.AutoSize));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.AutoSize));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.AutoSize));
             this.tableLayoutPanel3.Controls.Add(this.EditModePictureBox, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.DeleteModePictureBox, 1, 0);
             this.tableLayoutPanel3.Controls.Add(this.MultiModePictureBox, 2, 0);
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(606, 33);
+            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(6, 0, 0, 0);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(94, 24);
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.AutoSize));
             this.tableLayoutPanel3.TabIndex = 13;
             // 
             // EditModePictureBox
             // 
+            this.EditModePictureBox.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.EditModePictureBox.Cursor = System.Windows.Forms.Cursors.Hand;
             this.EditModePictureBox.Image = global::Netch.Properties.Resources.edit;
-            this.EditModePictureBox.Location = new System.Drawing.Point(3, 3);
+            this.EditModePictureBox.Margin = new System.Windows.Forms.Padding(3);
             this.EditModePictureBox.Name = "EditModePictureBox";
-            this.EditModePictureBox.Size = new System.Drawing.Size(16, 16);
+            this.EditModePictureBox.Size = new System.Drawing.Size(18, 18);
             this.EditModePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.EditModePictureBox.TabIndex = 12;
             this.EditModePictureBox.TabStop = false;
@@ -508,11 +515,12 @@
             // 
             // DeleteModePictureBox
             // 
+            this.DeleteModePictureBox.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.DeleteModePictureBox.Cursor = System.Windows.Forms.Cursors.Hand;
             this.DeleteModePictureBox.Image = global::Netch.Properties.Resources.delete;
-            this.DeleteModePictureBox.Location = new System.Drawing.Point(26, 3);
+            this.DeleteModePictureBox.Margin = new System.Windows.Forms.Padding(3);
             this.DeleteModePictureBox.Name = "DeleteModePictureBox";
-            this.DeleteModePictureBox.Size = new System.Drawing.Size(16, 16);
+            this.DeleteModePictureBox.Size = new System.Drawing.Size(18, 18);
             this.DeleteModePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.DeleteModePictureBox.TabIndex = 13;
             this.DeleteModePictureBox.TabStop = false;
@@ -520,10 +528,11 @@
             // 
             // MultiModePictureBox
             // 
+            this.MultiModePictureBox.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.MultiModePictureBox.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.MultiModePictureBox.Location = new System.Drawing.Point(49, 3);
+            this.MultiModePictureBox.Margin = new System.Windows.Forms.Padding(3);
             this.MultiModePictureBox.Name = "MultiModePictureBox";
-            this.MultiModePictureBox.Size = new System.Drawing.Size(16, 16);
+            this.MultiModePictureBox.Size = new System.Drawing.Size(18, 18);
             this.MultiModePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.MultiModePictureBox.TabIndex = 14;
             this.MultiModePictureBox.TabStop = false;
@@ -613,9 +622,12 @@
             // ControlButton
             // 
             this.ControlButton.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.ControlButton.AutoSize = true;
+            this.ControlButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ControlButton.Margin = new System.Windows.Forms.Padding(0);
+            this.ControlButton.MinimumSize = new System.Drawing.Size(80, 28);
             this.ControlButton.Name = "ControlButton";
-            this.ControlButton.Size = new System.Drawing.Size(80, 28);
+            this.ControlButton.Padding = new System.Windows.Forms.Padding(8, 0, 8, 0);
             this.ControlButton.TabIndex = 3;
             this.ControlButton.Text = "Start";
             this.ControlButton.UseVisualStyleBackColor = true;
@@ -655,9 +667,12 @@
             // SettingsButton
             // 
             this.SettingsButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.SettingsButton.AutoSize = true;
+            this.SettingsButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.SettingsButton.Margin = new System.Windows.Forms.Padding(0);
+            this.SettingsButton.MinimumSize = new System.Drawing.Size(80, 28);
             this.SettingsButton.Name = "SettingsButton";
-            this.SettingsButton.Size = new System.Drawing.Size(80, 28);
+            this.SettingsButton.Padding = new System.Windows.Forms.Padding(8, 0, 8, 0);
             this.SettingsButton.TabIndex = 4;
             this.SettingsButton.Text = "Settings";
             this.SettingsButton.UseVisualStyleBackColor = true;
@@ -668,8 +683,8 @@
             this.ProfileGroupBox.AutoSize = true;
             this.ProfileGroupBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ProfileGroupBox.Controls.Add(this.ProfileTable);
-            this.ProfileGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
-            this.ProfileGroupBox.Location = new System.Drawing.Point(3, 124);
+            this.ProfileGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ProfileGroupBox.Margin = new System.Windows.Forms.Padding(0);
             this.ProfileGroupBox.Name = "ProfileGroupBox";
             this.ProfileGroupBox.Size = new System.Drawing.Size(709, 65);
             this.ProfileGroupBox.TabIndex = 13;
@@ -696,29 +711,35 @@
             // 
             this.flowLayoutPanel1.AutoSize = true;
             this.flowLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.flowLayoutPanel1.Controls.Add(this.ConfigurationGroupBox);
-            this.flowLayoutPanel1.Controls.Add(this.ProfileGroupBox);
-            this.flowLayoutPanel1.Controls.Add(this.ButtomControlContainerControl);
-            this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.flowLayoutPanel1.ColumnCount = 1;
+            this.flowLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.flowLayoutPanel1.Controls.Add(this.ConfigurationGroupBox, 0, 0);
+            this.flowLayoutPanel1.Controls.Add(this.ProfileGroupBox, 0, 1);
+            this.flowLayoutPanel1.Controls.Add(this.ButtomControlContainerControl, 0, 2);
             this.flowLayoutPanel1.Location = new System.Drawing.Point(12, 29);
+            this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(12, 6, 12, 28);
+            this.flowLayoutPanel1.MinimumSize = new System.Drawing.Size(716, 0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(715, 256);
+            this.flowLayoutPanel1.RowCount = 3;
+            this.flowLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.AutoSize));
+            this.flowLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.AutoSize));
+            this.flowLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.AutoSize));
             this.flowLayoutPanel1.TabIndex = 14;
             // 
             // ButtomControlContainerControl
             // 
+            this.ButtomControlContainerControl.AutoSize = true;
+            this.ButtomControlContainerControl.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ButtomControlContainerControl.ColumnCount = 2;
             this.ButtomControlContainerControl.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.AutoSize));
             this.ButtomControlContainerControl.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.ButtomControlContainerControl.Controls.Add(this.SettingsButton, 0, 0);
             this.ButtomControlContainerControl.Controls.Add(this.ControlButton, 1, 0);
-            this.ButtomControlContainerControl.Dock = System.Windows.Forms.DockStyle.Top;
-            this.ButtomControlContainerControl.Location = new System.Drawing.Point(3, 195);
-            this.ButtomControlContainerControl.Margin = new System.Windows.Forms.Padding(3, 6, 3, 3);
+            this.ButtomControlContainerControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ButtomControlContainerControl.Margin = new System.Windows.Forms.Padding(0, 8, 0, 2);
             this.ButtomControlContainerControl.Name = "ButtomControlContainerControl";
             this.ButtomControlContainerControl.RowCount = 1;
-            this.ButtomControlContainerControl.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.ButtomControlContainerControl.Size = new System.Drawing.Size(709, 36);
+            this.ButtomControlContainerControl.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.AutoSize));
             this.ButtomControlContainerControl.TabIndex = 14;
             // 
             // MainForm
@@ -747,11 +768,13 @@
             this.configLayoutPanel.ResumeLayout(false);
             this.configLayoutPanel.PerformLayout();
             this.tableLayoutPanel2.ResumeLayout(false);
+            this.tableLayoutPanel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.EditServerPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CopyLinkPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.DeleteServerPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.SpeedPictureBox)).EndInit();
             this.tableLayoutPanel3.ResumeLayout(false);
+            this.tableLayoutPanel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.EditModePictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.DeleteModePictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.MultiModePictureBox)).EndInit();
@@ -761,7 +784,9 @@
             this.ProfileGroupBox.ResumeLayout(false);
             this.ProfileGroupBox.PerformLayout();
             this.flowLayoutPanel1.ResumeLayout(false);
+            this.flowLayoutPanel1.PerformLayout();
             this.ButtomControlContainerControl.ResumeLayout(false);
+            this.ButtomControlContainerControl.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -825,7 +850,7 @@
 
         #endregion
 
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        private System.Windows.Forms.TableLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.TableLayoutPanel ButtomControlContainerControl;
         private System.Windows.Forms.ToolStripMenuItem ShowHideConsoleToolStripMenuItem;
         private System.Windows.Forms.ToolStripStatusLabel HttpStatusLabel;

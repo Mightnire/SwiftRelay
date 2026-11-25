@@ -113,6 +113,7 @@ public class CompositeModeTests
         var tcs = new TaskCompletionSource();
         var thread = new Thread(() =>
         {
+            Application.ThreadException += (_, args) => tcs.TrySetException(args.Exception);
             try
             {
                 using var form = new Netch.Forms.ModeForms.MultiModeForm();
@@ -153,6 +154,7 @@ public class CompositeModeTests
         var tcs = new TaskCompletionSource();
         var thread = new Thread(() =>
         {
+            Application.ThreadException += (_, args) => tcs.TrySetException(args.Exception);
             try
             {
                 Netch.Utils.i18N.Load("zh-CN");
@@ -202,6 +204,7 @@ public class CompositeModeTests
         var tcs = new TaskCompletionSource();
         var thread = new Thread(() =>
         {
+            Application.ThreadException += (_, args) => tcs.TrySetException(args.Exception);
             try
             {
                 log.Add("1 Init settings");
@@ -214,12 +217,14 @@ public class CompositeModeTests
                 form.StartPosition = FormStartPosition.Manual;
                 form.Location = new System.Drawing.Point(-2000, -2000);
 
-                log.Add("3 CreateControl");
-                form.CreateControl();
+                log.Add("3 Show");
+                form.Show();
+                Application.DoEvents();
 
                 log.Add("4 LoadProfiles 0");
                 Netch.Global.Settings.ProfileCount = 0;
                 form.LoadProfiles();
+                Application.DoEvents();
 
                 log.Add("5 bmp1");
                 using (var bmp1 = new System.Drawing.Bitmap(form.Width, form.Height))
@@ -236,6 +241,7 @@ public class CompositeModeTests
                     Netch.Global.Settings.Profiles.Add(new Netch.Models.Profile { Index = i, ProfileName = $"配置 {i + 1}" });
                 }
                 form.LoadProfiles();
+                Application.DoEvents();
 
                 log.Add("7 bmp2");
                 using (var bmp2 = new System.Drawing.Bitmap(form.Width, form.Height))
@@ -272,6 +278,7 @@ public class CompositeModeTests
         var tcs = new TaskCompletionSource();
         var thread = new Thread(() =>
         {
+            Application.ThreadException += (_, args) => tcs.TrySetException(args.Exception);
             try
             {
                 Netch.Utils.i18N.Load("zh-CN");

@@ -95,6 +95,8 @@ public partial class MainForm : Form
 
         // 加载快速配置
         LoadProfiles();
+        UpdateComboBoxItemHeights();
+        SyncContentBounds();
 
         // 检查更新
         if (Global.Settings.CheckUpdateWhenOpened)
@@ -104,7 +106,38 @@ public partial class MainForm : Form
         if (Global.Settings.StartWhenOpened)
             ControlButton.PerformClick();
 
-        Program.SingleInstance?.StartListenServer();
+        try
+        {
+            Program.SingleInstance?.StartListenServer();
+        }
+        catch (InvalidOperationException)
+        {
+            // Ignored when MainForm is hosted outside Program.Main (e.g., tests)
+        }
+    }
+
+    private void UpdateComboBoxItemHeights()
+    {
+        var height = Math.Max(LogicalToDeviceUnits(20), Font.Height + LogicalToDeviceUnits(6));
+        ServerComboBox.ItemHeight = height;
+        ModeComboBox.ItemHeight = height;
+    }
+
+    private void SyncContentBounds()
+    {
+        flowLayoutPanel1.Top = MenuStrip.Bottom + LogicalToDeviceUnits(4);
+        flowLayoutPanel1.Margin = new Padding(
+            LogicalToDeviceUnits(12),
+            LogicalToDeviceUnits(4),
+            LogicalToDeviceUnits(12),
+            StatusStrip.Height + LogicalToDeviceUnits(4));
+    }
+
+    protected override void OnDpiChangedAfterParent(EventArgs e)
+    {
+        base.OnDpiChangedAfterParent(e);
+        UpdateComboBoxItemHeights();
+        SyncContentBounds();
     }
 
     private void TranslateControls()
@@ -904,7 +937,10 @@ public partial class MainForm : Form
                 var profile = Global.Settings.Profiles.SingleOrDefault(p => p.Index == i);
                 var b = new Button
                 {
+                    AutoSize = true,
+                    AutoSizeMode = AutoSizeMode.GrowAndShrink,
                     Dock = DockStyle.Fill,
+                    MinimumSize = new Size(0, LogicalToDeviceUnits(28)),
                     Text = profile?.ProfileName ?? i18N.Translate("None"),
                     Tag = profile
                 };
@@ -915,7 +951,7 @@ public partial class MainForm : Form
 
             // equal column
             for (var i = 1; i <= ProfileTable.RowCount; i++)
-                ProfileTable.RowStyles.Add(new RowStyle(SizeType.Percent, 1));
+                ProfileTable.RowStyles.Add(new RowStyle(SizeType.AutoSize));
 
             for (var i = 1; i <= ProfileTable.ColumnCount; i++)
                 ProfileTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 1));
@@ -1475,7 +1511,12 @@ public partial class MainForm : Form
             return;
 
         // 绘制 备注/名称 字符串
-        TextRenderer.DrawText(e.Graphics, cbx.Items[e.Index].ToString(), cbx.Font, e.Bounds, Color.Black, TextFormatFlags.Left);
+        TextRenderer.DrawText(e.Graphics,
+            cbx.Items[e.Index].ToString(),
+            cbx.Font,
+            e.Bounds,
+            Color.Black,
+            TextFormatFlags.Left | TextFormatFlags.VerticalCenter | TextFormatFlags.EndEllipsis);
 
         switch (cbx.Items[e.Index])
         {
@@ -1495,9 +1536,9 @@ public partial class MainForm : Form
                 TextRenderer.DrawText(e.Graphics,
                     item.Delay.ToString(),
                     cbx.Font,
-                    new Point(numberBoxX + numberBoxWrap, e.Bounds.Y),
+                    new Rectangle(numberBoxX + numberBoxWrap, e.Bounds.Y, numberBoxWidth - numberBoxWrap, e.Bounds.Height),
                     Color.Black,
-                    TextFormatFlags.Left);
+                    TextFormatFlags.Left | TextFormatFlags.VerticalCenter);
 
                 break;
             }

@@ -349,10 +349,11 @@ public class MultiModeForm : Form
         base.OnLoad(e);
         try
         {
-            if (_splitContainer.Width > 560)
+            var minTrigger = LogicalToDeviceUnits(560);
+            if (_splitContainer.Width > minTrigger)
             {
-                _splitContainer.Panel1MinSize = 340;
-                _splitContainer.Panel2MinSize = 260;
+                _splitContainer.Panel1MinSize = LogicalToDeviceUnits(340);
+                _splitContainer.Panel2MinSize = LogicalToDeviceUnits(260);
 
                 var desiredDistance = (int)(ClientSize.Width * 0.54);
                 if (desiredDistance >= _splitContainer.Panel1MinSize &&
@@ -362,7 +363,7 @@ public class MultiModeForm : Form
                 }
                 else
                 {
-                    _splitContainer.SplitterDistance = 430;
+                    _splitContainer.SplitterDistance = LogicalToDeviceUnits(430);
                 }
                 _splitContainer.FixedPanel = FixedPanel.Panel1;
             }

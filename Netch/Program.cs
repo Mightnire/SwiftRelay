@@ -30,7 +30,7 @@ public static class Program
     [STAThread]
     public static void Main(string[] args)
     {
-        Application.SetHighDpiMode(HighDpiMode.DpiUnawareGdiScaled);
+        Application.SetHighDpiMode(HighDpiMode.PerMonitorV2);
 
         // handle arguments
         if (args.Contains(Constants.Parameter.ForceUpdate))
@@ -103,7 +103,6 @@ public static class Program
         Application.ThreadException += Application_OnException;
         Application.ApplicationExit += Application_OnExit;
 
-        Application.SetHighDpiMode(HighDpiMode.DpiUnawareGdiScaled);
         Application.EnableVisualStyles();
         Application.SetCompatibleTextRenderingDefault(false);
         Application.Run(Global.MainForm);

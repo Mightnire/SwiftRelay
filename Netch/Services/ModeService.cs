@@ -40,6 +40,9 @@ public class ModeService
 
     private void LoadCore(string modeDirectory)
     {
+        if (!Directory.Exists(modeDirectory))
+            return;
+
         foreach (var directory in Directory.GetDirectories(modeDirectory))
             LoadCore(directory);
 
