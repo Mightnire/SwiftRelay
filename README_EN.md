@@ -69,7 +69,7 @@ SwiftRelay provides two different release packages:
 | Edition | File | Archive Size | Description |
 | :--- | :--- | :--- | :--- |
 | **Self-Contained** | `SwiftRelay.7z` | ~33 MB | **Ready to use out-of-the-box**. Bundles the complete .NET runtime. Recommended if you do not want to install extra runtimes. |
-| **Framework-Dependent** | `SwiftRelay-Framework-Dependent.7z` | ~7.5 MB | **Ultra-lightweight**. Excludes the bundled runtime to drastically reduce download size. **Requires** the .NET 6.0 Desktop Runtime to be installed on your system. |
+| **Framework-Dependent** | `SwiftRelay_Framework-Dependent.7z` | ~7.5 MB | **Ultra-lightweight**. Excludes the bundled runtime to drastically reduce download size. **Requires** the .NET 6.0 Desktop Runtime to be installed on your system. |
 
 ### Required Runtimes (For Framework-Dependent Edition)
 

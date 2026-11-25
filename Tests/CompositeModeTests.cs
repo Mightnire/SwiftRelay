@@ -467,4 +467,36 @@ public class CompositeModeTests
         Assert.AreEqual(@"C:\Modes\Custom\ForzaHorizon 4 (Custom).json", cloned.FullName);
         CollectionAssert.AreEqual(originalMode.Handle, cloned.Handle);
     }
+
+    [TestMethod]
+    public void UpdateChecker_ParsesChecksums_AndMatchesAssetByFilename()
+    {
+        var previous = Netch.Controllers.UpdateChecker.LatestRelease;
+        try
+        {
+            var expectedHash = new string('a', 64);
+            var fddHash = new string('b', 64);
+            Netch.Controllers.UpdateChecker.LatestRelease = new Netch.Models.GitHubRelease.Release
+            {
+                tag_name = "1.0.1",
+                html_url = "https://example.com/1.0.1",
+                body = $"Summary line\n\n### 校验和\n| 文件名 | SHA256 |\n| :- | :- |\n| SwiftRelay.7z | {expectedHash} |\n| SwiftRelay_Framework-Dependent.7z | {fddHash} |",
+                assets = new[]
+                {
+                    new Netch.Models.GitHubRelease.Asset { name = "SwiftRelay_Framework-Dependent.7z", browser_download_url = "https://example.com/fdd.7z" },
+                    new Netch.Models.GitHubRelease.Asset { name = "SwiftRelay.7z", browser_download_url = "https://example.com/full.7z" }
+                }
+            };
+
+            var (fileName, hash) = Netch.Controllers.UpdateChecker.GetLatestUpdateFileNameAndHash();
+            Assert.AreEqual("SwiftRelay.7z", fileName);
+            Assert.AreEqual(expectedHash, hash);
+            Assert.AreEqual("https://example.com/full.7z", Netch.Controllers.UpdateChecker.GetAssetDownloadUrl(fileName));
+            Assert.AreEqual("Summary line", Netch.Controllers.UpdateChecker.GetLatestReleaseContent());
+        }
+        finally
+        {
+            Netch.Controllers.UpdateChecker.LatestRelease = previous!;
+        }
+    }
 }

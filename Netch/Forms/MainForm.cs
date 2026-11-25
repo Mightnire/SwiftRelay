@@ -477,16 +477,17 @@ public partial class MainForm : Form
             string downloadDirectory = Path.Combine(Global.NetchDir, "data");
 
             var (updateFileName, sha256) = UpdateChecker.GetLatestUpdateFileNameAndHash();
-            var updateFileUrl = UpdateChecker.LatestRelease.assets[0].browser_download_url!;
+            var updateFileUrl = UpdateChecker.GetAssetDownloadUrl(updateFileName)
+                ?? throw new MessageException("Download Update File Failed: missing release asset URL");
 
             var updateFileFullName = Path.Combine(downloadDirectory, updateFileName);
             var updater = new Updater(updateFileFullName, Global.NetchDir);
 
             var downloaded = false;
-            if (File.Exists(updateFileFullName))
+            if (File.Exists(updateFileFullName) && !string.IsNullOrEmpty(sha256))
             {
                 var fileHash = await Utils.Utils.Sha256CheckSumAsync(updateFileFullName);
-                if (fileHash == sha256)
+                if (string.Equals(fileHash, sha256, StringComparison.OrdinalIgnoreCase))
                     downloaded = true;
                 else
                     File.Delete(updateFileFullName);
@@ -505,7 +506,7 @@ public partial class MainForm : Form
                 }
 
                 var fileHash = await Utils.Utils.Sha256CheckSumAsync(updateFileFullName);
-                if (fileHash != sha256)
+                if (string.IsNullOrEmpty(sha256) || !string.Equals(fileHash, sha256, StringComparison.OrdinalIgnoreCase))
                     throw new MessageException(i18N.Translate("The downloaded file has the wrong hash"));
             }
 

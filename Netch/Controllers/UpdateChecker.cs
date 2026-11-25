@@ -147,12 +147,21 @@ public static class UpdateChecker
     {
         if (!string.IsNullOrEmpty(LatestRelease?.body))
         {
-            var matches = Regex.Matches(LatestRelease.body, @"^\|\s*`?(?<filename>[^`|\r\n]+?)`?\s*\|\s*`?(?<sha256>[a-fA-F0-9]{64})`?\s*\|", RegexOptions.Multiline);
-            foreach (Match m in matches)
+            var tableMatches = Regex.Matches(LatestRelease.body, @"^\|\s*`?(?<filename>[^`|\r\n]+?)`?\s*\|\s*`?(?<sha256>[a-fA-F0-9]{64})`?\s*\|", RegexOptions.Multiline);
+            foreach (Match m in tableMatches)
             {
                 var fn = m.Groups["filename"].Value.Trim();
-                var hash = m.Groups["sha256"].Value.Trim();
-                if (keyword == null || fn.Contains(keyword))
+                var hash = m.Groups["sha256"].Value.Trim().ToLowerInvariant();
+                if (keyword == null || fn.Contains(keyword, StringComparison.OrdinalIgnoreCase))
+                    return (fn, hash);
+            }
+
+            var bulletMatches = Regex.Matches(LatestRelease.body, @"^[-*]\s*`?(?<filename>[^`:\r\n：]+?)`?\s*[:：]\s*`?(?<sha256>[a-fA-F0-9]{64})`?", RegexOptions.Multiline);
+            foreach (Match m in bulletMatches)
+            {
+                var fn = m.Groups["filename"].Value.Trim();
+                var hash = m.Groups["sha256"].Value.Trim().ToLowerInvariant();
+                if (keyword == null || fn.Contains(keyword, StringComparison.OrdinalIgnoreCase))
                     return (fn, hash);
             }
         }
@@ -161,12 +170,22 @@ public static class UpdateChecker
         {
             var asset = keyword == null
                 ? LatestRelease.assets[0]
-                : LatestRelease.assets.FirstOrDefault(a => a.name.Contains(keyword)) ?? LatestRelease.assets[0];
+                : LatestRelease.assets.FirstOrDefault(a => a.name.Contains(keyword, StringComparison.OrdinalIgnoreCase)) ?? LatestRelease.assets[0];
 
             return (asset.name, "");
         }
 
         return ("SwiftRelay.7z", "");
+    }
+
+    public static string? GetAssetDownloadUrl(string fileName)
+    {
+        var assets = LatestRelease?.assets;
+        if (assets == null || assets.Length == 0)
+            return null;
+
+        var matched = assets.FirstOrDefault(a => a.name.Equals(fileName, StringComparison.OrdinalIgnoreCase)) ?? assets[0];
+        return matched.browser_download_url;
     }
 
     public static string GetLatestReleaseContent()
@@ -175,9 +194,9 @@ public static class UpdateChecker
             return i18N.Translate("No release notes available.");
 
         var sb = new StringBuilder();
-        foreach (string l in LatestRelease.body.GetLines(false).SkipWhile(l => l.FirstOrDefault() != '#'))
+        foreach (var l in LatestRelease.body.GetLines(false))
         {
-            if (l.Contains("校验和"))
+            if (l.Contains("校验和") || l.Contains("Checksums", StringComparison.OrdinalIgnoreCase) || l.Contains("SHA256", StringComparison.OrdinalIgnoreCase))
                 break;
 
             sb.AppendLine(l);

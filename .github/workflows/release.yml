@@ -97,14 +97,14 @@ jobs:
         run: |
           7z a -mx9 SwiftRelay.7z release
           7z rn SwiftRelay.7z release SwiftRelay
-          7z a -mx9 SwiftRelay-Framework-Dependent.7z release-framework-dependent
-          7z rn SwiftRelay-Framework-Dependent.7z release-framework-dependent SwiftRelay
+          7z a -mx9 SwiftRelay_Framework-Dependent.7z release-framework-dependent
+          7z rn SwiftRelay_Framework-Dependent.7z release-framework-dependent SwiftRelay
 
       - name: Checksum
         shell: pwsh
         run: |
           $hash1=(Get-FileHash SwiftRelay.7z -Algorithm SHA256).Hash.ToLower()
-          $hash2=(Get-FileHash SwiftRelay-Framework-Dependent.7z -Algorithm SHA256).Hash.ToLower()
+          $hash2=(Get-FileHash SwiftRelay_Framework-Dependent.7z -Algorithm SHA256).Hash.ToLower()
           echo "SWIFTRELAY_SHA256=$hash1" | Out-File -Append -Encoding UTF8 -FilePath $Env:GITHUB_ENV
           echo "SWIFTRELAY_FDD_SHA256=$hash2" | Out-File -Append -Encoding UTF8 -FilePath $Env:GITHUB_ENV
 
@@ -117,14 +117,17 @@ jobs:
           draft: false
           files: |
             SwiftRelay.7z
-            SwiftRelay-Framework-Dependent.7z
+            SwiftRelay_Framework-Dependent.7z
           body: |
+            ### 更新说明
             自用魔改版打包，只保留了标准 Socks（Socks5 / Socks4a / Socks4），补了高分屏适配、多模式选择器、内置规则另存为这些日常方便的小功能。
 
             ### 下载说明
             - `SwiftRelay.7z`：完整版，自带运行环境，解压即用（推荐）。
-            - `SwiftRelay-Framework-Dependent.7z`：轻量版（体积小），需要电脑先装好 [.NET 6.0 Desktop Runtime (x64)](https://dotnet.microsoft.com/download/dotnet/6.0)。
+            - `SwiftRelay_Framework-Dependent.7z`：轻量版（体积小），需要电脑先装好 [.NET 6.0 Desktop Runtime (x64)](https://dotnet.microsoft.com/download/dotnet/6.0)。
 
-            ### SHA256
-            - `SwiftRelay.7z`：`${{ env.SWIFTRELAY_SHA256 }}`
-            - `SwiftRelay-Framework-Dependent.7z`：`${{ env.SWIFTRELAY_FDD_SHA256 }}`
+            ### 校验和
+            | 文件名 | SHA256 |
+            | :- | :- |
+            | SwiftRelay.7z | ${{ env.SWIFTRELAY_SHA256 }} |
+            | SwiftRelay_Framework-Dependent.7z | ${{ env.SWIFTRELAY_FDD_SHA256 }} |
