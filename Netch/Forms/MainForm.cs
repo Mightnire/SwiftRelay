@@ -547,7 +547,10 @@ public partial class MainForm : Form
 
     private void fAQToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        Utils.Utils.Open("https://github.com/Mightnire/SwiftRelay#readme");
+        var url = i18N.LangCode.StartsWith("zh", StringComparison.OrdinalIgnoreCase)
+            ? "https://github.com/Mightnire/SwiftRelay#使用指南"
+            : "https://github.com/Mightnire/SwiftRelay/blob/main/README_EN.md#usage";
+        Utils.Utils.Open(url);
     }
 
     #endregion

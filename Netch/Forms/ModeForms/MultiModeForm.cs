@@ -40,8 +40,16 @@ public class MultiModeForm : Form
     private TextBox _txtHandle = null!;
     private TextBox _txtBypass = null!;
     private Label _lblEmptyPreviewTip = null!;
+    private readonly Font _badgeFont = new("Microsoft YaHei UI", 8F);
 
     public Redirector? ResultMode { get; private set; }
+
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing)
+            _badgeFont.Dispose();
+        base.Dispose(disposing);
+    }
 
     public MultiModeForm(IEnumerable<Redirector>? preselected = null)
     {
@@ -653,7 +661,7 @@ public class MultiModeForm : Form
         var badge = new Label
         {
             AutoSize = true,
-            Font = new Font("Microsoft YaHei UI", 8F),
+            Font = _badgeFont,
             Margin = new Padding(0, 0, 6, 0),
             Padding = new Padding(4, 2, 4, 2)
         };

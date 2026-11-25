@@ -1,9 +1,9 @@
 > [!CAUTION]
 > #### Mightnire (https://github.com/Mightnire) and its SwiftRelay series of products, developed based on the source code of Netch (https://github.com/netchx/netch), are not affiliated with, or authorized, endorsed, or licensed in any way by any game publishers or network operators, their affiliates, or subsidiaries.
 >
-> #### SwiftRelay functions solely as a local network traffic router and standard Socks (Socks5 / Socks4a / Socks4) relay utility. It does not include any built-in network nodes or acceleration routes, and all node configurations used within the software are manually entered by the user. SwiftRelay cannot and does not inspect, verify, or guarantee the source, security, stability, or compliance of the nodes entered by the user, nor does it make any warranties regarding their legality; users are solely responsible for ensuring that the network access services and node configurations they use comply with applicable local laws, regulations, and relevant terms of service.
+> #### SwiftRelay is a local network forwarding utility supporting standard Socks (Socks5 / Socks4a / Socks4) only. It does not include any built-in servers or acceleration routes, and all server configurations used in the software are manually entered by the user. SwiftRelay cannot and does not inspect, verify, or guarantee the source, security, stability, or compliance of user-entered servers, nor does it make any warranties regarding their legality.
 >
-> #### SwiftRelay is only compatible with a limited number of applications and online games. The terms of service of certain online platforms, software, or games explicitly prohibit the use of unauthorized traffic routing or network acceleration tools; forced use may result in account restrictions, suspensions, or permanent bans. Furthermore, compatible programs may still exhibit some defects, including, but not limited to, partial or all traffic of the target program failing to be proxied and resulting in a direct connection, latency fluctuations, packet loss, connection drops, system driver compatibility issues, etc., which may affect how the programs perform. Users must review the terms of service of the target platform, software, or game prior to use, and assume full responsibility for any account penalties or losses incurred.
+> #### SwiftRelay is only compatible with a limited number of applications and online games. The terms of service of certain online platforms, software, or games[^1] explicitly prohibit the use of unauthorized traffic routing or network acceleration tools, and forced use may result in account restrictions, suspensions, or bans. Even in compatible programs or games, traffic may still bypass the proxy, experience latency spikes, packet loss, disconnections, or driver compatibility issues.
 >
 > #### The SwiftRelay name and icon were generated with the assistance of Gemini and are used in this project by Mightnire (https://github.com/Mightnire).
 >
@@ -45,9 +45,22 @@ A lightweight, pure Socks proxy and game routing client for Windows.
 
 ## 📦 Supported Protocols
 
-- **Socks5** (Full standard Socks5 proxy support, including target address/domain, port, and optional username/password authentication)
-- **Socks4a** (Supports remote domain name resolution via proxy)
-- **Socks4** (Standard Socks4 proxy support based on IPv4 addresses)
+- `Socks5`
+- `Socks4a`
+- `Socks4`
+
+## Usage
+
+### 1. Basic Workflow
+1. **Add a server**: Use **Server → Import Servers From Clipboard** or **Add [...] Server...** to enter your Socks server.
+2. **Pick a mode**: Select a Process or TUN mode from **Mode** (or save/switch up to 4 quick profiles at the bottom).
+3. **Start**: Click **Start**. Process Mode automatically installs the `netfilter2` kernel driver on first run; you can remove it later via **Options → Uninstall NetFilter Service**.
+4. **Customize built-in rules**: Built-in `.txt` modes are read-only; adjust rules in the editor and click **Save As...** to save an editable custom `.json` copy under `mode\Custom\`.
+
+### 2. Multi-Mode Selector & Mode Groups
+Click the multi-select icon next to Mode (or **Mode → Multi-Mode Selector / Group Manager...**):
+- **Search, sort & preview**: Filter modes by name or process, click the **Select** column to group checked modes, preview handle/bypass rules on the right, and click **Edit Mode** to adjust individual modes directly.
+- **Combine or save**: Check two or more process modes and click **Apply** to use them together temporarily, or **Save as Mode Group...** to keep the combined group for one-click reuse.
 
 ## 💻 Runtime Requirements & Downloads
 
@@ -102,3 +115,5 @@ This project is modified from [Netch](https://github.com/netchx/netch), original
 ## 📄 License
 
 SwiftRelay is licensed under the [GPLv3](LICENSE) license.
+
+[^1]: Example reference: [Honkai: Star Rail Terms of Service (clause prohibiting network accelerators)](https://sr.mihoyo.com/terms/user#:~:text=%E7%BD%91%E7%BB%9C%E5%8A%A0%E9%80%9F%E5%99%A8)

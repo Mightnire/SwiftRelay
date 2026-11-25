@@ -82,4 +82,29 @@ public static class ModeEditorUtils
         if (Global.MainForm != null)
             Global.MainForm.ModeComboBox.SelectedItem = newMode;
     }
+
+    public static bool SaveFormMode(Form owner, Mode mode, bool isCreateMode, string relativePath)
+    {
+        if (isCreateMode)
+        {
+            var fullName = ModeService.Instance.GetFullPath(relativePath);
+            if (File.Exists(fullName))
+            {
+                MessageBoxX.Show(i18N.Translate("File already exists.\n Please Change the filename"), owner: owner);
+                return false;
+            }
+
+            mode.FullName = fullName;
+            SaveNewMode(mode, owner);
+        }
+        else
+        {
+            mode.WriteFile();
+            MessageBoxX.Show(i18N.Translate("Mode updated successfully"), owner: owner);
+            if (Global.MainForm != null)
+                Global.MainForm.ModeComboBox.SelectedItem = mode;
+        }
+
+        return true;
+    }
 }

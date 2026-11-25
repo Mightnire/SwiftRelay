@@ -131,32 +131,18 @@ public partial class ProcessForm : BindingForm
             return;
         }
 
+        if (GetInvalidateValueControls().Any())
+        {
+            MessageBoxX.Show(i18N.Translate("Invalid value"), LogLevel.WARNING, owner: this);
+            return;
+        }
+
         SaveBinds();
 
-        if (IsCreateMode)
-        {
-            var relativePath = FilenameTextBox.Text;
-            var fullName = ModeService.Instance.GetFullPath(relativePath);
-            if (File.Exists(fullName))
-            {
-                MessageBoxX.Show(i18N.Translate("File already exists.\n Please Change the filename"));
-                return;
-            }
-
-            _mode.FullName = fullName;
-
-            ModeService.Instance.Add(_mode);
-            MessageBoxX.Show(i18N.Translate("Mode added successfully"));
-        }
-        else
-        {
-            _mode.WriteFile();
-            MessageBoxX.Show(i18N.Translate("Mode updated successfully"));
-        }
+        if (!ModeEditorUtils.SaveFormMode(this, _mode, IsCreateMode, FilenameTextBox.Text))
+            return;
 
         SavedMode = _mode;
-        if (Global.MainForm != null)
-            Global.MainForm.ModeComboBox.SelectedItem = _mode;
         DialogResult = DialogResult.OK;
         Close();
     }
@@ -209,7 +195,7 @@ public partial class ProcessForm : BindingForm
 
         BeginInvoke(() =>
         {
-            FilenameTextBox.Text = FilenameTextBox.Text = ModeEditorUtils.GetCustomModeRelativePath(RemarkTextBox.Text);
+            FilenameTextBox.Text = ModeEditorUtils.GetCustomModeRelativePath(RemarkTextBox.Text);
         });
     }
 
@@ -302,7 +288,8 @@ public partial class ProcessForm : BindingForm
 
     private void ValidationButton_Click(object sender, EventArgs e)
     {
-        if (!NFController.CheckRules(_mode.Bypass, out var results))
+        var rules = HandleRuleRichTextBox.Text.GetLines().Concat(BypassRuleRichTextBox.Text.GetLines());
+        if (!NFController.CheckRules(rules, out var results))
             MessageBoxX.Show(NFController.GenerateInvalidRulesMessage(results), LogLevel.WARNING);
         else
             MessageBoxX.Show("Fine");

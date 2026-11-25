@@ -16,10 +16,15 @@ public static class Utils
     {
         try
         {
-            Process.Start(new ProcessStartInfo
+            var target = path;
+            if (!Uri.TryCreate(path, UriKind.Absolute, out var uri) ||
+                (uri.Scheme != Uri.UriSchemeHttp && uri.Scheme != Uri.UriSchemeHttps))
             {
-                FileName = "explorer.exe",
-                Arguments = path,
+                target = Path.GetFullPath(path);
+            }
+
+            Process.Start(new ProcessStartInfo(target)
+            {
                 UseShellExecute = true
             });
         }
