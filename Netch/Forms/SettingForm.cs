@@ -157,6 +157,7 @@ public partial class SettingForm : BindingForm
     private void SettingForm_Load(object sender, EventArgs e)
     {
         TUNTAPUseCustomDNSCheckBox_CheckedChanged(null, null);
+        PerformLayout();
     }
 
     protected override void BindTextBox<T>(TextBoxBase control, Func<T, bool> check, Action<T> save, object value)

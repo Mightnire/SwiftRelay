@@ -135,7 +135,7 @@ namespace Netch.Forms
             rootLayout.RowCount = 2;
             rootLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             rootLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.AutoSize));
-            rootLayout.Size = new System.Drawing.Size(500, 518);
+            rootLayout.Size = new System.Drawing.Size(540, 540);
             rootLayout.TabIndex = 0;
             // 
             // TabControl
@@ -149,6 +149,7 @@ namespace Netch.Forms
             this.TabControl.Name = "TabControl";
             this.TabControl.Padding = new System.Drawing.Point(12, 4);
             this.TabControl.SelectedIndex = 0;
+            this.TabControl.Size = new System.Drawing.Size(516, 466);
             this.TabControl.TabIndex = 0;
             // 
             // GeneralTabPage
@@ -158,6 +159,7 @@ namespace Netch.Forms
             this.GeneralTabPage.Controls.Add(generalTabLayout);
             this.GeneralTabPage.Name = "GeneralTabPage";
             this.GeneralTabPage.Padding = new System.Windows.Forms.Padding(12, 10, 12, 10);
+            this.GeneralTabPage.Size = new System.Drawing.Size(508, 438);
             this.GeneralTabPage.TabIndex = 0;
             this.GeneralTabPage.Text = "General";
             // 
@@ -296,6 +298,7 @@ namespace Netch.Forms
             this.STUN_ServerComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.STUN_ServerComboBox.FormattingEnabled = true;
             this.STUN_ServerComboBox.Margin = new System.Windows.Forms.Padding(0, 4, 4, 4);
+            this.STUN_ServerComboBox.MinimumSize = new System.Drawing.Size(180, 0);
             this.STUN_ServerComboBox.Name = "STUN_ServerComboBox";
             this.STUN_ServerComboBox.TabIndex = 7;
             // 
@@ -321,7 +324,7 @@ namespace Netch.Forms
             profileTable.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             profileTable.ColumnCount = 2;
             profileTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.AutoSize));
-            profileTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            profileTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.AutoSize));
             profileTable.Controls.Add(this.ProfileCountLabel, 0, 0);
             profileTable.Controls.Add(this.ProfileCountTextBox, 1, 0);
             profileTable.Controls.Add(this.DetectionTickLabel, 0, 1);
@@ -352,6 +355,7 @@ namespace Netch.Forms
             // 
             this.ProfileCountTextBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.ProfileCountTextBox.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.ProfileCountTextBox.MinimumSize = new System.Drawing.Size(80, 0);
             this.ProfileCountTextBox.Name = "ProfileCountTextBox";
             this.ProfileCountTextBox.Size = new System.Drawing.Size(80, 23);
             this.ProfileCountTextBox.TabIndex = 1;
@@ -370,6 +374,7 @@ namespace Netch.Forms
             // 
             this.DetectionTickTextBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.DetectionTickTextBox.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.DetectionTickTextBox.MinimumSize = new System.Drawing.Size(80, 0);
             this.DetectionTickTextBox.Name = "DetectionTickTextBox";
             this.DetectionTickTextBox.Size = new System.Drawing.Size(80, 23);
             this.DetectionTickTextBox.TabIndex = 3;
@@ -388,6 +393,7 @@ namespace Netch.Forms
             // 
             this.StartedPingIntervalTextBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.StartedPingIntervalTextBox.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.StartedPingIntervalTextBox.MinimumSize = new System.Drawing.Size(80, 0);
             this.StartedPingIntervalTextBox.Name = "StartedPingIntervalTextBox";
             this.StartedPingIntervalTextBox.Size = new System.Drawing.Size(80, 23);
             this.StartedPingIntervalTextBox.TabIndex = 5;
@@ -408,6 +414,7 @@ namespace Netch.Forms
             this.LanguageComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.LanguageComboBox.FormattingEnabled = true;
             this.LanguageComboBox.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.LanguageComboBox.MinimumSize = new System.Drawing.Size(140, 0);
             this.LanguageComboBox.Name = "LanguageComboBox";
             this.LanguageComboBox.Size = new System.Drawing.Size(140, 25);
             this.LanguageComboBox.TabIndex = 7;
@@ -419,6 +426,7 @@ namespace Netch.Forms
             this.NFTabPage.Controls.Add(nfTabLayout);
             this.NFTabPage.Name = "NFTabPage";
             this.NFTabPage.Padding = new System.Windows.Forms.Padding(12, 10, 12, 10);
+            this.NFTabPage.Size = new System.Drawing.Size(508, 438);
             this.NFTabPage.TabIndex = 1;
             this.NFTabPage.Text = "Process Mode";
             // 
@@ -638,6 +646,7 @@ namespace Netch.Forms
             this.WinTUNTabPage.Controls.Add(tunTabLayout);
             this.WinTUNTabPage.Name = "WinTUNTabPage";
             this.WinTUNTabPage.Padding = new System.Windows.Forms.Padding(12, 10, 12, 10);
+            this.WinTUNTabPage.Size = new System.Drawing.Size(508, 438);
             this.WinTUNTabPage.TabIndex = 2;
             this.WinTUNTabPage.Text = "WinTUN";
             // 
@@ -818,6 +827,7 @@ namespace Netch.Forms
             this.OtherTabPage.Controls.Add(otherTabLayout);
             this.OtherTabPage.Name = "OtherTabPage";
             this.OtherTabPage.Padding = new System.Windows.Forms.Padding(12, 10, 12, 10);
+            this.OtherTabPage.Size = new System.Drawing.Size(508, 438);
             this.OtherTabPage.TabIndex = 3;
             this.OtherTabPage.Text = "Others";
             // 
@@ -1019,78 +1029,83 @@ namespace Netch.Forms
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.CancelButton = this.CancelButtonControl;
-            this.ClientSize = new System.Drawing.Size(500, 518);
+            this.ClientSize = new System.Drawing.Size(540, 540);
             this.Controls.Add(rootLayout);
             this.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(480, 480);
+            this.MinimumSize = new System.Drawing.Size(520, 500);
             this.Name = "SettingForm";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Settings";
             this.Load += new System.EventHandler(this.SettingForm_Load);
 
-            rootLayout.ResumeLayout(false);
-            rootLayout.PerformLayout();
-            bottomButtonFlow.ResumeLayout(false);
-            bottomButtonFlow.PerformLayout();
-            this.TabControl.ResumeLayout(false);
-            this.GeneralTabPage.ResumeLayout(false);
-            this.GeneralTabPage.PerformLayout();
-            generalTabLayout.ResumeLayout(false);
-            generalTabLayout.PerformLayout();
-            this.PortGroupBox.ResumeLayout(false);
-            this.PortGroupBox.PerformLayout();
-            portTable.ResumeLayout(false);
-            portTable.PerformLayout();
             pingPanel.ResumeLayout(false);
             pingPanel.PerformLayout();
-            this.ProfileGroupBox.ResumeLayout(false);
-            this.ProfileGroupBox.PerformLayout();
+            portTable.ResumeLayout(false);
+            portTable.PerformLayout();
+            this.PortGroupBox.ResumeLayout(false);
+            this.PortGroupBox.PerformLayout();
             profileTable.ResumeLayout(false);
             profileTable.PerformLayout();
-            this.NFTabPage.ResumeLayout(false);
-            this.NFTabPage.PerformLayout();
-            nfTabLayout.ResumeLayout(false);
-            nfTabLayout.PerformLayout();
-            this.TrafficFilterGroupBox.ResumeLayout(false);
-            this.TrafficFilterGroupBox.PerformLayout();
-            tfTable.ResumeLayout(false);
-            tfTable.PerformLayout();
+            this.ProfileGroupBox.ResumeLayout(false);
+            this.ProfileGroupBox.PerformLayout();
+            generalTabLayout.ResumeLayout(false);
+            generalTabLayout.PerformLayout();
+            this.GeneralTabPage.ResumeLayout(false);
+            this.GeneralTabPage.PerformLayout();
+
             icmpDelayPanel.ResumeLayout(false);
             icmpDelayPanel.PerformLayout();
-            this.DNSGroupBox.ResumeLayout(false);
-            this.DNSGroupBox.PerformLayout();
-            dnsTable.ResumeLayout(false);
-            dnsTable.PerformLayout();
+            tfTable.ResumeLayout(false);
+            tfTable.PerformLayout();
+            this.TrafficFilterGroupBox.ResumeLayout(false);
+            this.TrafficFilterGroupBox.PerformLayout();
             dnsHostPanel.ResumeLayout(false);
             dnsHostPanel.PerformLayout();
-            this.WinTUNTabPage.ResumeLayout(false);
-            this.WinTUNTabPage.PerformLayout();
-            tunTabLayout.ResumeLayout(false);
-            tunTabLayout.PerformLayout();
-            this.WinTUNGroupBox.ResumeLayout(false);
-            this.WinTUNGroupBox.PerformLayout();
-            tunTable.ResumeLayout(false);
-            tunTable.PerformLayout();
+            dnsTable.ResumeLayout(false);
+            dnsTable.PerformLayout();
+            this.DNSGroupBox.ResumeLayout(false);
+            this.DNSGroupBox.PerformLayout();
+            nfTabLayout.ResumeLayout(false);
+            nfTabLayout.PerformLayout();
+            this.NFTabPage.ResumeLayout(false);
+            this.NFTabPage.PerformLayout();
+
             tunDnsCheckPanel.ResumeLayout(false);
             tunDnsCheckPanel.PerformLayout();
-            this.OtherTabPage.ResumeLayout(false);
-            this.OtherTabPage.PerformLayout();
-            otherTabLayout.ResumeLayout(false);
-            otherTabLayout.PerformLayout();
-            this.StartupBehaviorGroupBox.ResumeLayout(false);
-            this.StartupBehaviorGroupBox.PerformLayout();
+            tunTable.ResumeLayout(false);
+            tunTable.PerformLayout();
+            this.WinTUNGroupBox.ResumeLayout(false);
+            this.WinTUNGroupBox.PerformLayout();
+            tunTabLayout.ResumeLayout(false);
+            tunTabLayout.PerformLayout();
+            this.WinTUNTabPage.ResumeLayout(false);
+            this.WinTUNTabPage.PerformLayout();
+
             sbPanel.ResumeLayout(false);
             sbPanel.PerformLayout();
-            this.UpdateNoticeGroupBox.ResumeLayout(false);
-            this.UpdateNoticeGroupBox.PerformLayout();
+            this.StartupBehaviorGroupBox.ResumeLayout(false);
+            this.StartupBehaviorGroupBox.PerformLayout();
             unPanel.ResumeLayout(false);
             unPanel.PerformLayout();
+            this.UpdateNoticeGroupBox.ResumeLayout(false);
+            this.UpdateNoticeGroupBox.PerformLayout();
+            otherTabLayout.ResumeLayout(false);
+            otherTabLayout.PerformLayout();
+            this.OtherTabPage.ResumeLayout(false);
+            this.OtherTabPage.PerformLayout();
+
+            this.TabControl.ResumeLayout(false);
+            bottomButtonFlow.ResumeLayout(false);
+            bottomButtonFlow.PerformLayout();
+            rootLayout.ResumeLayout(false);
+            rootLayout.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
         }
 
         #endregion
