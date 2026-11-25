@@ -33,6 +33,7 @@ public partial class MainForm : Form
     private bool _newVersionVisible;
     private bool _newVersionEnabled = true;
     private string _newVersionText = string.Empty;
+    private bool _isExiting;
 
     public MainForm()
     {
@@ -822,9 +823,9 @@ public partial class MainForm : Form
             return;
         }
 
-        if (mode is CompositeMode)
+        if (mode is CompositeMode compositeMode)
         {
-            OpenMultiModeForm();
+            OpenMultiModeForm(compositeMode.IsTemporary ? null : compositeMode);
             return;
         }
 
@@ -853,7 +854,7 @@ public partial class MainForm : Form
         OpenMultiModeForm();
     }
 
-    private void OpenMultiModeForm()
+    private void OpenMultiModeForm(CompositeMode? editingGroup = null)
     {
         IEnumerable<Redirector>? preselected = null;
         if (ModeComboBox.SelectedItem is CompositeMode compositeMode)
@@ -862,8 +863,9 @@ public partial class MainForm : Form
             foreach (var subPath in compositeMode.SubModes)
             {
                 var match = Global.Modes.OfType<Redirector>().FirstOrDefault(m =>
-                    m.FullName.EndsWith(subPath, StringComparison.OrdinalIgnoreCase) ||
-                    Path.GetFileName(m.FullName).Equals(Path.GetFileName(subPath), StringComparison.OrdinalIgnoreCase));
+                    m is not CompositeMode &&
+                    (m.FullName.EndsWith(subPath, StringComparison.OrdinalIgnoreCase) ||
+                     Path.GetFileName(m.FullName).Equals(Path.GetFileName(subPath), StringComparison.OrdinalIgnoreCase)));
                 if (match != null)
                     resolved.Add(match);
             }
@@ -876,7 +878,7 @@ public partial class MainForm : Form
         }
 
         Hide();
-        using var form = new MultiModeForm(preselected);
+        using var form = new MultiModeForm(preselected, editingGroup);
         var result = form.ShowDialog();
         Show();
 
@@ -1166,6 +1168,15 @@ public partial class MainForm : Form
                     ProfileGroupBox.Enabled = true;
                     StartDisableItems(true);
                     break;
+                case State.Terminating:
+                    ControlButton.Enabled = false;
+                    ControlButton.Text = "...";
+
+                    ProfileGroupBox.Enabled = false;
+                    StartDisableItems(false);
+                    BandwidthState(false);
+                    ConnectivityStatusVisible(false);
+                    break;
             }
         }
     }
@@ -1180,11 +1191,20 @@ public partial class MainForm : Form
 
     private async Task StopCoreAsync()
     {
-        State = State.Stopping;
+        if (State != State.Terminating)
+            State = State.Stopping;
         _discoveryNatCts?.Cancel();
         _httpConnectCts?.Cancel();
         await MainController.StopAsync();
-        State = State.Stopped;
+        if (_isExiting)
+        {
+            Bandwidth.Stop();
+            State = State.Terminating;
+        }
+        else
+        {
+            State = State.Stopped;
+        }
     }
 
     private bool IsWaiting() => IsWaiting(_state);
@@ -1412,6 +1432,9 @@ public partial class MainForm : Form
 
     public async void Exit(bool forceExit = false, bool saveConfiguration = true)
     {
+        if (_isExiting)
+            return;
+
         if (!IsWaiting() && !Global.Settings.StopWhenExited && !forceExit)
         {
             MessageBoxX.Show(i18N.Translate("Please press Stop button first"));
@@ -1420,21 +1443,38 @@ public partial class MainForm : Form
             return;
         }
 
-        // State = State.Terminating;
-        NotifyIcon.Visible = false;
-        Hide();
+        _isExiting = true;
+        var needsStop = !IsWaiting();
+        Enabled = false;
+        State = State.Terminating;
 
-        if (saveConfiguration)
-            await Configuration.SaveAsync();
+        try
+        {
+            if (saveConfiguration)
+                await Configuration.SaveAsync();
 
-        foreach (var file in new[] { Constants.TempConfig, Constants.TempRouteFile })
-            if (File.Exists(file))
-                File.Delete(file);
+            foreach (var file in new[] { Constants.TempConfig, Constants.TempRouteFile })
+                if (File.Exists(file))
+                    File.Delete(file);
 
-        await StopAsync();
-
-        Dispose();
-        Environment.Exit(Environment.ExitCode);
+            if (needsStop)
+                await StopCoreAsync();
+            else
+                Bandwidth.Stop();
+        }
+        catch (Exception e)
+        {
+            Log.Error(e, "Unhandled error during Exit");
+        }
+        finally
+        {
+            NotifyIcon.Visible = false;
+            Hide();
+            Dispose();
+            Program.SingleInstance?.Dispose();
+            Log.CloseAndFlush();
+            Environment.Exit(Environment.ExitCode);
+        }
     }
 
     #region FormClosingButton
@@ -1443,6 +1483,12 @@ public partial class MainForm : Form
 
     private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
     {
+        if (_isExiting)
+        {
+            e.Cancel = true;
+            return;
+        }
+
         if (e.CloseReason == CloseReason.UserClosing && State != State.Terminating)
         {
             // 取消"关闭窗口"事件

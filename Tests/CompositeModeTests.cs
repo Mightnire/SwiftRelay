@@ -512,4 +512,147 @@ public class CompositeModeTests
             Netch.Controllers.UpdateChecker.LatestRelease = previous!;
         }
     }
+
+    [TestMethod]
+    public void MultiModeForm_EditModeGroup_ShowsOnlySaveAndCancelButtons()
+    {
+        var group = new CompositeMode
+        {
+            FullName = Path.Combine(Path.GetTempPath(), $"group_{Guid.NewGuid():N}.json"),
+            Remark = new() { { "en", "Existing Group" } },
+            IsTemporary = false
+        };
+
+        var tcs = new TaskCompletionSource();
+        var thread = new Thread(() =>
+        {
+            try
+            {
+                using var form = new Netch.Forms.ModeForms.MultiModeForm(editingGroup: group);
+                form.StartPosition = FormStartPosition.Manual;
+                form.Location = new System.Drawing.Point(-32000, -32000);
+                form.ShowInTaskbar = false;
+                form.Show();
+
+                var buttons = GetAllControls<Button>(form).ToList();
+                var applyBtn = buttons.Single(b => b.Text == i18N.Translate("Apply"));
+                var saveBtn = buttons.Single(b => b.Text == i18N.Translate("Save"));
+                var cancelBtn = buttons.Single(b => b.Text == i18N.Translate("Cancel"));
+
+                Assert.IsFalse(applyBtn.Visible);
+                Assert.IsTrue(saveBtn.Visible);
+                Assert.IsTrue(cancelBtn.Visible);
+                Assert.AreSame(saveBtn, form.AcceptButton);
+                Assert.IsFalse(buttons.Any(b => b.Text == i18N.Translate("Save as Mode Group...")));
+
+                using var renameDlg = new Netch.Forms.ModeForms.ModeGroupRenameDialog("Old", "New");
+                var dlgButtons = GetAllControls<Button>(renameDlg).ToList();
+                Assert.IsTrue(dlgButtons.Any(b => b.Text == i18N.Translate("Rename (Replace Original)")));
+                Assert.IsTrue(dlgButtons.Any(b => b.Text == i18N.Translate("Save As (Keep Original)")));
+                Assert.IsTrue(dlgButtons.Any(b => b.Text == i18N.Translate("Cancel")));
+
+                form.Close();
+                tcs.SetResult();
+            }
+            catch (Exception ex)
+            {
+                tcs.SetException(ex);
+            }
+        });
+        thread.SetApartmentState(ApartmentState.STA);
+        thread.Start();
+        tcs.Task.GetAwaiter().GetResult();
+    }
+
+    [TestMethod]
+    public void MultiModeForm_CommitModeGroupSave_HandlesOverwriteRenameAndSaveAs()
+    {
+        var tempDir = Path.Combine(Path.GetTempPath(), $"swiftrelay_group_test_{Guid.NewGuid():N}");
+        Directory.CreateDirectory(tempDir);
+        var snapshot = Netch.Global.Modes.ToList();
+
+        try
+        {
+            Netch.Global.Modes.Clear();
+            var m1 = new Redirector
+            {
+                FullName = Path.Combine(tempDir, "m1.txt"),
+                Remark = new() { { "en", "M1" } },
+                Handle = new() { "m1.exe" }
+            };
+            var m2 = new Redirector
+            {
+                FullName = Path.Combine(tempDir, "m2.txt"),
+                Remark = new() { { "en", "M2" } },
+                Handle = new() { "m2.exe" }
+            };
+            Netch.Global.Modes.Add(m1);
+            Netch.Global.Modes.Add(m2);
+
+            var origPath = Path.Combine(tempDir, "Original.json");
+            var origGroup = Netch.Forms.ModeForms.MultiModeForm.CommitModeGroupSave(
+                new[] { m1, m2 },
+                "Original",
+                origPath,
+                null,
+                Netch.Forms.ModeForms.ModeGroupSaveAction.SaveAs,
+                refreshUI: false);
+            Assert.IsTrue(File.Exists(origPath));
+
+            // 1. OverwriteCurrent: keeps path, no duplicate in Global.Modes
+            var updatedGroup = Netch.Forms.ModeForms.MultiModeForm.CommitModeGroupSave(
+                new[] { m1, m2 },
+                "Original",
+                origPath,
+                origGroup,
+                Netch.Forms.ModeForms.ModeGroupSaveAction.OverwriteCurrent,
+                refreshUI: false);
+            Assert.AreEqual(1, Netch.Global.Modes.OfType<CompositeMode>().Count(m => m.FullName == origPath));
+
+            // 2. SaveAs: keeps original file and creates new file
+            var copyPath = Path.Combine(tempDir, "Copy.json");
+            var copyGroup = Netch.Forms.ModeForms.MultiModeForm.CommitModeGroupSave(
+                new[] { m1, m2 },
+                "Copy",
+                copyPath,
+                updatedGroup,
+                Netch.Forms.ModeForms.ModeGroupSaveAction.SaveAs,
+                refreshUI: false);
+            Assert.IsTrue(File.Exists(origPath));
+            Assert.IsTrue(File.Exists(copyPath));
+            Assert.AreEqual(2, Netch.Global.Modes.OfType<CompositeMode>().Count());
+
+            // 3. Rename: creates new path, deletes old path, removes old entry
+            var renamedPath = Path.Combine(tempDir, "Renamed.json");
+            Netch.Forms.ModeForms.MultiModeForm.CommitModeGroupSave(
+                new[] { m1, m2 },
+                "Renamed",
+                renamedPath,
+                copyGroup,
+                Netch.Forms.ModeForms.ModeGroupSaveAction.Rename,
+                refreshUI: false);
+            Assert.IsFalse(File.Exists(copyPath));
+            Assert.IsTrue(File.Exists(renamedPath));
+            Assert.IsFalse(Netch.Global.Modes.Contains(copyGroup));
+            Assert.AreEqual(2, Netch.Global.Modes.OfType<CompositeMode>().Count());
+        }
+        finally
+        {
+            Netch.Global.Modes.Clear();
+            Netch.Global.Modes.AddRange(snapshot);
+            if (Directory.Exists(tempDir))
+                Directory.Delete(tempDir, true);
+        }
+    }
+
+    private static IEnumerable<T> GetAllControls<T>(Control root) where T : Control
+    {
+        foreach (Control c in root.Controls)
+        {
+            if (c is T match)
+                yield return match;
+            foreach (var child in GetAllControls<T>(c))
+                yield return child;
+        }
+    }
 }

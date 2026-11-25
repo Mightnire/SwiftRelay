@@ -11,6 +11,7 @@ public class MultiModeForm : Form
 {
     private readonly List<Redirector> _allProcessModes = new();
     private readonly HashSet<Redirector> _checkedModes = new();
+    private readonly CompositeMode? _editingGroup;
     private bool _updatingCheckState;
     private bool _adjustingColumns;
     private int _sortColumn = 1;
@@ -51,8 +52,9 @@ public class MultiModeForm : Form
         base.Dispose(disposing);
     }
 
-    public MultiModeForm(IEnumerable<Redirector>? preselected = null)
+    public MultiModeForm(IEnumerable<Redirector>? preselected = null, CompositeMode? editingGroup = null)
     {
+        _editingGroup = editingGroup is { IsTemporary: false } ? editingGroup : null;
         InitializeComponents();
         LoadModes(preselected);
     }
@@ -61,7 +63,9 @@ public class MultiModeForm : Form
     {
         AutoScaleDimensions = new SizeF(96F, 96F);
         AutoScaleMode = AutoScaleMode.Dpi;
-        Text = i18N.Translate("Multi-Mode Selector");
+        Text = _editingGroup != null
+            ? $"{i18N.Translate("Edit Mode Group")} - {_editingGroup.i18NRemark}"
+            : i18N.Translate("Multi-Mode Selector");
         Font = new Font("Microsoft YaHei UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
         Size = new Size(1020, 600);
         MinimumSize = new Size(880, 500);
@@ -304,10 +308,10 @@ public class MultiModeForm : Form
 
         _btnSaveAsGroup = new Button
         {
-            Text = i18N.Translate("Save as Mode Group..."),
+            Text = _editingGroup != null ? i18N.Translate("Save") : i18N.Translate("Save as Mode Group..."),
             AutoSize = true,
             AutoSizeMode = AutoSizeMode.GrowAndShrink,
-            MinimumSize = new Size(140, 30),
+            MinimumSize = _editingGroup != null ? new Size(85, 30) : new Size(140, 30),
             Padding = new Padding(10, 0, 10, 0),
             Margin = new Padding(0, 0, 8, 0),
             FlatStyle = FlatStyle.System
@@ -322,7 +326,8 @@ public class MultiModeForm : Form
             MinimumSize = new Size(85, 30),
             Padding = new Padding(10, 0, 10, 0),
             Margin = new Padding(0, 0, 8, 0),
-            FlatStyle = FlatStyle.System
+            FlatStyle = FlatStyle.System,
+            Visible = _editingGroup == null
         };
         _btnApply.Click += BtnApply_Click;
 
@@ -367,7 +372,7 @@ public class MultiModeForm : Form
         Controls.Add(_splitContainer);
         Controls.Add(bottomPanel);
 
-        AcceptButton = _btnApply;
+        AcceptButton = _editingGroup != null ? _btnSaveAsGroup : _btnApply;
         CancelButton = _btnCancel;
     }
 
@@ -501,9 +506,12 @@ public class MultiModeForm : Form
                 _checkedModes.Add(m);
         }
 
-        // Only include ProcessModes
+        // Only include ProcessModes (excluding the currently edited group to avoid self-nesting)
         foreach (var mode in Global.Modes.OfType<Redirector>())
         {
+            if (_editingGroup != null && ReferenceEquals(mode, _editingGroup))
+                continue;
+
             _allProcessModes.Add(mode);
         }
 
@@ -785,12 +793,29 @@ public class MultiModeForm : Form
             return;
         }
 
-        var defaultName = string.Join(" + ", _checkedModes.Take(3).Select(m => m.i18NRemark));
-        if (_checkedModes.Count > 3)
-            defaultName += "...";
+        string dialogTitle;
+        string defaultName;
+        string groupDir;
+
+        if (_editingGroup != null)
+        {
+            dialogTitle = i18N.Translate("Save Mode Group");
+            defaultName = _editingGroup.i18NRemark;
+            groupDir = !string.IsNullOrEmpty(_editingGroup.FullName)
+                ? Path.GetDirectoryName(_editingGroup.FullName)!
+                : Path.Combine(ModeService.Instance.ModeDirectoryFullName, "Group");
+        }
+        else
+        {
+            dialogTitle = i18N.Translate("Save as Mode Group");
+            defaultName = string.Join(" + ", _checkedModes.Take(3).Select(m => m.i18NRemark));
+            if (_checkedModes.Count > 3)
+                defaultName += "...";
+            groupDir = Path.Combine(ModeService.Instance.ModeDirectoryFullName, "Group");
+        }
 
         var groupName = InputDialog.Show(
-            i18N.Translate("Save as Mode Group"),
+            dialogTitle,
             i18N.Translate("Please enter a name for this mode group:"),
             defaultName,
             this);
@@ -802,25 +827,35 @@ public class MultiModeForm : Form
         foreach (var c in Path.GetInvalidFileNameChars())
             groupName = groupName.Replace(c, '_');
 
-        var groupDir = Path.Combine(ModeService.Instance.ModeDirectoryFullName, "Group");
-        if (!Directory.Exists(groupDir))
-            Directory.CreateDirectory(groupDir);
-
         var filePath = Path.Combine(groupDir, $"{groupName}.json");
-        if (File.Exists(filePath))
+        var action = ModeGroupSaveAction.SaveAs;
+
+        if (_editingGroup != null)
+        {
+            var isSameTarget = !string.IsNullOrEmpty(_editingGroup.FullName) &&
+                               Path.GetFullPath(filePath).Equals(Path.GetFullPath(_editingGroup.FullName), StringComparison.OrdinalIgnoreCase);
+
+            if (isSameTarget)
+            {
+                action = ModeGroupSaveAction.OverwriteCurrent;
+            }
+            else
+            {
+                action = ModeGroupRenameDialog.Show(_editingGroup.i18NRemark, groupName, this);
+                if (action == ModeGroupSaveAction.Cancel)
+                    return;
+            }
+        }
+
+        if (action != ModeGroupSaveAction.OverwriteCurrent && File.Exists(filePath))
         {
             if (MessageBoxX.Show(i18N.Translate("A mode group with the same name already exists. Overwrite?"), confirm: true, owner: this) != DialogResult.OK)
                 return;
         }
 
-        var composite = CompositeMode.FromModes(_checkedModes, groupName, isTemp: false);
-        composite.FullName = filePath;
-
         try
         {
-            composite.WriteFile();
-            ModeService.Instance.Add(composite);
-            ResultMode = composite;
+            ResultMode = CommitModeGroupSave(_checkedModes, groupName, filePath, _editingGroup, action);
             DialogResult = DialogResult.OK;
             Close();
         }
@@ -829,6 +864,177 @@ public class MultiModeForm : Form
             Log.Error(ex, "Save mode group failed");
             MessageBoxX.Show($"{i18N.Translate("Save mode group failed")}: {ex.Message}", Enums.LogLevel.ERROR, owner: this);
         }
+    }
+
+    public static CompositeMode CommitModeGroupSave(
+        IEnumerable<Redirector> checkedModes,
+        string groupName,
+        string filePath,
+        CompositeMode? editingGroup,
+        ModeGroupSaveAction action,
+        bool refreshUI = true)
+    {
+        var groupDir = Path.GetDirectoryName(filePath);
+        if (!string.IsNullOrEmpty(groupDir) && !Directory.Exists(groupDir))
+            Directory.CreateDirectory(groupDir);
+
+        var composite = CompositeMode.FromModes(checkedModes, groupName, isTemp: false);
+        composite.FullName = filePath;
+        composite.WriteFile();
+
+        var normalizedTarget = Path.GetFullPath(filePath);
+        if (action == ModeGroupSaveAction.Rename &&
+            editingGroup != null &&
+            !string.IsNullOrEmpty(editingGroup.FullName) &&
+            !Path.GetFullPath(editingGroup.FullName).Equals(normalizedTarget, StringComparison.OrdinalIgnoreCase))
+        {
+            if (File.Exists(editingGroup.FullName))
+                File.Delete(editingGroup.FullName);
+
+            Global.Modes.Remove(editingGroup);
+        }
+
+        Global.Modes.RemoveAll(m =>
+            !string.IsNullOrEmpty(m.FullName) &&
+            Path.GetFullPath(m.FullName).Equals(normalizedTarget, StringComparison.OrdinalIgnoreCase));
+
+        Global.Modes.Add(composite);
+        ModeService.Instance.Sort(refreshUI);
+        return composite;
+    }
+}
+
+public enum ModeGroupSaveAction
+{
+    Cancel,
+    OverwriteCurrent,
+    Rename,
+    SaveAs
+}
+
+public class ModeGroupRenameDialog : Form
+{
+    public ModeGroupSaveAction SelectedAction { get; private set; } = ModeGroupSaveAction.Cancel;
+
+    public ModeGroupRenameDialog(string oldName, string newName)
+    {
+        AutoScaleDimensions = new SizeF(96F, 96F);
+        AutoScaleMode = AutoScaleMode.Dpi;
+        AutoSize = true;
+        AutoSizeMode = AutoSizeMode.GrowAndShrink;
+        Text = i18N.Translate("Save Mode Group");
+        Font = new Font("Microsoft YaHei UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+        FormBorderStyle = FormBorderStyle.FixedDialog;
+        MaximizeBox = false;
+        MinimizeBox = false;
+        StartPosition = FormStartPosition.CenterParent;
+        ShowInTaskbar = false;
+
+        var rootLayout = new TableLayoutPanel
+        {
+            Dock = DockStyle.Fill,
+            AutoSize = true,
+            AutoSizeMode = AutoSizeMode.GrowAndShrink,
+            ColumnCount = 1,
+            RowCount = 2,
+            Padding = new Padding(16),
+            MinimumSize = new Size(420, 0)
+        };
+        rootLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+        rootLayout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+        rootLayout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+
+        var lblPrompt = new Label
+        {
+            Text = i18N.TranslateFormat(
+                "The mode group name has changed from \"{0}\" to \"{1}\".\n\nWould you like to rename the original mode group or save as a new one?",
+                oldName,
+                newName),
+            AutoSize = true,
+            MaximumSize = new Size(420, 0),
+            Margin = new Padding(0, 0, 0, 14),
+            TextAlign = ContentAlignment.MiddleLeft
+        };
+
+        var buttonPanel = new FlowLayoutPanel
+        {
+            Dock = DockStyle.Fill,
+            AutoSize = true,
+            AutoSizeMode = AutoSizeMode.GrowAndShrink,
+            FlowDirection = FlowDirection.RightToLeft,
+            WrapContents = false,
+            Margin = Padding.Empty
+        };
+
+        var btnCancel = new Button
+        {
+            Text = i18N.Translate("Cancel"),
+            AutoSize = true,
+            AutoSizeMode = AutoSizeMode.GrowAndShrink,
+            MinimumSize = new Size(76, 28),
+            Padding = new Padding(8, 0, 8, 0),
+            Margin = Padding.Empty,
+            DialogResult = DialogResult.Cancel,
+            FlatStyle = FlatStyle.System
+        };
+        btnCancel.Click += (_, _) =>
+        {
+            SelectedAction = ModeGroupSaveAction.Cancel;
+            Close();
+        };
+
+        var btnSaveAs = new Button
+        {
+            Text = i18N.Translate("Save As (Keep Original)"),
+            AutoSize = true,
+            AutoSizeMode = AutoSizeMode.GrowAndShrink,
+            MinimumSize = new Size(130, 28),
+            Padding = new Padding(8, 0, 8, 0),
+            Margin = new Padding(0, 0, 8, 0),
+            FlatStyle = FlatStyle.System
+        };
+        btnSaveAs.Click += (_, _) =>
+        {
+            SelectedAction = ModeGroupSaveAction.SaveAs;
+            DialogResult = DialogResult.OK;
+            Close();
+        };
+
+        var btnRename = new Button
+        {
+            Text = i18N.Translate("Rename (Replace Original)"),
+            AutoSize = true,
+            AutoSizeMode = AutoSizeMode.GrowAndShrink,
+            MinimumSize = new Size(130, 28),
+            Padding = new Padding(8, 0, 8, 0),
+            Margin = new Padding(0, 0, 8, 0),
+            FlatStyle = FlatStyle.System
+        };
+        btnRename.Click += (_, _) =>
+        {
+            SelectedAction = ModeGroupSaveAction.Rename;
+            DialogResult = DialogResult.OK;
+            Close();
+        };
+
+        buttonPanel.Controls.Add(btnCancel);
+        buttonPanel.Controls.Add(btnSaveAs);
+        buttonPanel.Controls.Add(btnRename);
+
+        rootLayout.Controls.Add(lblPrompt, 0, 0);
+        rootLayout.Controls.Add(buttonPanel, 0, 1);
+
+        Controls.Add(rootLayout);
+
+        AcceptButton = btnRename;
+        CancelButton = btnCancel;
+    }
+
+    public static ModeGroupSaveAction Show(string oldName, string newName, IWin32Window? owner = null)
+    {
+        using var dlg = new ModeGroupRenameDialog(oldName, newName);
+        dlg.ShowDialog(owner);
+        return dlg.SelectedAction;
     }
 }
 

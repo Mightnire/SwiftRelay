@@ -214,5 +214,10 @@
     "Create Process Mode...": "创建进程模式...",
     "Create Route Table Rule...": "创建路由表规则...",
     "Built-in (.txt) mode is read-only; use Save As... to create a custom copy.": "内置 (.txt) 模式只读，可点“另存为...”保存自定义副本。",
-    "Mode groups cannot be edited in Process Mode editor.": "模式组不支持在进程模式编辑器中直接修改。"
+    "Mode groups cannot be edited in Process Mode editor.": "模式组不支持在进程模式编辑器中直接修改。",
+    "Edit Mode Group": "编辑模式组",
+    "Save Mode Group": "保存模式组",
+    "The mode group name has changed from \"{0}\" to \"{1}\".\n\nWould you like to rename the original mode group or save as a new one?": "模式组名称已从“{0}”更改为“{1}”。\n\n请选择要重命名原模式组，还是另存为新的模式组？",
+    "Rename (Replace Original)": "重命名（替换原模式组）",
+    "Save As (Keep Original)": "另存为（保留原模式组）"
 }

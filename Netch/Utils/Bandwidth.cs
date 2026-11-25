@@ -111,7 +111,7 @@ public static class Bandwidth
             })
             .Forget();
 
-        while (Global.MainForm.State != State.Stopped)
+        while (Global.MainForm.State is not (State.Stopped or State.Terminating))
         {
             Thread.Sleep(1000);
             lock (counterLock)
