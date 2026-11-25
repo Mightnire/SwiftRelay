@@ -1,0 +1,7 @@
+# OpenCode
+OpenConsole\.exe
+elevate\.exe
+opencode-cli\.exe
+OpenCode\.exe
+Uninstall OpenCode\.exe
+opencode\.exe

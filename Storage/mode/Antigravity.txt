@@ -1,0 +1,5 @@
+# Antigravity
+language_server\.exe
+elevate\.exe
+Antigravity\.exe
+Uninstall Antigravity\.exe

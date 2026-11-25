@@ -1,0 +1,6 @@
+# BlueArchive (Global), 0
+NGService\.exe
+cefhelper\.exe
+BlueArchive\.exe
+CrashReportClient\.exe
+UnityCrashHandler64\.exe

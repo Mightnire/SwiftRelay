@@ -1,0 +1,5 @@
+# Gemini
+Gemini\.exe
+GeminiAppLauncher\.exe
+GeminiCrashpadHandler\.exe
+Uninstall Gemini\.exe
