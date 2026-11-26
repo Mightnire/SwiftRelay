@@ -227,5 +227,6 @@
     "Redirector start failed.": "Redirector 启动失败。",
     "tun2socks start failed.": "tun2socks 启动失败。",
     "Please install pcap2socks's dependency": "请安装 pcap2socks 依赖组件（Npcap）",
-    "Unknown Mode Type": "未知的模式类型"
+    "Unknown Mode Type": "未知的模式类型",
+    "Some sub-modes in the temporary combination were not found and have been skipped:\n{0}": "临时组合中的部分子模式已不存在，已跳过缺失项并重新合并：\n{0}"
 }

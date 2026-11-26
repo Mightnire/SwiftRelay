@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using Netch.Models.Modes.ProcessMode;
 
 namespace Netch.Models;
 
@@ -60,6 +61,11 @@ public class Setting
     ///     模式选择位置
     /// </summary>
     public int ModeComboBoxSelectedIndex { get; set; } = -1;
+
+    /// <summary>
+    ///     当前未切换前的临时组合模式快照
+    /// </summary>
+    public TemporaryModeData? TemporaryMode { get; set; }
 
     /// <summary>
     ///     快捷配置数量

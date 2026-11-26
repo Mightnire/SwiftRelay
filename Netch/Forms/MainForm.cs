@@ -785,6 +785,24 @@ public partial class MainForm : Form
 
     private void SelectLastMode()
     {
+        if (Global.Settings.TemporaryMode != null)
+        {
+            if (CompositeMode.TryRestoreTemporary(Global.Settings.TemporaryMode, Global.Modes, out var restored, out var missing) && restored != null)
+            {
+                ApplyTemporaryMode(restored, persistAsActive: false);
+                WarnMissingTemporarySubModes(missing, deferOnStartup: true);
+                return;
+            }
+
+            Global.Settings.TemporaryMode = null;
+            if (IsHandleCreated)
+                BeginInvoke(() =>
+                {
+                    if (!IsDisposed)
+                        MessageBoxX.Show(i18N.Translate("Mode not found."), LogLevel.WARNING, owner: this);
+                });
+        }
+
         // 如果值合法，选中该位置
         if (Global.Settings.ModeComboBoxSelectedIndex > 0 && Global.Settings.ModeComboBoxSelectedIndex < ModeComboBox.Items.Count)
             ModeComboBox.SelectedIndex = Global.Settings.ModeComboBoxSelectedIndex;
@@ -795,11 +813,79 @@ public partial class MainForm : Form
         // 如果当前 ModeComboBox 中没元素，不做处理
     }
 
+    private void RemoveTemporaryModesFromComboBox()
+    {
+        for (var i = ModeComboBox.Items.Count - 1; i >= 0; i--)
+        {
+            if (ModeComboBox.Items[i] is CompositeMode { IsTemporary: true })
+                ModeComboBox.Items.RemoveAt(i);
+        }
+    }
+
+    private void ApplyTemporaryMode(CompositeMode comp, bool persistAsActive)
+    {
+        RemoveTemporaryModesFromComboBox();
+        ModeComboBox.Items.Add(comp);
+        ModeComboBox.SelectedItem = comp;
+
+        if (persistAsActive)
+        {
+            Global.Settings.TemporaryMode = new TemporaryModeData
+            {
+                Remark = comp.i18NRemark,
+                SubModes = comp.SubModes.ToList()
+            };
+            Global.Settings.ModeComboBoxSelectedIndex = -1;
+        }
+    }
+
+    private void ClearPersistedTemporaryMode(Mode? keepSelected = null)
+    {
+        Global.Settings.TemporaryMode = null;
+        RemoveTemporaryModesFromComboBox();
+
+        if (keepSelected != null && ModeComboBox.Items.Contains(keepSelected))
+            ModeComboBox.SelectedItem = keepSelected;
+    }
+
+    private void WarnMissingTemporarySubModes(List<string> missingSubModes, bool deferOnStartup)
+    {
+        if (missingSubModes.Count == 0)
+            return;
+
+        var message = i18N.TranslateFormat(
+            "Some sub-modes in the temporary combination were not found and have been skipped:\n{0}",
+            string.Join("\n", missingSubModes));
+
+        if (deferOnStartup)
+        {
+            if (IsHandleCreated)
+                BeginInvoke(() =>
+                {
+                    if (!IsDisposed)
+                        MessageBoxX.Show(message, LogLevel.WARNING, owner: this);
+                });
+        }
+        else
+        {
+            MessageBoxX.Show(message, LogLevel.WARNING, owner: this);
+        }
+    }
+
     private void ModeComboBox_SelectionChangeCommitted(object sender, EventArgs o)
     {
         try
         {
-            Global.Settings.ModeComboBoxSelectedIndex = Global.Modes.IndexOf((Mode)ModeComboBox.SelectedItem);
+            var selected = ModeComboBox.SelectedItem as Mode;
+            if (selected is CompositeMode { IsTemporary: true })
+            {
+                Global.Settings.ModeComboBoxSelectedIndex = -1;
+                return;
+            }
+
+            ClearPersistedTemporaryMode(keepSelected: selected);
+            Global.Settings.ModeComboBoxSelectedIndex = selected != null ? Math.Max(0, Global.Modes.IndexOf(selected)) : 0;
+            Configuration.SaveAsync().Forget();
         }
         catch
         {
@@ -886,14 +972,11 @@ public partial class MainForm : Form
         {
             if (form.ResultMode is CompositeMode comp && comp.IsTemporary)
             {
-                if (!ModeComboBox.Items.Contains(comp))
-                {
-                    ModeComboBox.Items.Add(comp);
-                }
-                ModeComboBox.SelectedItem = comp;
+                ApplyTemporaryMode(comp, persistAsActive: true);
             }
             else
             {
+                ClearPersistedTemporaryMode();
                 LoadModes();
                 var found = ModeComboBox.Items.OfType<Mode>().FirstOrDefault(m =>
                     (!string.IsNullOrEmpty(form.ResultMode.FullName) && m.FullName.Equals(form.ResultMode.FullName, StringComparison.OrdinalIgnoreCase)) ||
@@ -901,8 +984,11 @@ public partial class MainForm : Form
                 if (found != null)
                 {
                     ModeComboBox.SelectedItem = found;
+                    Global.Settings.ModeComboBoxSelectedIndex = Math.Max(0, Global.Modes.IndexOf(found));
                 }
             }
+
+            Configuration.SaveAsync().Forget();
         }
     }
 
@@ -946,6 +1032,14 @@ public partial class MainForm : Form
         if (ModeComboBox.Items.Count <= 0 || ModeComboBox.SelectedIndex == -1)
         {
             MessageBoxX.Show(i18N.Translate("Please select a mode first"));
+            return;
+        }
+
+        if (ModeComboBox.SelectedItem is CompositeMode { IsTemporary: true })
+        {
+            ClearPersistedTemporaryMode();
+            SelectLastMode();
+            Configuration.SaveAsync().Forget();
             return;
         }
 
@@ -1051,6 +1145,7 @@ public partial class MainForm : Form
                 button.Text = profile.ProfileName;
 
                 ProfileNameText.Clear();
+                Configuration.SaveAsync().Forget();
                 return;
             case Keys.Shift:
                 // Delete Profile
@@ -1060,6 +1155,7 @@ public partial class MainForm : Form
                 Global.Settings.Profiles.Remove(profile);
                 button.Tag = null;
                 button.Text = i18N.Translate("None");
+                Configuration.SaveAsync().Forget();
                 return;
         }
 
@@ -1076,17 +1172,33 @@ public partial class MainForm : Form
             ProfileNameText.Text = profile.ProfileName;
 
             var server = ServerComboBox.Items.Cast<Server>().FirstOrDefault(s => s.Remark.Equals(profile.ServerRemark));
-            var mode = ModeComboBox.Items.Cast<Mode>().FirstOrDefault(m => m.Remark.Any(s => s.Value.Equals(profile.ModeRemark)));
-
             if (server == null)
                 throw new MessageException(i18N.Translate("Server not found."));
 
-            if (mode == null)
-                throw new MessageException(i18N.Translate("Mode not found."));
+            if (profile.TemporaryMode != null)
+            {
+                if (!CompositeMode.TryRestoreTemporary(profile.TemporaryMode, Global.Modes, out var restored, out var missing) || restored == null)
+                    throw new MessageException(i18N.Translate("Mode not found."));
 
-            // set active server and mode
-            ServerComboBox.SelectedItem = server;
-            ModeComboBox.SelectedItem = mode;
+                WarnMissingTemporarySubModes(missing, deferOnStartup: false);
+                ServerComboBox.SelectedItem = server;
+                ApplyTemporaryMode(restored, persistAsActive: true);
+                Configuration.SaveAsync().Forget();
+            }
+            else
+            {
+                var mode = ModeComboBox.Items.Cast<Mode>().FirstOrDefault(m =>
+                    m is not CompositeMode { IsTemporary: true } &&
+                    m.Remark.Any(s => s.Value.Equals(profile.ModeRemark)));
+
+                if (mode == null)
+                    throw new MessageException(i18N.Translate("Mode not found."));
+
+                ClearPersistedTemporaryMode();
+                ServerComboBox.SelectedItem = server;
+                ModeComboBox.SelectedItem = mode;
+                Global.Settings.ModeComboBoxSelectedIndex = Math.Max(0, Global.Modes.IndexOf(mode));
+            }
         }
         catch (MessageException exception)
         {

@@ -207,6 +207,7 @@
     "tun2socks start failed.": "tun2socks 啟動失敗。",
     "Please install pcap2socks's dependency": "請安裝 pcap2socks 相依元件（Npcap）",
     "Unknown Mode Type": "未知的模式類型",
+    "Some sub-modes in the temporary combination were not found and have been skipped:\n{0}": "臨時組合中的部分子模式已不存在，已跳過缺失項並重新合併：\n{0}",
     "Accelerated Processes": "加速進程",
     "Bypass Rules": "分流規則",
     "Auto": "自動",

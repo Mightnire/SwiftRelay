@@ -117,4 +117,71 @@ public class CompositeMode : Redirector
             MergeFrom(resolvedModes);
         }
     }
+
+    public static bool TryRestoreTemporary(
+        TemporaryModeData? data,
+        IEnumerable<Mode> availableModes,
+        out CompositeMode? restored,
+        out List<string> missingSubModes)
+    {
+        restored = null;
+        missingSubModes = new List<string>();
+        if (data == null || data.SubModes.Count == 0)
+            return false;
+
+        var leafModes = availableModes.OfType<Redirector>().Where(m => m is not CompositeMode).ToList();
+        var resolvedModes = new List<Redirector>();
+
+        foreach (var sub in data.SubModes)
+        {
+            var match = FindSubMode(leafModes, sub);
+            if (match != null)
+            {
+                if (!resolvedModes.Contains(match))
+                    resolvedModes.Add(match);
+            }
+            else
+            {
+                missingSubModes.Add(sub);
+            }
+        }
+
+        if (resolvedModes.Count == 0)
+            return false;
+
+        var remark = string.IsNullOrWhiteSpace(data.Remark)
+            ? string.Join(" + ", resolvedModes.Take(2).Select(m => m.i18NRemark))
+            : data.Remark;
+
+        restored = FromModes(resolvedModes, remark, isTemp: true);
+        return true;
+    }
+
+    private static Redirector? FindSubMode(List<Redirector> leafModes, string subPath)
+    {
+        if (string.IsNullOrWhiteSpace(subPath))
+            return null;
+
+        var byRelativeOrSuffix = leafModes.FirstOrDefault(m =>
+            !string.IsNullOrEmpty(m.FullName) &&
+            (m.FullName.Equals(subPath, StringComparison.OrdinalIgnoreCase) ||
+             m.FullName.EndsWith(subPath, StringComparison.OrdinalIgnoreCase)));
+        if (byRelativeOrSuffix != null)
+            return byRelativeOrSuffix;
+
+        var fileName = Path.GetFileName(subPath);
+        if (string.IsNullOrEmpty(fileName))
+            return null;
+
+        return leafModes.FirstOrDefault(m =>
+            !string.IsNullOrEmpty(m.FullName) &&
+            Path.GetFileName(m.FullName).Equals(fileName, StringComparison.OrdinalIgnoreCase));
+    }
+}
+
+public class TemporaryModeData
+{
+    public string Remark { get; set; } = string.Empty;
+
+    public List<string> SubModes { get; set; } = new();
 }

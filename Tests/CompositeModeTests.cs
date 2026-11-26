@@ -645,6 +645,109 @@ public class CompositeModeTests
         }
     }
 
+    [TestMethod]
+    public void CompositeMode_TryRestoreTemporary_HandlesFullPartialAndMissingSubModes()
+    {
+        var modeDir = ModeService.Instance.ModeDirectoryFullName;
+        var m1 = new Redirector
+        {
+            FullName = Path.Combine(modeDir, "Game", "Alpha.txt"),
+            Remark = new() { { "en", "Alpha" } },
+            Handle = new() { "alpha.exe" },
+            Bypass = new() { "alpha_skip.exe" }
+        };
+        var m2 = new Redirector
+        {
+            FullName = Path.Combine(modeDir, "Other", "Beta.txt"),
+            Remark = new() { { "en", "Beta" } },
+            Handle = new() { "beta.exe" }
+        };
+
+        var data = new TemporaryModeData
+        {
+            Remark = "Alpha + Beta",
+            SubModes = new() { Path.Combine("Game", "Alpha.txt"), Path.Combine("Other", "Beta.txt") }
+        };
+
+        // Full match
+        Assert.IsTrue(CompositeMode.TryRestoreTemporary(data, new Mode[] { m1, m2 }, out var restoredFull, out var missingFull));
+        Assert.IsNotNull(restoredFull);
+        Assert.IsTrue(restoredFull!.IsTemporary);
+        Assert.AreEqual("Alpha + Beta", restoredFull.i18NRemark);
+        Assert.AreEqual(0, missingFull.Count);
+        CollectionAssert.Contains(restoredFull.Handle, "alpha.exe");
+        CollectionAssert.Contains(restoredFull.Handle, "beta.exe");
+
+        // Partial match: Beta removed, Alpha kept
+        Assert.IsTrue(CompositeMode.TryRestoreTemporary(data, new Mode[] { m1 }, out var restoredPartial, out var missingPartial));
+        Assert.IsNotNull(restoredPartial);
+        Assert.AreEqual(1, missingPartial.Count);
+        CollectionAssert.Contains(missingPartial, Path.Combine("Other", "Beta.txt"));
+        CollectionAssert.Contains(restoredPartial!.Handle, "alpha.exe");
+        CollectionAssert.DoesNotContain(restoredPartial.Handle, "beta.exe");
+
+        // Zero match
+        Assert.IsFalse(CompositeMode.TryRestoreTemporary(data, Array.Empty<Mode>(), out var restoredNone, out var missingNone));
+        Assert.IsNull(restoredNone);
+        Assert.AreEqual(2, missingNone.Count);
+    }
+
+    [TestMethod]
+    public void Profile_And_Setting_RoundTrip_PreservesTemporaryMode()
+    {
+        var modeDir = ModeService.Instance.ModeDirectoryFullName;
+        var m1 = new Redirector
+        {
+            FullName = Path.Combine(modeDir, "A.txt"),
+            Remark = new() { { "en", "A" } },
+            Handle = new() { "a.exe" }
+        };
+        var m2 = new Redirector
+        {
+            FullName = Path.Combine(modeDir, "B.txt"),
+            Remark = new() { { "en", "B" } },
+            Handle = new() { "b.exe" }
+        };
+        var tempComp = CompositeMode.FromModes(new[] { m1, m2 }, "A + B", isTemp: true);
+        var server = new Netch.Servers.Socks5Server { Remark = "Default", Hostname = "127.0.0.1", Port = 1080 };
+        var profile = new Netch.Models.Profile(server, tempComp, "asd", 0);
+
+        Assert.IsNotNull(profile.TemporaryMode);
+        Assert.AreEqual("A + B", profile.TemporaryMode!.Remark);
+        Assert.AreEqual(2, profile.TemporaryMode.SubModes.Count);
+
+        var setting = new Netch.Models.Setting
+        {
+            TemporaryMode = profile.TemporaryMode,
+            Profiles = new() { profile }
+        };
+
+        var json = System.Text.Json.JsonSerializer.Serialize(setting, Netch.Global.NewCustomJsonSerializerOptions());
+        var deserialized = System.Text.Json.JsonSerializer.Deserialize<Netch.Models.Setting>(json, Netch.Global.NewCustomJsonSerializerOptions())!;
+
+        Assert.IsNotNull(deserialized.TemporaryMode);
+        Assert.AreEqual("A + B", deserialized.TemporaryMode!.Remark);
+        Assert.AreEqual(1, deserialized.Profiles.Count);
+        Assert.IsNotNull(deserialized.Profiles[0].TemporaryMode);
+        Assert.AreEqual(2, deserialized.Profiles[0].TemporaryMode!.SubModes.Count);
+    }
+
+    [TestMethod]
+    public void i18N_ZhCn_TranslatesModeAndServerNotFound()
+    {
+        var previousLang = i18N.LangCode;
+        try
+        {
+            i18N.Load("zh-CN");
+            Assert.AreEqual("找不到对应模式。", i18N.Translate("Mode not found."));
+            Assert.AreEqual("找不到对应服务器。", i18N.Translate("Server not found."));
+        }
+        finally
+        {
+            i18N.Load(previousLang);
+        }
+    }
+
     private static IEnumerable<T> GetAllControls<T>(Control root) where T : Control
     {
         foreach (Control c in root.Controls)

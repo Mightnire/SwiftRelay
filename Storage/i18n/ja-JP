@@ -181,6 +181,7 @@
     "tun2socks start failed.": "tun2socks の起動に失敗しました。",
     "Please install pcap2socks's dependency": "pcap2socks の依存コンポーネント（Npcap）をインストールしてください",
     "Unknown Mode Type": "不明なモード種別",
+    "Some sub-modes in the temporary combination were not found and have been skipped:\n{0}": "一時組み合わせ内の一部のサブモードが見つからないため、スキップして再マージしました：\n{0}",
     "Accelerated Processes": "プロキシ対象プロセス",
     "Bypass Rules": "バイパスルール",
     "Auto": "自動",
